@@ -7,6 +7,7 @@ import Hero from "../src/components/hero.jsx";
 import OurStory from "../src/components/OurStory.jsx";
 import CaseStudies from './components/CaseStudies.jsx';
 import Services from './components/Services.jsx';
+import PlayReel from './components/PlayReel.jsx';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       <OurStory />
       <CaseStudies />
       <Services />
+      <PlayReel />
     </>
   );
 }
