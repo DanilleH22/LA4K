@@ -1,0 +1,46 @@
+/* src/components/sections/Hero/Hero.css */
+
+.hero {
+  min-width: 100vh;
+  max-height: 70%;
+/*  display: flex; */
+  align-items: center;
+  padding: 0 5vw;
+  
+  color: #ffffff;
+}
+
+/* .hero-inner {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+} */
+
+.hero-text h1 {
+  font-size: 400px;
+  font-weight: 500;
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+  
+  letter-spacing: 10px; 
+  color: white; 
+  
+}
+
+
+
+/* .hero-visual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+} */
+
+/* .hero-image-placeholder {
+  width: 100%;
+  height: 420px;
+ 
+} */
