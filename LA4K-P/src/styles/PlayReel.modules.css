@@ -1,0 +1,76 @@
+/* src/components/sections/PlayReel/PlayReel.css */
+
+.play-reel {
+  padding: 7rem 5vw;
+  margin-top: 2rem;
+  color: #fff;
+}
+
+.play-reel-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* HEADER */
+.play-reel-header {
+  margin-bottom: 3rem;
+}
+
+.play-reel-header .eyebrow {
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #aaa;
+  display: block;
+  margin-bottom: 0.6rem;
+}
+
+.play-reel-header h2 {
+  font-size: clamp(2.2rem, 4vw, 3rem);
+  line-height: 1.2;
+}
+
+/* VIDEO */
+.play-reel-video {
+  position: relative;
+}
+
+.video-placeholder {
+  width: 100%;
+  height: 520px;
+  background: linear-gradient(135deg, #2a2a2a, #1a1a1a);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* PLAY BUTTON */
+.play-button {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  background: transparent;
+  color: #fff;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.play-button:hover {
+  transform: scale(1.08);
+  border-color: #fff;
+}
+
+/* RESPONSIVE */
+@media (max-width: 700px) {
+  .video-placeholder {
+    height: 320px;
+  }
+
+  .play-button {
+    width: 70px;
+    height: 70px;
+    font-size: 1.2rem;
+  }
+}
