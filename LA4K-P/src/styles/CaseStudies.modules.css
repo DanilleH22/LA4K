@@ -1,0 +1,77 @@
+/* src/components/sections/CaseStudies/CaseStudies.css */
+
+.case-studies {
+  padding: 7rem 5vw;
+  background: #fff;
+  color: #1a1a1a;
+}
+
+.case-studies-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* HEADER */
+.case-studies-header {
+  margin-bottom: 4rem;
+}
+
+.case-studies-header .eyebrow {
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #777;
+  display: block;
+  margin-bottom: 0.6rem;
+}
+
+.case-studies-header h2 {
+  font-size: clamp(2.4rem, 4vw, 3.2rem);
+}
+
+/* GRID */
+.case-studies-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2.5rem;
+}
+
+/* CARD */
+.case-card {
+  cursor: pointer;
+}
+
+.case-image {
+  width: 100%;
+  height: 380px;
+  background: linear-gradient(135deg, #dedede, #c5c5c5);
+  margin-bottom: 1rem;
+}
+
+/* TEXT */
+.case-meta h3 {
+  font-size: 1.15rem;
+  margin-bottom: 0.3rem;
+}
+
+.case-meta p {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1000px) {
+  .case-studies-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .case-studies-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .case-image {
+    height: 260px;
+  }
+}
