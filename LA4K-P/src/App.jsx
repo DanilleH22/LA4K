@@ -4,11 +4,13 @@ import viteLogo from '/vite.svg'
 import './App.css'
 
 import Hero from "../src/components/hero.jsx";
+import OurStory from "../src/components/OurStory.jsx";
 
 function App() {
   return (
     <>
       <Hero />
+      <OurStory />
     </>
   );
 }
