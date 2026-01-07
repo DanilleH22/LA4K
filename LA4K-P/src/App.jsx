@@ -6,6 +6,7 @@ import './App.css'
 import Hero from "../src/components/hero.jsx";
 import OurStory from "../src/components/OurStory.jsx";
 import CaseStudies from './components/CaseStudies.jsx';
+import Services from './components/Services.jsx';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Hero />
       <OurStory />
       <CaseStudies />
+      <Services />
     </>
   );
 }
