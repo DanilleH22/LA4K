@@ -1,0 +1,64 @@
+/* src/components/sections/OurStory/OurStory.css */
+
+.our-story {
+  padding: 7rem 5vw;
+  color: #1a1a1a;
+}
+
+.our-story-inner {
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr;
+  gap: 3rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  align-items: center;
+}
+
+/* TEXT */
+.our-story-text h2 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.15;
+  margin-bottom: 1.5rem;
+}
+
+.our-story-text p {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  margin-bottom: 1.8rem;
+  max-width: 520px;
+  color: #4a4a4a;
+}
+
+.our-story-mission {
+  list-style: none;
+  padding: 0;
+}
+
+.our-story-mission li {
+  margin-bottom: 0.8rem;
+  color: #555;
+  line-height: 1.6;
+}
+
+/* IMAGES */
+.our-story-image {
+  width: 100%;
+}
+
+.story-image-placeholder {
+  width: 100%;
+  height: 260px;
+  background: linear-gradient(135deg, #e0e0e0, #c6c6c6);
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .our-story-inner {
+    grid-template-columns: 1fr;
+    text-align: left;
+  }
+
+  .our-story-image {
+    display: none; /* matches Aspekto mobile feel */
+  }
+}
