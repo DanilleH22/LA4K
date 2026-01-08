@@ -11,6 +11,7 @@ import PlayReel from './components/PlayReel.jsx';
 import TrustedFeedback from './components/TrustedFeedback.jsx';
 import OurPackages from './components/OurPackages.jsx';
 import VideoReel from './components/VideoReel.jsx';
+import Footer from './components/Footer.jsx';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
       <TrustedFeedback />
       <OurPackages />
       <VideoReel />
+      <Footer />
     </>
   );
 }
