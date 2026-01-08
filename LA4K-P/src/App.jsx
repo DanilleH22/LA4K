@@ -9,6 +9,7 @@ import CaseStudies from './components/CaseStudies.jsx';
 import Services from './components/Services.jsx';
 import PlayReel from './components/PlayReel.jsx';
 import TrustedFeedback from './components/TrustedFeedback.jsx';
+import OurPackages from './components/OurPackages.jsx';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
       <Services />
       <PlayReel />
       <TrustedFeedback />
+      <OurPackages />
     </>
   );
 }
