@@ -12,6 +12,7 @@ import TrustedFeedback from './components/TrustedFeedback.jsx';
 import OurPackages from './components/OurPackages.jsx';
 import VideoReel from './components/VideoReel.jsx';
 import Footer from './components/Footer.jsx';
+import MovingFooter from './components/MovingFooter.jsx';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
       <OurPackages />
       <VideoReel />
       <Footer />
+      <MovingFooter />
     </>
   );
 }
