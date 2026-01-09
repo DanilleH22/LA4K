@@ -1,18 +1,40 @@
-// src/components/sections/OurStory/OurStory.jsx
+import React, { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import "../styles/OurStory.modules.css";
 
 export default function OurStory() {
+  const sectionRef = useRef(null);
+
+  // Track scroll relative to THIS section
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+
+  // Parallax motion values
+  const leftImageY = useTransform(scrollYProgress, [0, 1], [80, -80]);
+  const rightImageY = useTransform(scrollYProgress, [0, 1], [-80, 80]);
+
+  const textY = useTransform(scrollYProgress, [0, 0.4], [40, 0]);
+  const textOpacity = useTransform(scrollYProgress, [0, 0.4], [0, 1]);
+
   return (
-    <section className="our-story">
+    <section className="our-story" ref={sectionRef}>
       <div className="our-story-inner">
 
-        {/* Left image */}
-        <div className="our-story-image our-story-image-l">
+        {/* Left image — moves UP while scrolling */}
+        <motion.div
+          className="our-story-image our-story-image-l"
+          style={{ y: leftImageY }}
+        >
           <div className="story-image-placeholder"></div>
-        </div>
+        </motion.div>
 
-        {/* Text */}
-        <div className="our-story-text">
+        {/* Text — fades + slides in */}
+        <motion.div
+          className="our-story-text"
+          style={{ y: textY, opacity: textOpacity }}
+        >
           <h2>
             We’re a team of filmmakers, strategists, and storytellers passionate
             about turning ideas into cinematic experiences.
@@ -24,16 +46,19 @@ export default function OurStory() {
           </p>
 
           <ul className="our-story-mission">
-            <li><strong>Authenticity First:</strong> Human-centered storytelling that feels real.</li>
-            <li><strong>Purposeful Craft:</strong> Every visual has strategy at its core.</li>
-            <li><strong>Detail Obsessed:</strong> From concept to execution with precision.</li>
+            <li><strong>Authenticity First:</strong> Human-centered storytelling.</li>
+            <li><strong>Purposeful Craft:</strong> Strategy-led visuals.</li>
+            <li><strong>Detail Obsessed:</strong> Precision from start to finish.</li>
           </ul>
-        </div>
+        </motion.div>
 
-        {/* Right image */}
-        <div className="our-story-image our-story-image-r">
+        {/* Right image — moves DOWN while scrolling */}
+        <motion.div
+          className="our-story-image our-story-image-r"
+          style={{ y: rightImageY }}
+        >
           <div className="story-image-placeholder"></div>
-        </div>
+        </motion.div>
 
       </div>
     </section>
