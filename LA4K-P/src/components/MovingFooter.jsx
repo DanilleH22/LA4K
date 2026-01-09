@@ -1,13 +1,22 @@
+import "../styles/MovingFooter.modules.css";
 
-
-export default function MovingFooter() {
+export default function CreativeStatement() {
   return (
-    <footer className="moving-footer">
-      <div className="moving-footer-inner">
-        <h1>LA4K</h1>
-        <p>Font here.</p>
-        <h1>LA4K</h1>
+    <section className="statement">
+
+      {/* MOVING TEXT */}
+      <div className="marquee">
+        <div className="marquee-track">
+          <span>LA4K STUDIOS</span>
+          <span>LA4K STUDIOS</span>
+          <span>LA4K STUDIOS</span>
+          <span>LA4K STUDIOS</span>
+          <span>LA4K STUDIOS</span>
+          <span>LA4K STUDIOS</span>
+        </div>
       </div>
-    </footer>
+
+   
+    </section>
   );
 }
