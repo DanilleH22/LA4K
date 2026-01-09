@@ -2,6 +2,8 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 import Hero from "../src/components/hero.jsx";
 import OurStory from "../src/components/OurStory.jsx";
@@ -13,10 +15,12 @@ import OurPackages from './components/OurPackages.jsx';
 import VideoReel from './components/VideoReel.jsx';
 import Footer from './components/Footer.jsx';
 import MovingFooter from './components/MovingFooter.jsx';
+import NavBar from './components/NavBar.jsx';
 
 function App() {
   return (
     <>
+      <NavBar />
       <Hero />
       <OurStory />
       <CaseStudies />
