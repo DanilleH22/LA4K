@@ -1,8 +1,9 @@
-/* src/components/sections/OurStory/OurStory.css */
-
+/* our story section */
 .our-story {
-  padding: 7rem 5vw;
-  color: #1a1a1a;
+  padding: 8rem 5vw;
+  background: #060000;
+  position: relative;
+  overflow: hidden;
 }
 
 .our-story-inner {
@@ -14,19 +15,16 @@
   align-items: center;
 }
 
-/* TEXT */
+/* text styling */
 .our-story-text h2 {
   font-size: clamp(2rem, 4vw, 3rem);
-  line-height: 1.15;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 .our-story-text p {
   font-size: 1.05rem;
-  line-height: 1.6;
-  margin-bottom: 1.8rem;
-  max-width: 520px;
-  color: #4a4a4a;
+  margin-bottom: 1.5rem;
+  color: #444;
 }
 
 .our-story-mission {
@@ -35,30 +33,25 @@
 }
 
 .our-story-mission li {
-  margin-bottom: 0.8rem;
-  color: #555;
-  line-height: 1.6;
+  margin-bottom: 0.7rem;
 }
 
-/* IMAGES */
+/* image placeholders */
 .our-story-image {
   width: 100%;
 }
 
 .story-image-placeholder {
   width: 100%;
-  height: 260px;
-  background: linear-gradient(135deg, #e0e0e0, #c6c6c6);
+  height: 300px;
+  background: linear-gradient(135deg, #ddd, #bbb);
+  border-radius: 8px;
 }
 
-/* RESPONSIVE */
+/* responsiveness */
 @media (max-width: 900px) {
   .our-story-inner {
     grid-template-columns: 1fr;
-    text-align: left;
-  }
-
-  .our-story-image {
-    display: none; /* matches Aspekto mobile feel */
+    text-align: center;
   }
 }
