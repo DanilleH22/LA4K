@@ -17,13 +17,12 @@ import Footer from './components/Footer.jsx';
 import MovingFooter from './components/MovingFooter.jsx';
 import NavBar from './components/NavBar.jsx';
 
-
 function App() {
   return (
     <>
       <NavBar />
       <Hero />
-       <MovingFooter />
+      <MovingFooter />
       <OurStory />
       <CaseStudies />
       <Services />
