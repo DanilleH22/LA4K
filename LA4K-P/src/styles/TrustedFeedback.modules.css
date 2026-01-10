@@ -44,7 +44,7 @@
 
 /* CENTER IMAGE */
 .feedback-image .image-placeholder {
-  width: 100%;
+  width: 500px;
   height: 400px;
   background: linear-gradient(135deg, #dcdcdc, #bfbfbf);
   border-radius: 8px;
