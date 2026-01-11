@@ -17,12 +17,14 @@ import Footer from './components/Footer.jsx';
 import MovingFooter from './components/MovingFooter.jsx';
 import NavBar from './components/NavBar.jsx';
 import SocialLinks from './components/SocialLinks.jsx';
+import Hero2 from './components/Hero2.jsx';
+import Hero3 from './components/Hero3.jsx';
 
 function App() {
   return (
     <>
       <NavBar />
-      <Hero />
+      <Hero2 />
       <MovingFooter />
       <OurStory />
       <SocialLinks />
@@ -34,6 +36,7 @@ function App() {
       <Footer />
       <SocialLinks />
       <MovingFooter />
+
     </>
   );
 }
