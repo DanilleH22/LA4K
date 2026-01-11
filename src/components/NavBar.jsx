@@ -14,9 +14,10 @@ const NavBar = () => {
           className={styles.toggle}
         />
         <Navbar.Collapse
-          id="navbar-collapse"
-          className={`${styles.collapse} d-flex justify-content-end align-items-center`}
-        >
+  id="navbar-collapse"
+  className={styles.navbarCollapse}
+>
+
           <Nav className={`${styles.nav} me-3`}>
             <Nav.Link href="#home" className={styles.navLink}>
               Home
