@@ -5,7 +5,7 @@ import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
-import Hero from "../src/components/hero.jsx";
+
 import OurStory from "../src/components/OurStory.jsx";
 import CaseStudies from './components/CaseStudies.jsx';
 import Services from './components/Services.jsx';
@@ -18,7 +18,7 @@ import MovingFooter from './components/MovingFooter.jsx';
 import NavBar from './components/NavBar.jsx';
 import SocialLinks from './components/SocialLinks.jsx';
 import Hero2 from './components/Hero2.jsx';
-import Hero3 from './components/Hero3.jsx';
+
 
 function App() {
   return (
