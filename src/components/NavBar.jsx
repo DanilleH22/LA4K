@@ -77,7 +77,7 @@ const NavBar = () => {
   return (
     <Navbar expand="lg" sticky="top" className={styles.navbar}>
       <Container>
-        <Navbar.Brand href="#" className={styles.brand}>
+        <Navbar.Brand href="/" className={styles.brand}>
           LA4K
         </Navbar.Brand>
         <Navbar.Toggle 
@@ -90,7 +90,7 @@ const NavBar = () => {
 >
 
           <Nav className={`${styles.nav} me-3`}>
-            <Nav.Link href="#home" className={styles.navLink}>
+            <Nav.Link href="/" className={styles.navLink}>
               Home
             </Nav.Link>
             <Nav.Link href="/about" className={styles.navLink}>
