@@ -11,7 +11,7 @@ import CaseStudies from './components/CaseStudies.jsx';
 import Services from './components/Services.jsx';
 // import PlayReel from './components/PlayReel.jsx';
 import TrustedFeedback from './components/TrustedFeedback.jsx';
-import QA from './components/Q&A.jsx';
+import QA from './components/QandA.jsx';
 import PhotoReel from './components/PhotoReel.jsx';
 import Footer from './components/Footer.jsx';
 import MovingFooter from './components/MovingFooter.jsx';
