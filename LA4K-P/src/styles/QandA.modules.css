@@ -1,0 +1,262 @@
+/* Q&A Section */
+.qa-section {
+  padding: 100px 5vw;
+
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.qa-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(255, 255, 255, 0.1) 50%, 
+    transparent 100%
+  );
+}
+
+.qa-container {
+  max-width: 800px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* Header */
+.qa-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.qa-header h2 {
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  margin-bottom: 20px;
+  background: linear-gradient(135deg, #fff 0%, #aaa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.qa-header p {
+  font-size: 1.2rem;
+  color: #aaa;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* Accordion */
+.qa-accordion {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 60px;
+}
+
+/* QA Item */
+.qa-item {
+  border-radius: 12px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.qa-item.active {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* Question Button */
+.qa-question {
+  width: 100%;
+  padding: 24px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.qa-question:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.qa-question-text {
+  flex: 1;
+  margin-right: 20px;
+  font-size: 1.15rem;
+  line-height: 1.4;
+}
+
+.qa-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+
+.qa-item.active .qa-icon {
+  background: rgba(255, 255, 255, 0.2);
+  transform: rotate(180deg);
+}
+
+/* Answer Container */
+.qa-answer-container {
+  overflow: hidden;
+}
+
+.qa-answer {
+  padding: 0 30px 30px;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: #ccc;
+}
+
+.qa-answer::before {
+  content: '';
+  display: block;
+  width: 40px;
+  height: 2px;
+  background: linear-gradient(90deg, #b44cff, #953ad5);
+  margin-bottom: 20px;
+}
+
+/* CTA Section */
+.qa-cta {
+  text-align: center;
+  padding: 40px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.05) 0%, 
+    rgba(255, 255, 255, 0.02) 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.qa-cta p {
+  font-size: 1.2rem;
+  margin-bottom: 25px;
+  color: #ddd;
+}
+
+.qa-contact-btn {
+  background: linear-gradient(135deg, #b44cff, #953ad5);
+  color: white;
+  border: none;
+  padding: 16px 40px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 20px rgba(78, 205, 196, 0.3);
+}
+
+.qa-contact-btn:hover {
+  box-shadow: 0 8px 25px rgba(78, 205, 196, 0.4);
+  transform: translateY(-2px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .qa-section {
+    padding: 60px 5vw;
+  }
+
+  .qa-header {
+    margin-bottom: 40px;
+  }
+
+  .qa-header h2 {
+    font-size: 2.2rem;
+  }
+
+  .qa-header p {
+    font-size: 1.1rem;
+  }
+
+  .qa-question {
+    padding: 20px;
+  }
+
+  .qa-question-text {
+    font-size: 1.05rem;
+  }
+
+  .qa-answer {
+    padding: 0 20px 20px;
+    font-size: 1rem;
+  }
+
+  .qa-cta {
+    padding: 30px 20px;
+  }
+
+  .qa-contact-btn {
+    padding: 14px 32px;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .qa-section {
+    padding: 40px 4vw;
+  }
+
+  .qa-header h2 {
+    font-size: 1.8rem;
+  }
+
+  .qa-question {
+    padding: 18px;
+  }
+
+  .qa-question-text {
+    font-size: 1rem;
+    margin-right: 15px;
+  }
+
+  .qa-icon {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+/* Animation for list items */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.qa-item {
+  animation: fadeInUp 0.5s ease forwards;
+  animation-delay: calc(var(--item-index, 0) * 0.1s);
+  opacity: 0;
+}
