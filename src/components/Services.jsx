@@ -1,6 +1,7 @@
 import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import "../styles/Services.modules.css"
+
 
 const services = [
   {
@@ -40,6 +41,74 @@ export default function ServicesReveal() {
 });
 
 
+  const [buttonState, setButtonState] = useState('idle'); // 'idle' | 'loading' | 'success' | 'error'
+  const [copied, setCopied] = useState(false);
+  
+  const email = "hamiltonkdanille@hotmail.com";
+  const subject = "Video Production Inquiry";
+  const body = "Hello LA4K,\n\nI'm interested in your video production services. Could you provide more information about:\n\n• Project type:\n• Timeline:\n• Budget range:\n\nLooking forward to hearing from you!";
+
+
+  const handleGetInTouch = () => {
+    setButtonState('loading');
+    
+    // Simulate network delay
+    setTimeout(() => {
+      // Open email client
+      window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      
+      // Show success state briefly
+      setButtonState('success');
+      setTimeout(() => setButtonState('idle'), 2000);
+    }, 800);
+  };
+
+  const handleCopyEmail = () => {
+    navigator.clipboard.writeText(email)
+      .then(() => {
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      })
+      .catch(() => {
+        // Fallback for older browsers
+        const textArea = document.createElement('textarea');
+        textArea.value = email;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      });
+  };
+
+  const buttonConfig = {
+    idle: {
+      text: 'Get in Touch',
+     
+      className: 'primary'
+    },
+    loading: {
+      text: 'Opening Email...',
+      icon: <div className="loading-spinner" />,
+      className: 'loading'
+    },
+    success: {
+      text: 'Email Ready!',
+     
+      className: 'success'
+    },
+    error: {
+      text: 'Try Again',
+      
+      className: 'error'
+    }
+  };
+
+  const currentButton = buttonConfig[buttonState];
+
+
+
   return (
     <section className="services-section">
       <h2>Services</h2>
@@ -70,12 +139,16 @@ export default function ServicesReveal() {
         </motion.div>
       </div>
       <div>
-     <a href="#" className="neon-btn">
+     <a  className="neon-btn"
+     disabled={buttonState === 'loading'}
+            href="mailto:hamiltonkdanille@hotmail.com"
+            onClick={handleGetInTouch}
+     >
   <span></span>
   <span></span>
   <span></span>
   <span></span>
-  Get Started!
+  {buttonState === 'loading' ? 'Loading…' : 'Get Started'}
 </a>
 
 </div>

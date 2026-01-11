@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import '../styles/QandA.modules.css';
+
 
 const OurPackages = () => {
   const [activeIndex, setActiveIndex] = useState(null);
@@ -35,6 +36,73 @@ const OurPackages = () => {
   const toggleAccordion = (index) => {
     setActiveIndex(activeIndex === index ? null : index);
   };
+
+
+  const [buttonState, setButtonState] = useState('idle'); // 'idle' | 'loading' | 'success' | 'error'
+  const [copied, setCopied] = useState(false);
+  
+  const email = "hamiltonkdanille@hotmail.com";
+  const subject = "Video Production Inquiry";
+  const body = "Hello LA4K,\n\nI'm interested in your video production services. Could you provide more information about:\n\n• Project type:\n• Timeline:\n• Budget range:\n\nLooking forward to hearing from you!";
+
+
+  const handleGetInTouch = () => {
+    setButtonState('loading');
+    
+    // Simulate network delay
+    setTimeout(() => {
+      // Open email client
+      window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      
+      // Show success state briefly
+      setButtonState('success');
+      setTimeout(() => setButtonState('idle'), 2000);
+    }, 800);
+  };
+
+  const handleCopyEmail = () => {
+    navigator.clipboard.writeText(email)
+      .then(() => {
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      })
+      .catch(() => {
+        // Fallback for older browsers
+        const textArea = document.createElement('textarea');
+        textArea.value = email;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      });
+  };
+
+  const buttonConfig = {
+    idle: {
+      text: 'Get in Touch',
+     
+      className: 'primary'
+    },
+    loading: {
+      text: 'Opening Email...',
+      icon: <div className="loading-spinner" />,
+      className: 'loading'
+    },
+    success: {
+      text: 'Email Ready!',
+     
+      className: 'success'
+    },
+    error: {
+      text: 'Try Again',
+      
+      className: 'error'
+    }
+  };
+
+  const currentButton = buttonConfig[buttonState];
 
   return (
     <section className="qa-section">
@@ -122,8 +190,11 @@ const OurPackages = () => {
             whileHover={{ scale: 1.05, backgroundColor: "#333" }}
             whileTap={{ scale: 0.95 }}
             transition={{ type: "spring", stiffness: 400, damping: 25 }}
+            disabled={buttonState === 'loading'}
+            href="mailto:hamiltonkdanille@hotmail.com"
+            onClick={handleGetInTouch}
           >
-            Contact Us
+             {buttonState === 'loading' ? 'Loading…' : 'Contact Us'}
           </motion.button>
         </motion.div>
       </div>
