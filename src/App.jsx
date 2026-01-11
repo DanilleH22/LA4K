@@ -24,7 +24,7 @@ function App() {
   return (
     <>
       <NavBar />
-      <Hero2 />
+      {/* <Hero2 /> */}
       <MovingFooter />
       <OurStory />
       <SocialLinks />
