@@ -9,10 +9,10 @@ import Hero from "../src/components/hero.jsx";
 import OurStory from "../src/components/OurStory.jsx";
 import CaseStudies from './components/CaseStudies.jsx';
 import Services from './components/Services.jsx';
-import PlayReel from './components/PlayReel.jsx';
+// import PlayReel from './components/PlayReel.jsx';
 import TrustedFeedback from './components/TrustedFeedback.jsx';
-import OurPackages from './components/OurPackages.jsx';
-import VideoReel from './components/VideoReel.jsx';
+import QA from './components/Q&A.jsx';
+import PhotoReel from './components/PhotoReel.jsx';
 import Footer from './components/Footer.jsx';
 import MovingFooter from './components/MovingFooter.jsx';
 import NavBar from './components/NavBar.jsx';
@@ -27,11 +27,10 @@ function App() {
       <OurStory />
       <SocialLinks />
       <CaseStudies />
-      <Services />
-      <PlayReel />
       <TrustedFeedback />
-      <OurPackages />
-      <VideoReel />
+      <PhotoReel />
+      <Services />
+      <QA />
       <Footer />
       <SocialLinks />
       <MovingFooter />
