@@ -2,8 +2,11 @@
 
 .feedback {
   padding: 7rem 5vw;
-  
-  color: #1a1a1a;
+  color: #ffffff;
+}
+
+.feedback h1 {
+  margin-bottom: 20px;
 }
 
 .feedback-inner {
@@ -49,24 +52,42 @@
   background: linear-gradient(135deg, #dcdcdc, #bfbfbf);
   border-radius: 8px;
 }
+/* =========================
+   RESPONSIVE – MOBILE FIRST
+   ========================= */
 
-/* RESPONSIVE */
 @media (max-width: 900px) {
+  .feedback {
+    padding: 4rem 1.25rem;
+  }
+
   .feedback-inner {
     grid-template-columns: 1fr;
-    gap: 3rem;
+    gap: 2.5rem;
   }
 
+  /* Stack cards vertically */
   .feedback-column {
-    flex-direction: row;
-    justify-content: space-between;
+    flex-direction: column;
+    gap: 1.5rem;
   }
 
-  .feedback-image .image-placeholder {
-    height: 250px;
-  }
-
+  /* Full-width cards */
   .feedback-card {
-    flex: 1;
+    width: 100%;
+  }
+
+  /* Responsive image */
+  .feedback-image .image-placeholder {
+    width: 100%;
+    height: auto;
+    max-height: 280px;
+  }
+
+  .feedback-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
   }
 }
