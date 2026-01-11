@@ -3,40 +3,29 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
-
-
-
-import OurStory from "../src/components/OurStory.jsx";
-import CaseStudies from './components/CaseStudies.jsx';
-import Services from './components/Services.jsx';
-// import PlayReel from './components/PlayReel.jsx';
-import TrustedFeedback from './components/TrustedFeedback.jsx';
-import QA from './components/QandA.jsx';
-import PhotoReel from './components/PhotoReel.jsx';
-import Footer from './components/Footer.jsx';
-import MovingFooter from './components/MovingFooter.jsx';
 import NavBar from './components/NavBar.jsx';
-import SocialLinks from './components/SocialLinks.jsx';
-import Hero2 from './components/Hero2.jsx';
+import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
+
+
+import Homepage from "./pages/home.jsx" 
+import About from "./pages/about.jsx"
+import ContactUs from './pages/ContactUs.jsx';
 
 
 function App() {
   return (
     <>
       <NavBar />
-      {/* <Hero2 /> */}
-      <MovingFooter />
-      <OurStory />
-      <SocialLinks />
-      <CaseStudies />
-      <TrustedFeedback />
-      <PhotoReel />
-      <Services />
-      <QA />
-      <Footer />
-      <SocialLinks />
-      <MovingFooter />
-
+      <Router>
+        <div className="page-content">
+         
+          <Routes>
+            <Route path="/" element={<Homepage />} />
+            <Route path="/About" element={<About />} />
+            <Route path="/ContactUs" element={<ContactUs />} />
+          </Routes>
+        </div>
+      </Router>
     </>
   );
 }
