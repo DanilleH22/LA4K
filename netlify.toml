@@ -1,0 +1,9 @@
+[build]
+  base = "LA4K-P"
+  command = "npm run build"
+  publish = "LA4K-P/dist"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
