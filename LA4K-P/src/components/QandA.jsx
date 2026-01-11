@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import '../styles/Q&A.modules.css';
+import '../styles/QandA.modules.css';
 
 const OurPackages = () => {
   const [activeIndex, setActiveIndex] = useState(null);
