@@ -12,11 +12,11 @@ export default function OurStory() {
   });
 
   // Parallax motion values
-  const leftImageY = useTransform(scrollYProgress, [0, 1], [80, -80]);
-  const rightImageY = useTransform(scrollYProgress, [0, 1], [-80, 80]);
+  const leftImageY = useTransform(scrollYProgress, [0, 3], [100, -100]);
+  const rightImageY = useTransform(scrollYProgress, [0, 3], [-100, 100]);
 
-  const textY = useTransform(scrollYProgress, [0, 0.4], [40, 0]);
-  const textOpacity = useTransform(scrollYProgress, [0, 0.4], [0, 1]);
+  const textY = useTransform(scrollYProgress, [0, 1], [40, 0]);
+  const textOpacity = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
   return (
     <section className="our-story" ref={sectionRef}>
@@ -33,7 +33,7 @@ export default function OurStory() {
         {/* Text — fades + slides in */}
         <motion.div
           className="our-story-text"
-          style={{ y: textY, opacity: textOpacity }}
+          // style={{ y: textY, opacity: textOpacity }}
         >
           <h2>
             We’re a team of filmmakers, strategists, and storytellers passionate
