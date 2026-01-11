@@ -7,11 +7,15 @@ export default function CreativeStatement() {
       {/* MOVING TEXT */}
       <div className="marquee">
         <div className="marquee-track">
+           <img src="/images/DroneLogo.jpg" alt="LA4K STUDIOS" />
           <span>LA4K STUDIOS</span>
+          <img src="/images/DroneLogo.jpg" alt="LA4K STUDIOS" />
           <span>LA4K STUDIOS</span>
+          <img src="/images/DroneLogo.jpg" alt="LA4K STUDIOS" />
           <span>LA4K STUDIOS</span>
+          <img src="/images/DroneLogo.jpg" alt="LA4K STUDIOS" />
           <span>LA4K STUDIOS</span>
-          <span>LA4K STUDIOS</span>
+          <img src="/images/DroneLogo.jpg" alt="LA4K STUDIOS" />
           <span>LA4K STUDIOS</span>
         </div>
       </div>
