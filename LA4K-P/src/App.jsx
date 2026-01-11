@@ -16,6 +16,7 @@ import VideoReel from './components/VideoReel.jsx';
 import Footer from './components/Footer.jsx';
 import MovingFooter from './components/MovingFooter.jsx';
 import NavBar from './components/NavBar.jsx';
+import SocialLinks from './components/SocialLinks.jsx';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
       <Hero />
       <MovingFooter />
       <OurStory />
+      <SocialLinks />
       <CaseStudies />
       <Services />
       <PlayReel />
@@ -31,6 +33,7 @@ function App() {
       <OurPackages />
       <VideoReel />
       <Footer />
+      <SocialLinks />
       <MovingFooter />
     </>
   );
