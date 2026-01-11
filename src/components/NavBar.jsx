@@ -1,22 +1,34 @@
 import React from "react";
 import { Navbar, Nav, Container, Button } from "react-bootstrap";
+import styles from "../styles/NavBar.module.css";
 
 const NavBar = () => {
   return (
-    <Navbar expand="lg"  sticky="top" style={{ color: 'white' }}>
+    <Navbar expand="lg" sticky="top" className={styles.navbar}>
       <Container>
-        <Navbar.Brand href="#">LA4K</Navbar.Brand>
-        <Navbar.Toggle aria-controls="navbar-collapse" />
+        <Navbar.Brand href="#" className={styles.brand}>
+          LA4K
+        </Navbar.Brand>
+        <Navbar.Toggle 
+          aria-controls="navbar-collapse" 
+          className={styles.toggle}
+        />
         <Navbar.Collapse
           id="navbar-collapse"
-          className="d-flex justify-content-end align-items-center"
+          className={`${styles.collapse} d-flex justify-content-end align-items-center`}
         >
-          <Nav className="me-3">
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#about">About</Nav.Link>
-            <Nav.Link href="#portfolio">Portfolio</Nav.Link>
+          <Nav className={`${styles.nav} me-3`}>
+            <Nav.Link href="#home" className={styles.navLink}>
+              Home
+            </Nav.Link>
+            <Nav.Link href="#about" className={styles.navLink}>
+              About
+            </Nav.Link>
+            <Nav.Link href="#portfolio" className={styles.navLink}>
+              Portfolio
+            </Nav.Link>
           </Nav>
-          <Button href="#contact" variant="primary">
+          <Button href="#contact" variant="primary" className={styles.button}>
             Get Started
           </Button>
         </Navbar.Collapse>

@@ -1,0 +1,134 @@
+/* Override Bootstrap defaults */
+.navbar {
+  background-color: transparent !important;
+  padding: 20px 0;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  background: rgba(0, 0, 0, 0.8) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Brand/Logo */
+.brand {
+  color: white !important;
+  font-size: 1.8rem !important;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-decoration: none;
+}
+
+/* Nav links */
+.navLink {
+  color: rgba(255, 255, 255, 0.9) !important;
+  font-weight: 500;
+  margin: 0 15px;
+  padding: 8px 0 !important;
+  position: relative;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.navLink:hover,
+.navLink:focus {
+  color: white !important;
+  background-color: transparent !important;
+}
+
+/* Active link */
+.navLink.active {
+  color: white !important;
+}
+
+/* Underline animation */
+.navLink::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #4ecdc4, #45b7d1);
+  transition: width 0.3s ease;
+}
+
+.navLink:hover::after {
+  width: 100%;
+}
+
+/* Mobile menu toggle */
+.toggle {
+  border: none !important;
+  padding: 0 !important;
+}
+
+.toggle:focus {
+  box-shadow: none !important;
+}
+
+.toggleIcon {
+  filter: invert(1); /* Makes the hamburger white */
+}
+
+/* Button */
+.button {
+  background: linear-gradient(135deg, #4ecdc4, #45b7d1) !important;
+  border: none !important;
+  border-radius: 50px !important;
+  padding: 10px 30px !important;
+  font-weight: 600 !important;
+  transition: all 0.3s ease !important;
+}
+
+.button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(78, 205, 196, 0.4) !important;
+}
+
+/* Mobile menu background */
+.navbarCollapse {
+  background-color: rgba(0, 0, 0, 0.95);
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .navbar {
+    background: rgba(0, 0, 0, 0.95) !important;
+    padding: 15px 0;
+  }
+  
+  .nav {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .navLink {
+    margin: 10px 0;
+    padding: 10px !important;
+  }
+  
+  .navLink::after {
+    display: none;
+  }
+  
+  .button {
+    width: 100%;
+    max-width: 200px;
+    margin: 0 auto;
+  }
+}
+
+/* Add this to make hamburger menu white */
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.9%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+}
+
+/* Scrolled state */
+.navbarScrolled {
+  background: rgba(0, 0, 0, 0.95) !important;
+  padding: 15px 0;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
