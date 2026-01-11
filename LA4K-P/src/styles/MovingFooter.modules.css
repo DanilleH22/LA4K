@@ -21,6 +21,11 @@
   animation: scroll 30s linear infinite;
 }
 
+img {
+    height: 100px;
+    padding-right: 30px;
+}
+
 .marquee-track span {
   font-size: clamp(2.5rem, 5vw, 4rem);
   font-weight: 600;
