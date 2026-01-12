@@ -22,7 +22,7 @@ function Homepage() {
   return (
     <>
 
-      {/* <Hero2 /> */}
+      <Hero2 />
       <MovingFooter />
       <OurStory />
       <SocialLinks />
@@ -34,7 +34,6 @@ function Homepage() {
       <Footer />
       <SocialLinks />
       <MovingFooter />
-
     </>
   );
 }
