@@ -83,7 +83,7 @@
   display: inline-block;
   padding: 22px 28px;
   margin: 40px 0;
-  color: #b44cff;
+  color: #4ecdc4;
   text-decoration: none;
   text-transform: uppercase;
   letter-spacing: 4px;
@@ -91,15 +91,16 @@
   transition: 0.5s;
   font-weight: 600;
 }
+  /* background: linear-gradient(135deg, , #45b7d1) !important; */
 
 .neon-btn:hover {
-  background: #b44cff;
+  background: #4ecdc4;
   color: #ffffff;
   box-shadow:
-    0 0 5px #b44cff,
-    0 0 25px #b44cff,
-    0 0 50px #b44cff,
-    0 0 120px #b44cff;
+    0 0 5px #4ecdc4,
+    0 0 25px #4ecdc4,
+    0 0 50px #4ecdc4,
+    0 0 120px #45b7d1;
 }
 
 /* SPANS */
@@ -114,7 +115,7 @@
   left: -100%;
   width: 100%;
   height: 2px;
-  background: linear-gradient(90deg, transparent, #b44cff);
+  background: linear-gradient(90deg, transparent, #4ecdc4);
   animation: neon1 1s linear infinite;
 }
 
@@ -129,7 +130,7 @@
   right: 0;
   width: 2px;
   height: 100%;
-  background: linear-gradient(180deg, transparent, #b44cff);
+  background: linear-gradient(180deg, transparent, #4ecdc4);
   animation: neon2 1s linear infinite;
   animation-delay: 0.25s;
 }
@@ -145,7 +146,7 @@
   right: -100%;
   width: 100%;
   height: 2px;
-  background: linear-gradient(270deg, transparent, #b44cff);
+  background: linear-gradient(270deg, transparent, #4ecdc4);
   animation: neon3 1s linear infinite;
   animation-delay: 0.5s;
 }
@@ -161,7 +162,7 @@
   left: 0;
   width: 2px;
   height: 100%;
-  background: linear-gradient(360deg, transparent, #b44cff);
+  background: linear-gradient(360deg, transparent, #4ecdc4);
   animation: neon4 1s linear infinite;
   animation-delay: 0.75s;
 }

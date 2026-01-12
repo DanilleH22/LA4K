@@ -161,7 +161,7 @@
 }
 
 .qa-contact-btn {
-  background: linear-gradient(135deg, #b44cff, #953ad5);
+  background: linear-gradient(135deg, #4ecdc4, #45b7d1) !important;;
   color: white;
   border: none;
   padding: 16px 40px;
