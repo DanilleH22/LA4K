@@ -82,16 +82,16 @@ useEffect(() => {
   initial={{ opacity: 0, scale: 0.8, rotate: c.rotate - 20 }}
   animate={
     prefersReducedMotion
-      ? { opacity: 0.25 }
+      ? { opacity: 0.8 }
       : isMobile
       ? {
-          opacity: 0.25,
+          opacity: 0.8,
           scale: 1, // Once it reaches 1.03, it stays
           rotate: c.rotate,
           y: [0, -12 * c.speed, 0],
         }
       : {
-          opacity: 0.25,
+          opacity: 0.8,
           scale: 1,
           rotate: c.rotate,
           x: mouse.x * 40 * c.speed,
@@ -99,7 +99,7 @@ useEffect(() => {
         }
   }
   transition={{
-    duration: isMobile ? 10 : 4,
+    duration: isMobile ? 10 : 5,
     ease: "easeIn", // Only ease in once
     repeat: 0, // No repeat animation
     x: { type: "spring", stiffness: 80, damping: 20 },
@@ -107,7 +107,7 @@ useEffect(() => {
   }}
   whileHover={{
     scale: 1.03,
-    opacity: 0.65,
+    opacity: 0.8,
     zIndex: 5,
   }}
   onViewportBoxUpdate={(info, delta) => {
