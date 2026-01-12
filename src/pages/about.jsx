@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { motion } from 'framer-motion';
-import Hero from '../components/Hero.jsx';
+import Hero from '../components/hero.jsx';
 import SocialLinks from '../components/SocialLinks.jsx';
 import Footer from '../components/Footer.jsx';
 import MovingFooter from '../components/MovingFooter.jsx';
