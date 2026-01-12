@@ -83,6 +83,7 @@ const card = {
   background: "#000",
   boxShadow: "0 20px 60px rgba(0,0,0,0.35)",
   transformOrigin: "10% 60%",
+  height: "620px",
 };
 
 const videoStyle = {

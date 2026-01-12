@@ -56,7 +56,7 @@ export default function Feedback() {
         <div className="feedback-image">
           <div className="image-placeholder">
             {/* Placeholder for center image */}
-            <img src="./images/StockImage5.jpg" alt="Feedback" />
+            <img src="./images/StockImage5.jpg" alt="Feedback" style={{ height: "400px", width: "530px" }} />
           </div>
         </div>
 

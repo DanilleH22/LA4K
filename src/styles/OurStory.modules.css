@@ -44,8 +44,8 @@
 }
 
 .story-image-placeholder {
-  width: 200px;
-  height: 200px;
+  width: 160px;
+  height: 150px;
   background: linear-gradient(135deg, #ddd, #bbb);
   border-radius: 8px;
 }
