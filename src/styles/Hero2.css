@@ -43,7 +43,7 @@
   font-weight: 900;
   line-height: 0.85;
   background: linear-gradient(135deg, #fff, #4ecdc4);
-  -webkit-background-clip: text;
+  /* -webkit-background-clip: text; */
   -webkit-text-fill-color: transparent;
 }
 

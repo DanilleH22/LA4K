@@ -25,6 +25,12 @@ export default function Hero() {
   const [mouse, setMouse] = useState({ x: 0, y: 0 });
   const raf = useRef(null);
 
+  const isMobile = window.matchMedia("(max-width: 768px)").matches;
+const prefersReducedMotion = window.matchMedia(
+  "(prefers-reduced-motion: reduce)"
+).matches;
+
+
   /* Mouse parallax (throttled) */
   useEffect(() => {
     const move = (e) => {
@@ -45,16 +51,22 @@ export default function Hero() {
   }, []);
 
   /* Title entrance */
-  useEffect(() => {
-    titleControls.start({
-      opacity: 1,
-      scale: 1,
-      transition: {
-        duration: 1.2,
-        ease: [0.6, 0.05, 0.01, 0.9],
-      },
-    });
-  }, [titleControls]);
+useEffect(() => {
+  titleControls.start(
+    prefersReducedMotion
+      ? { opacity: 1 }
+      : {
+          opacity: 1,
+          scale: isMobile ? 1.03 : 1, // Animate to 1.03 once
+          transition: {
+            duration: isMobile ? 5 : 1.2,
+            ease: "easeIn", // Only easing in, no repeat
+          },
+        }
+  );
+}, [titleControls, isMobile, prefersReducedMotion]);
+
+
 
   return (
     <section className="hero">
@@ -64,31 +76,56 @@ export default function Hero() {
           const c = configs[i];
           return (
             <motion.div
-              key={i}
-              className="image-card"
-              style={{ left: c.left, top: c.top }}
-              initial={{ opacity: 0, scale: 0.8, rotate: c.rotate - 10 }}
-              animate={{
-                opacity: 0.25,
-                scale: 1,
-                rotate: c.rotate,
-                x: mouse.x * 20 * c.speed,
-                y: mouse.y * 15 * c.speed,
-              }}
-              transition={{
-                duration: 1,
-                ease: "easeOut",
-                x: { type: "spring", stiffness: 80, damping: 20 },
-                y: { type: "spring", stiffness: 80, damping: 20 },
-              }}
-              whileHover={{
-                scale: 1.1,
-                opacity: 0.45,
-                zIndex: 5,
-              }}
-            >
-              <img src={src} alt="" loading="lazy" />
-            </motion.div>
+  key={i}
+  className="image-card"
+  style={{ left: c.left, top: c.top }}
+  initial={{ opacity: 0, scale: 0.8, rotate: c.rotate - 20 }}
+  animate={
+    prefersReducedMotion
+      ? { opacity: 0.25 }
+      : isMobile
+      ? {
+          opacity: 0.25,
+          scale: 1, // Once it reaches 1.03, it stays
+          rotate: c.rotate,
+          y: [0, -12 * c.speed, 0],
+        }
+      : {
+          opacity: 0.25,
+          scale: 1,
+          rotate: c.rotate,
+          x: mouse.x * 40 * c.speed,
+          y: mouse.y * 30 * c.speed,
+        }
+  }
+  transition={{
+    duration: isMobile ? 10 : 4,
+    ease: "easeIn", // Only ease in once
+    repeat: 0, // No repeat animation
+    x: { type: "spring", stiffness: 80, damping: 20 },
+    y: { type: "spring", stiffness: 80, damping: 20 },
+  }}
+  whileHover={{
+    scale: 1.03,
+    opacity: 0.65,
+    zIndex: 5,
+  }}
+  onViewportBoxUpdate={(info, delta) => {
+    // Trigger only when image comes into view
+    if (info.isInView && delta) {
+      titleControls.start({
+        opacity: 1,
+        scale: 1,
+        transition: {
+          duration: 1,
+        },
+      });
+    }
+  }}
+>
+  <img src={src} alt="" loading="lazy" />
+</motion.div>
+
           );
         })}
       </div>
