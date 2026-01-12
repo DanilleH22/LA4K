@@ -66,7 +66,7 @@ export default function Hero() {
         
         {/* Background elements */}
         <div className="hero-bg">
-          <div className="bg-gradient"></div>
+          
           <div className="bg-grid"></div>
         </div>
 
