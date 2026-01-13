@@ -38,21 +38,42 @@ const OurPackages = () => {
   };
 
 
-  const [buttonState, setButtonState] = useState('idle'); // 'idle' | 'loading' | 'success' | 'error'
+   const [buttonState, setButtonState] = useState('idle'); 
   const [copied, setCopied] = useState(false);
   
-  const email = "hamiltonkdanille@hotmail.com";
-  const subject = "Video Production Inquiry";
-  const body = "Hello LA4K,\n\nI'm interested in your video production services. Could you provide more information about:\n\n• Project type:\n• Timeline:\n• Budget range:\n\nLooking forward to hearing from you!";
+  const whatsappPhone = "447769873047"; 
+  const whatsappMessage = "Hello LA4K,\n\nI'm interested in your media production services. Could you provide more information about:\n\n• Project type:\n• Timeline:\n• Budget range:\n\nLooking forward to hearing from you!";
 
+
+
+ // Email fallback (optional)
+  const email = "Mrla4k@gmail.com";
 
   const handleGetInTouch = () => {
     setButtonState('loading');
     
     // Simulate network delay
     setTimeout(() => {
-      // Open email client
-      window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      // Check if user is on mobile for better UX
+      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      
+      if (isMobile) {
+        // For mobile: Try to open WhatsApp app directly
+        window.location.href = `whatsapp://send?phone=${whatsappPhone}&text=${encodeURIComponent(whatsappMessage)}`;
+        
+        // Fallback after 2 seconds if WhatsApp not installed
+        setTimeout(() => {
+          if (document.hidden) {
+            // WhatsApp opened successfully
+          } else {
+            // WhatsApp not installed, open web version
+            window.open(`https://api.whatsapp.com/send?phone=${whatsappPhone}&text=${encodeURIComponent(whatsappMessage)}`, '_blank');
+          }
+        }, 2000);
+      } else {
+        // For desktop: Open WhatsApp Web
+        window.open(`https://web.whatsapp.com/send?phone=${whatsappPhone}&text=${encodeURIComponent(whatsappMessage)}`, '_blank');
+      }
       
       // Show success state briefly
       setButtonState('success');
@@ -60,49 +81,29 @@ const OurPackages = () => {
     }, 800);
   };
 
-  const handleCopyEmail = () => {
-    navigator.clipboard.writeText(email)
-      .then(() => {
-        setCopied(true);
-        setTimeout(() => setCopied(false), 2000);
-      })
-      .catch(() => {
-        // Fallback for older browsers
-        const textArea = document.createElement('textarea');
-        textArea.value = email;
-        document.body.appendChild(textArea);
-        textArea.select();
-        document.execCommand('copy');
-        document.body.removeChild(textArea);
-        setCopied(true);
-        setTimeout(() => setCopied(false), 2000);
-      });
-  };
+  
 
   const buttonConfig = {
     idle: {
-      text: 'Get in Touch',
-     
+      text: 'Get in Touch on WhatsApp',
       className: 'primary'
     },
     loading: {
-      text: 'Opening Email...',
-      icon: <div className="loading-spinner" />,
+      text: 'Opening WhatsApp...',
       className: 'loading'
     },
     success: {
-      text: 'Email Ready!',
-     
+      text: 'WhatsApp Ready!',
       className: 'success'
     },
     error: {
       text: 'Try Again',
-      
       className: 'error'
     }
   };
 
   const currentButton = buttonConfig[buttonState];
+
 
   return (
     <section className="qa-section">
@@ -191,8 +192,13 @@ const OurPackages = () => {
             whileTap={{ scale: 0.95 }}
             transition={{ type: "spring", stiffness: 400, damping: 25 }}
             disabled={buttonState === 'loading'}
-            href="mailto:hamiltonkdanille@hotmail.com"
-            onClick={handleGetInTouch}
+              href={`https://wa.me/${whatsappPhone}?text=${encodeURIComponent(whatsappMessage)}`}
+      onClick={(e) => {
+        e.preventDefault(); 
+        handleGetInTouch();
+      }}
+      target="_blank"
+      rel="noopener noreferrer"
           >
              {buttonState === 'loading' ? 'Loading…' : 'Contact Us'}
           </motion.button>
