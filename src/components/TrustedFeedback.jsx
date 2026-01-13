@@ -54,10 +54,10 @@ export default function Feedback() {
 
         {/* Center Image */}
         <div className="feedback-image">
-          <div className="image-placeholder">
+          
             {/* Placeholder for center image */}
-            <img src="./images/StockImage5.jpg" alt="Feedback" style={{ height: "400px", width: "530px" }} />
-          </div>
+            <img src="./images/StockImage5.jpg" alt="Feedback"  />
+          
         </div>
 
         {/* Right Column */}
