@@ -10,22 +10,22 @@ export default function Hero() {
   const mediaItems = [
     {
       type: "image",
-      src: "/public/images/StockPhoto.jpg",
+      src: "/images/StockPhoto.jpg",
       alt: "Cinematic production 1"
     },
     {
       type: "image",
-      src: "/public/images/StockImage2.jpg",
+      src: "/images/StockImage2.jpg",
       alt: "Film equipment"
     },
     {
       type: "image",
-      src: "/public/images/StockPhoto.jpg",
+      src: "/images/StockPhoto.jpg",
       alt: "Video editing"
     },
     {
       type: "image",
-      src: "/public/images/StockImage2.jpg",
+      src: "/images/StockImage2.jpg",
       alt: "Camera work"
     }
   ];
