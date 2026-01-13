@@ -8,7 +8,7 @@ const SocialLinks = () => {
     {
       id: 'whatsapp',
       name: 'WhatsApp',
-      url: 'https://wa.me/',
+      url: 'https://wa.me/qr/XMU4FLMI55LTP1',
       icon: 'fab fa-whatsapp',
       color: '#25D366',
       hoverColor: '#128C7E'
