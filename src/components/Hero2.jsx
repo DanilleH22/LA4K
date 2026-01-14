@@ -1,15 +1,7 @@
 import { motion, useAnimation } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import "../styles/Hero2.css";
-
-const images = [
-  "https://images.unsplash.com/photo-1536240478700-b869070f9279?w=400",
-  "https://images.unsplash.com/photo-1542744095-fcf48d80b0fd?w=400",
-  "https://images.unsplash.com/photo-1598899134739-24c46f58b8c0?w=400",
-  "https://images.unsplash.com/photo-1564327522418-91e587627d1d?w=400",
-  "https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=400",
-  "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=400",
-];
+import { urlFor } from "../sanityImage";
 
 const configs = [
   { left: "5%", top: "10%", rotate: -4, speed: 1 },
@@ -20,18 +12,19 @@ const configs = [
   { left: "60%", top: "30%", rotate: 2, speed: 1.1 },
 ];
 
-export default function Hero() {
+export default function Hero({ data }) {
   const titleControls = useAnimation();
   const [mouse, setMouse] = useState({ x: 0, y: 0 });
   const raf = useRef(null);
 
+  if (!data) return null;
+
   const isMobile = window.matchMedia("(max-width: 768px)").matches;
-const prefersReducedMotion = window.matchMedia(
-  "(prefers-reduced-motion: reduce)"
-).matches;
+  const prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
 
-
-  /* Mouse parallax (throttled) */
+  /* Mouse parallax */
   useEffect(() => {
     const move = (e) => {
       cancelAnimationFrame(raf.current);
@@ -51,81 +44,72 @@ const prefersReducedMotion = window.matchMedia(
   }, []);
 
   /* Title entrance */
-useEffect(() => {
-  titleControls.start(
-    prefersReducedMotion
-      ? { opacity: 1 }
-      : {
-          opacity: 1,
-          scale: isMobile ? 1.03 : 1, // Animate to 1.03 once
-          transition: {
-            duration: isMobile ? 5 : 1.2,
-            ease: "easeIn", // Only easing in, no repeat
-          },
-        }
-  );
-}, [titleControls, isMobile, prefersReducedMotion]);
-
-
+  useEffect(() => {
+    titleControls.start(
+      prefersReducedMotion
+        ? { opacity: 1 }
+        : {
+            opacity: 1,
+            scale: isMobile ? 1.03 : 1,
+            transition: {
+              duration: isMobile ? 5 : 1.2,
+              ease: "easeIn",
+            },
+          }
+    );
+  }, [titleControls, isMobile, prefersReducedMotion]);
 
   return (
     <section className="hero">
       {/* FLOATING IMAGES */}
       <div className="image-layer">
-        {images.map((src, i) => {
+        {data.images?.map((img, i) => {
           const c = configs[i];
+          if (!c) return null;
+
           return (
             <motion.div
-  key={i}
-  className="image-card"
-  style={{ left: c.left, top: c.top }}
-  initial={{ opacity: 0, scale: 0.8, rotate: c.rotate - 20 }}
-  animate={
-    prefersReducedMotion
-      ? { opacity: 0.8 }
-      : isMobile
-      ? {
-          opacity: 0.8,
-          scale: 1, // Once it reaches 1.03, it stays
-          rotate: c.rotate,
-          y: [0, -12 * c.speed, 0],
-        }
-      : {
-          opacity: 0.8,
-          scale: 1,
-          rotate: c.rotate,
-          x: mouse.x * 40 * c.speed,
-          y: mouse.y * 30 * c.speed,
-        }
-  }
-  transition={{
-    duration: isMobile ? 10 : 5,
-    ease: "easeIn", // Only ease in once
-    repeat: 0, // No repeat animation
-    x: { type: "spring", stiffness: 80, damping: 20 },
-    y: { type: "spring", stiffness: 80, damping: 20 },
-  }}
-  whileHover={{
-    scale: 1.03,
-    opacity: 0.8,
-    zIndex: 5,
-  }}
-  onViewportBoxUpdate={(info, delta) => {
-    // Trigger only when image comes into view
-    if (info.isInView && delta) {
-      titleControls.start({
-        opacity: 1,
-        scale: 1,
-        transition: {
-          duration: 1,
-        },
-      });
-    }
-  }}
->
-  <img src={src} alt="" loading="lazy" />
-</motion.div>
-
+              key={i}
+              className="image-card"
+              style={{ left: c.left, top: c.top }}
+              initial={{ opacity: 0, scale: 0.8, rotate: c.rotate - 20 }}
+              animate={
+                prefersReducedMotion
+                  ? { opacity: 0.8 }
+                  : isMobile
+                  ? {
+                      opacity: 0.8,
+                      scale: 1,
+                      rotate: c.rotate,
+                      y: [0, -12 * c.speed, 0],
+                    }
+                  : {
+                      opacity: 0.8,
+                      scale: 1,
+                      rotate: c.rotate,
+                      x: mouse.x * 40 * c.speed,
+                      y: mouse.y * 30 * c.speed,
+                    }
+              }
+              transition={{
+                duration: isMobile ? 10 : 5,
+                ease: "easeIn",
+                repeat: 0,
+                x: { type: "spring", stiffness: 80, damping: 20 },
+                y: { type: "spring", stiffness: 80, damping: 20 },
+              }}
+              whileHover={{
+                scale: 1.03,
+                opacity: 0.8,
+                zIndex: 5,
+              }}
+            >
+              <img
+                src={urlFor(img).width(400).quality(80).url()}
+                alt=""
+                loading="lazy"
+              />
+            </motion.div>
           );
         })}
       </div>
@@ -137,7 +121,7 @@ useEffect(() => {
           initial={{ opacity: 0, scale: 0.85 }}
           animate={titleControls}
         >
-          LA4K
+          {data.title}
         </motion.h1>
 
         <motion.div
@@ -146,8 +130,8 @@ useEffect(() => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8 }}
         >
-          <span>VIDEO STUDIO</span>
-          <span>LOS ANGELES, CA</span>
+          <span>{data.metaLeft}</span>
+          <span>{data.metaRight}</span>
         </motion.div>
       </div>
 
