@@ -1,16 +1,23 @@
+
+
+
+
 import React from "react";
 import { motion } from "framer-motion";
 
 /* ===================== COMPONENT ===================== */
 
-export default function ScrollTriggered() {
+export default function ScrollTriggered({ data }) {
+  if (!data) return null;
+
   return (
     <>
-      <h1> SELECTED WORK </h1>
-      <p>Explore the work that defines our craft and the results we deliver.</p>
+      <h1>{data.caseStudyHeading}</h1>
+      <p>{data.caseStudyBody}</p>
+
       <div style={container}>
-        {projects.map((project, i) => (
-          <Card key={project.video} video={project.video} />
+        {data.caseStudyMedia?.map((media, index) => (
+          <Card key={index} video={media.asset.url} />
         ))}
       </div>
     </>
@@ -23,7 +30,7 @@ function Card({ video }) {
       style={cardContainer}
       initial="offscreen"
       whileInView="onscreen"
-      viewport={{ amount: 0.6, once: false }} // ← re-triggers on scroll
+      viewport={{ amount: 0.6, once: false }}
     >
       <motion.div style={card} variants={cardVariants}>
         <video
@@ -38,6 +45,7 @@ function Card({ video }) {
     </motion.div>
   );
 }
+
 
 /* ===================== ANIMATION ===================== */
 

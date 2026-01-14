@@ -110,7 +110,7 @@ const NavBar = () => {
       target="_blank"
       rel="noopener noreferrer"
           >
-            {buttonState === 'loading' ? 'Loading…' : ' Get Started'}
+            {buttonState === 'loading' ? 'Loading…' : ' Whatsapp me'}
            
           </Button>
         </Navbar.Collapse>

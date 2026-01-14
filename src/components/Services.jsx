@@ -1,118 +1,47 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
-import "../styles/Services.modules.css"
+import "../styles/Services.modules.css";
 
-
-const services = [
-  {
-    title: "Photography",
-    description: "Positioning, messaging & identity systems",
-    description2: "Positioning, messaging & identity systems",
-    description3: "Positioning, messaging & identity systems",
-    price: "£1000",
-  },
-  {
-    title: "Editing",
-    description: "High-conversion, modern interfaces",
-    description2: "High-conversion, modern interfaces",
-    description3: "High-conversion, modern interfaces",
-    price: "£800",
-  },
-  {
-    title: "Videography",
-    description: "React, performance & scalability",
-    description2: "React, performance & scalability",
-    description3: "React, performance & scalability",
-    price: "£1200",
-  },
-  {
-    title: "Drone Work",
-    description: "Visual systems & storytelling",
-    description2: "Visual systems & storytelling",
-    description3: "Visual systems & storytelling",
-    price: "£1500",
-  },
-];
-
-export default function ServicesReveal() {
+export default function Services({ data }) {
   const ref = useRef(null);
- const isInView = useInView(ref, {
-  amount: 0.3,
-});
+  const isInView = useInView(ref, { amount: 0.3 });
 
+  const [buttonState, setButtonState] = useState("idle");
 
-  const [buttonState, setButtonState] = useState('idle'); 
-  const [copied, setCopied] = useState(false);
-  
-  const whatsappPhone = "447769873047"; 
-  const whatsappMessage = "Hello LA4K,\n\nI'm interested in your media production services. Could you provide more information about:\n\n• Project type:\n• Timeline:\n• Budget range:\n\nLooking forward to hearing from you!";
+  const whatsappPhone = "447769873047";
+  const whatsappMessage =
+    "Hello LA4K,\n\nI'm interested in your media production services. Could you provide more information about:\n\n• Project type:\n• Timeline:\n• Budget range:\n\nLooking forward to hearing from you!";
 
-
-
- // Email fallback (optional)
-  const email = "Mrla4k@gmail.com";
+  if (!data) return null;
 
   const handleGetInTouch = () => {
-    setButtonState('loading');
-    
-    // Simulate network delay
+    setButtonState("loading");
+
     setTimeout(() => {
-      // Check if user is on mobile for better UX
       const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-      
+
       if (isMobile) {
-        // For mobile: Try to open WhatsApp app directly
-        window.location.href = `whatsapp://send?phone=${whatsappPhone}&text=${encodeURIComponent(whatsappMessage)}`;
-        
-        // Fallback after 2 seconds if WhatsApp not installed
-        setTimeout(() => {
-          if (document.hidden) {
-            // WhatsApp opened successfully
-          } else {
-            // WhatsApp not installed, open web version
-            window.open(`https://api.whatsapp.com/send?phone=${whatsappPhone}&text=${encodeURIComponent(whatsappMessage)}`, '_blank');
-          }
-        }, 2000);
+        window.location.href = `whatsapp://send?phone=${whatsappPhone}&text=${encodeURIComponent(
+          whatsappMessage
+        )}`;
       } else {
-        // For desktop: Open WhatsApp Web
-        window.open(`https://web.whatsapp.com/send?phone=${whatsappPhone}&text=${encodeURIComponent(whatsappMessage)}`, '_blank');
+        window.open(
+          `https://web.whatsapp.com/send?phone=${whatsappPhone}&text=${encodeURIComponent(
+            whatsappMessage
+          )}`,
+          "_blank"
+        );
       }
-      
-      // Show success state briefly
-      setButtonState('success');
-      setTimeout(() => setButtonState('idle'), 2000);
+
+      setButtonState("success");
+      setTimeout(() => setButtonState("idle"), 2000);
     }, 800);
   };
 
-  
-
-  const buttonConfig = {
-    idle: {
-      text: 'Get in Touch on WhatsApp',
-      className: 'primary'
-    },
-    loading: {
-      text: 'Opening WhatsApp...',
-      className: 'loading'
-    },
-    success: {
-      text: 'WhatsApp Ready!',
-      className: 'success'
-    },
-    error: {
-      text: 'Try Again',
-      className: 'error'
-    }
-  };
-
-  const currentButton = buttonConfig[buttonState];
-
-
-
   return (
     <section className="services-section">
-      <h2>Services</h2>
-      <p>What we services offer</p>
+      <h2>{data.sectionTitle}</h2>
+      <p>{data.sectionSubtitle}</p>
 
       <div ref={ref} className="cards-wrapper">
         <motion.div
@@ -122,7 +51,7 @@ export default function ServicesReveal() {
             layout: { duration: 0.9, ease: [0.22, 1, 0.36, 1] },
           }}
         >
-          {services.map((service, i) => (
+          {data.services.map((service, i) => (
             <motion.div
               layout
               key={i}
@@ -132,32 +61,30 @@ export default function ServicesReveal() {
               <h3>{service.title}</h3>
               <p>{service.description}</p>
               <p>{service.description2}</p>
-              <p>{service.description3}</p> 
+              <p>{service.description3}</p>
               <p>{service.price}</p>
             </motion.div>
           ))}
         </motion.div>
       </div>
-      <div>
-     <a  className="neon-btn"
-     disabled={buttonState === 'loading'}
-            href={`https://wa.me/${whatsappPhone}?text=${encodeURIComponent(whatsappMessage)}`}
-      onClick={(e) => {
-        e.preventDefault(); 
-        handleGetInTouch();
-      }}
-      target="_blank"
-      rel="noopener noreferrer"
-     >
-  <span></span>
-  <span></span>
-  <span></span>
-  <span></span>
-  {buttonState === 'loading' ? 'Loading…' : 'Get Started'}
-</a>
 
-</div>
-      <h3 className="additional-services">Additional Services available upon request.</h3>
+      <div>
+        <a
+          className="neon-btn"
+          onClick={(e) => {
+            e.preventDefault();
+            handleGetInTouch();
+          }}
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          {buttonState === "loading" ? "Loading…" : "Get Started"}
+        </a>
+      </div>
+
+      <h3 className="additional-services">{data.additionalServices}</h3>
     </section>
   );
 }

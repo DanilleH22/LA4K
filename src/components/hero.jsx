@@ -1,6 +1,8 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import { motion, useAnimation } from "framer-motion";
 import "../styles/Hero.modules.css";
+import { client } from "../sanity/client";
+import { urlFor } from '../sanityImage';
 
 export default function Hero() {
   const containerRef = useRef(null);
@@ -30,7 +32,7 @@ export default function Hero() {
     }
   ];
 
-  // For video items, you can use:
+  // For video items,  can use:
   // { type: "video", src: "/videos/hero1.mp4", poster: "/images/poster1.jpg" }
 
   // Calculate positions for orbiting media
@@ -60,6 +62,30 @@ export default function Hero() {
     animateOrbit();
   }, [controls]);
 
+
+   const [content, setContent] = useState(null);
+  
+     useEffect(() => {
+    client.fetch(`*[_type == "hero"][0]{
+      heroTitle,
+      heroSubtitle
+       heroMedia[]{
+      _type,
+      asset->{_id, url},
+      alt
+    }
+    }`).then((data) => {
+      console.log("HOME DATA:", data);
+      setContent(data);
+    });
+  }, []);
+  
+    
+    
+      if (!content) {
+      return <div style={{ color: 'white', padding: '2rem' }}>Loading Contact Us content…</div>;
+    }
+
   return (
     <section className="hero" ref={containerRef}>
       <div className="hero-container">
@@ -77,87 +103,70 @@ export default function Hero() {
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 1, ease: "backOut" }}
           >
-            LA4K
+            {content.heroTitle}
             <motion.span 
               className="hero-subtitle"
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.5, duration: 0.8 }}
             >
-              cinematic visionaries
+              {content.heroSubtitle}
             </motion.span>
           </motion.h1>
         </div>
 
         {/* Orbiting media container */}
         <motion.div 
-          className="orbit-container"
-          animate={controls}
-          style={{ originX: "center", originY: "center" }}
-        >
-          {mediaItems.map((item, index) => {
-            const position = getOrbitPosition(index, mediaItems.length);
-            
-            return (
-              <motion.div
-                key={index}
-                className="orbit-media"
-                style={{
-                  x: position.x,
-                  y: position.y,
-                }}
-                initial={{ scale: 0, rotate: position.rotation }}
-                animate={{ 
-                  scale: 1,
-                  rotate: -360, // Anti-rotation (opposite direction)
-                }}
-                transition={{
-                  delay: 0.2 + index * 0.1,
-                  duration: 0.8,
-                  ease: "backOut",
-                  rotate: {
-                    duration: 30,
-                    ease: "linear",
-                    repeat: Infinity,
-                  }
-                }}
-                whileHover={{
-                  scale: 1.2,
-                  zIndex: 10,
-                  transition: { duration: 0.3 }
-                }}
-              >
-                <div className="media-wrapper">
-                  {item.type === "image" ? (
-                    <img 
-                      src={item.src} 
-                      alt={item.alt}
-                      className="orbit-image"
-                      loading="eager"
-                    />
-                  ) : (
-                    <video
-                      className="orbit-video"
-                      autoPlay
-                      muted
-                      loop
-                      playsInline
-                      poster={item.poster}
-                    >
-                      <source src={item.src} type="video/mp4" />
-                    </video>
-                  )}
-                  
-                  {/* Glow effect */}
-                  <div className="media-glow"></div>
-                  
-                  {/* Connector line */}
-                  <div className="orbit-connector"></div>
-                </div>
-              </motion.div>
-            );
-          })}
-        </motion.div>
+  className="orbit-container"
+  animate={controls}
+  style={{ originX: "center", originY: "center" }}
+>
+  {content.heroMedia.map((item, index) => {
+    const position = getOrbitPosition(index, content.heroMedia.length);
+
+    return (
+      <motion.div
+        key={index}
+        className="orbit-media"
+        style={{ x: position.x, y: position.y }}
+        initial={{ scale: 0, rotate: position.rotation }}
+        animate={{ scale: 1, rotate: -360 }}
+        transition={{
+          delay: 0.2 + index * 0.1,
+          duration: 0.8,
+          ease: "backOut",
+          rotate: { duration: 30, ease: "linear", repeat: Infinity },
+        }}
+        whileHover={{ scale: 1.2, zIndex: 10, transition: { duration: 0.3 } }}
+      >
+        <div className="media-wrapper">
+          {item._type === "image" ? (
+            <img
+              src={urlFor(item).url()}
+              alt={item.alt || "Hero image"}
+              className="orbit-image"
+              loading="eager"
+            />
+          ) : (
+            <video
+              className="orbit-video"
+              autoPlay
+              muted
+              loop
+              playsInline
+            >
+              <source src={item.asset.url} type="video/mp4" />
+            </video>
+          )}
+
+          <div className="media-glow"></div>
+          <div className="orbit-connector"></div>
+        </div>
+      </motion.div>
+    );
+  })}
+</motion.div>
+
 
         {/* Scroll indicator */}
         <motion.div 

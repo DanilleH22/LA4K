@@ -1,48 +1,23 @@
 // src/components/sections/Feedback/Feedback.jsx
+import { useEffect, useState } from "react";
 import "../styles/TrustedFeedback.modules.css";
+import { client } from "../sanity/client";
+import { urlFor } from '../sanityImage';
 
+export default function Feedback({ data }) {
+  if (!data) return null;
 
-const feedbackData = {
-  left: [
-    {
-      quote: "Working with Aspekto was seamless and creative.",
-      author: "David Miller",
-      project: "Future",
-    },
-    {
-      quote: "Their storytelling and production blew us away.",
-      author: "Emma Collins",
-      project: "Horizon",
-    },
-  ],
-  right: [
-    {
-      quote: "Professional, talented, and highly communicative team.",
-      author: "Olivia Harris",
-      project: "Beyond",
-    },
-    {
-      quote: "Exceeded expectations on every level.",
-      author: "Daniel Scott",
-      project: "Rocket",
-    },
-  ],
-};
-
-export default function Feedback() {
   return (
     <section className="feedback">
-
-<div>
-    <h1>Feedback</h1>
-
-</div>
+      <div>
+        <h1>{data.trustedFeedbackHeading}</h1>
+      </div>
 
       <div className="feedback-inner">
 
         {/* Left Column */}
         <div className="feedback-column left">
-          {feedbackData.left.map((item, index) => (
+          {data.feedbackLeft?.map((item, index) => (
             <div className="feedback-card" key={index}>
               <p className="feedback-quote">❝ {item.quote}</p>
               <span className="feedback-author">
@@ -54,15 +29,20 @@ export default function Feedback() {
 
         {/* Center Image */}
         <div className="feedback-image">
-          
-            {/* Placeholder for center image */}
-            <img src="./images/StockImage5.jpg" alt="Feedback"  />
-          
+          {data.trustedFeedbackMedia?.[0] ? (
+            <img
+              src={urlFor(data.trustedFeedbackMedia[0]).width(900).quality(80).url()}
+              alt={data.trustedFeedbackMedia[0].alt || ''}
+              className="section-image"
+            />
+          ) : (
+            <img src="./images/StockImage5.jpg" alt="Feedback" />
+          )}
         </div>
 
         {/* Right Column */}
         <div className="feedback-column right">
-          {feedbackData.right.map((item, index) => (
+          {data.feedbackRight?.map((item, index) => (
             <div className="feedback-card" key={index}>
               <p className="feedback-quote">❝ {item.quote}</p>
               <span className="feedback-author">
