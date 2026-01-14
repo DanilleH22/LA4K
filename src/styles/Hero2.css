@@ -68,21 +68,25 @@
 }
 
 
+
+
+
 @media (max-width: 768px) {
   .hero {
     overflow-y: visible;
   }
 
-  .image-card {
-    width: 110px;
-    height: 70px;
+  .hero-content {
+    transform: translateY(100%); /* Move UP by 100% */
+    /* Adjust the -100% value as needed: -50%, -150%, etc. */
   }
 
-  .image-layer {
-    inset: 5% 5%;
+  .hero-title {
+    font-size: clamp(4rem, 18vw, 6rem);
+    line-height: 0.9;
+    padding-bottom: 500px ;
   }
 }
-
 @supports not (height: 100svh) {
   .hero {
     min-height: 100vh;
