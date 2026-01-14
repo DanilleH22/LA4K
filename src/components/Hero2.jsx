@@ -1,15 +1,15 @@
 import { motion, useAnimation } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import "../styles/Hero2.css";
+import styles from "../styles/Hero2.module.css";
 import { urlFor } from "../sanityImage";
 
 const configs = [
   { left: "5%", top: "10%", rotate: -4, speed: 1 },
-  { left: "70%", top: "8%", rotate: 3, speed: 1.2 },
-  { left: "20%", top: "55%", rotate: -2, speed: 0.8 },
+  { left: "50%", top: "0%", rotate: 3, speed: 1.2 },
+  { left: "40%", top: "55%", rotate: -2, speed: 0.8 },
   { left: "80%", top: "65%", rotate: 4, speed: 1 },
-  { left: "10%", top: "80%", rotate: -3, speed: 0.9 },
-  { left: "60%", top: "30%", rotate: 2, speed: 1.1 },
+  { left: "10%", top: "70%", rotate: -3, speed: 0.9 },
+  { left: "75%", top: "30%", rotate: 2, speed: 1.1 },
 ];
 
 export default function Hero({ data }) {
@@ -50,7 +50,7 @@ export default function Hero({ data }) {
         ? { opacity: 1 }
         : {
             opacity: 1,
-            scale: isMobile ? 1.03 : 1,
+            scale: isMobile ? 1 : 1.02,
             transition: {
               duration: isMobile ? 5 : 1.2,
               ease: "easeIn",
@@ -60,9 +60,9 @@ export default function Hero({ data }) {
   }, [titleControls, isMobile, prefersReducedMotion]);
 
   return (
-    <section className="hero">
+    <section className={styles.kyle}>
       {/* FLOATING IMAGES */}
-      <div className="image-layer">
+      <div className={styles.imageLayer}>
         {data.images?.map((img, i) => {
           const c = configs[i];
           if (!c) return null;
@@ -70,7 +70,7 @@ export default function Hero({ data }) {
           return (
             <motion.div
               key={i}
-              className="image-card"
+              className={styles.imageCard}
               style={{ left: c.left, top: c.top }}
               initial={{ opacity: 0, scale: 0.8, rotate: c.rotate - 20 }}
               animate={
@@ -115,9 +115,9 @@ export default function Hero({ data }) {
       </div>
 
       {/* CENTER TEXT */}
-      <div className="hero-content">
+      <div className={styles.heroContent}>
         <motion.h1
-          className="hero-title"
+          className={styles.heroTitle}
           initial={{ opacity: 0, scale: 0.85 }}
           animate={titleControls}
         >
@@ -125,7 +125,7 @@ export default function Hero({ data }) {
         </motion.h1>
 
         <motion.div
-          className="hero-meta"
+          className={styles.heroMeta}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8 }}
@@ -137,11 +137,12 @@ export default function Hero({ data }) {
 
       {/* SCROLL INDICATOR */}
       <motion.div
-        className="scroll-indicator"
+        className={styles.scrollIndicator}
         animate={{ y: [0, -10, 0] }}
         transition={{ duration: 1.6, repeat: Infinity }}
       >
         ↓
+        <p>Scroll Down</p>
       </motion.div>
     </section>
   );
