@@ -27,7 +27,7 @@ function Homepage() {
     client
       .fetch(`
         *[_type == "home"][0]{
-          hero,
+          heroSection,
           ourStory,
           caseStudy {
   caseStudyHeading,
@@ -58,7 +58,7 @@ function Homepage() {
   return (
     <>
 
-      <Hero2 />
+      <Hero2 data={home.heroSection} />
       <MovingFooter />
       <OurStory  data={home.ourStory} />
       <SocialLinks />
