@@ -479,6 +479,18 @@ h1 {
   object-fit: cover;
 }
 
+.section-bg-image {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.story-image-container {
+  position: relative;
+  overflow: hidden;
+}
 
 /* Responsive Design */
 @media (max-width: 1024px) {

@@ -1,8 +1,6 @@
 /* our story section */
 .our-story {
-  /* padding: 8rem 5vw; */
   padding: 5rem 5vw;
-
   position: relative;
   overflow: hidden;
 }
@@ -14,6 +12,30 @@
   max-width: 1200px;
   margin: 0 auto;
   align-items: center;
+}
+
+/* image containers */
+.our-story-image {
+  width: 100%; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.our-story-image img,
+.our-story-image video {
+  width: 100%; 
+  height: auto; 
+  max-width: 250px; 
+  object-fit: cover; 
+  /*  border-radius: 30px; */
+}
+
+/* If you want exact 200px squares */
+.our-story-image img {
+  width: 290px;
+  height: 200px;
+  object-fit: cover;
 }
 
 /* text styling */
@@ -39,19 +61,6 @@
   color: #f0eeee;
 }
 
-/* image placeholders */
-.our-story-image {
-  width: 200px;
-  height: 200px;
-}
-
-.story-image-placeholder {
-  width: 200px;
-  height: 200px;
-  background: linear-gradient(135deg, #ddd, #bbb);
-  border-radius: 8px;
-}
-
 /* responsiveness */
 @media (max-width: 900px) {
   .our-story-inner {
@@ -59,11 +68,17 @@
     text-align: center;
   }
 
-  .story-image-placeholder {
+  .our-story-image {
     width: 100%;
-    
-    max-height: 280px;
-    padding-bottom: 30px;
-    margin: 40px 0px;
+    max-width: 290px; 
+    margin: 0 auto 40px;
+  }
+
+  .our-story-image img,
+  .our-story-image video {
+    width: 100%;
+    max-width: 290px;
+    height: 280px; 
+    padding: 0;
   }
 }
