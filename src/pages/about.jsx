@@ -99,10 +99,15 @@ const About = () => {
             >
               <div >
   {content.storyImage && (
-  <img
-    src={urlFor(content.storyImage).width(900).quality(80).url()}
-    alt={content.storyImage?.alt || ''}
-    className="section-image"
+  <div
+    className="section-bg-image"
+    style={{
+      backgroundImage: `url(${urlFor(content.storyImage)
+        .width(900)
+        .quality(80)
+        .fit('crop')
+        .url()})`
+    }}
   />
 )}
 
@@ -181,13 +186,26 @@ const About = () => {
             <motion.div className="mission-image-container" variants={itemVariants} whileHover={{ scale: 1.02 }} transition={{ duration: 0.3 }}>
               <div className="image-placeholder mission-image">
 
-          {content.missionImage && (
+          {/* {content.missionImage && (
           <img
             src={urlFor(content.missionImage).width(900).quality(80).url()}
             alt={content.missionImage?.alt || ''}
             className="section-image"
           />
-        )}
+        )} */}
+
+        {content.missionImage && (
+  <div
+    className="section-bg-image"
+    style={{
+      backgroundImage: `url(${urlFor(content.missionImage)
+        .width(900)
+        .quality(80)
+        .fit('crop')
+        .url()})`
+    }}
+  />
+)}
           <div className="image-overlay"></div>
           
 
