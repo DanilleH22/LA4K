@@ -1,14 +1,18 @@
-
-
-
-
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 
-/* ===================== COMPONENT ===================== */
+export default function CaseStudies({ data }) {
+  const [selectedVideo, setSelectedVideo] = useState(null);
 
-export default function ScrollTriggered({ data }) {
   if (!data) return null;
+
+  const handleVideoClick = (videoUrl) => {
+    setSelectedVideo(videoUrl);
+  };
+
+  const closeModal = () => {
+    setSelectedVideo(null);
+  };
 
   return (
     <>
@@ -17,20 +21,43 @@ export default function ScrollTriggered({ data }) {
 
       <div style={container}>
         {data.caseStudyMedia?.map((media, index) => (
-          <Card key={index} video={media.asset.url} />
+          <Card 
+            key={index} 
+            video={media.asset.url} 
+            onVideoClick={handleVideoClick}
+          />
         ))}
       </div>
+
+      {/* Fullscreen Modal */}
+      {selectedVideo && (
+        <div style={modalOverlay} onClick={closeModal}>
+          <div style={modalContent} onClick={(e) => e.stopPropagation()}>
+            <button style={closeButton} onClick={closeModal}>×</button>
+            <video
+              src={selectedVideo}
+              style={fullscreenVideo}
+              autoPlay
+              muted
+              loop
+              controls
+              playsInline
+            />
+          </div>
+        </div>
+      )}
     </>
   );
 }
 
-function Card({ video }) {
+function Card({ video, onVideoClick }) {
   return (
     <motion.div
       style={cardContainer}
       initial="offscreen"
       whileInView="onscreen"
       viewport={{ amount: 0.6, once: false }}
+      onClick={() => onVideoClick(video)}
     >
       <motion.div style={card} variants={cardVariants}>
         <video
@@ -41,14 +68,18 @@ function Card({ video }) {
           loop
           playsInline
         />
+        {/* Play overlay icon */}
+        <div style={playOverlay}>
+          <svg width="60" height="60" viewBox="0 0 24 24" fill="white">
+            <path d="M8 5v14l11-7z" />
+          </svg>
+        </div>
       </motion.div>
     </motion.div>
   );
 }
 
-
 /* ===================== ANIMATION ===================== */
-
 const cardVariants = {
   offscreen: {
     y: 200,
@@ -67,31 +98,32 @@ const cardVariants = {
 };
 
 /* ===================== STYLES ===================== */
-
 const container = {
   margin: "100px auto",
   maxWidth: 1100,
   paddingBottom: 200,
   width: "100%",
+  cursor: "pointer",
 };
 
 const cardContainer = {
   display: "flex",
   justifyContent: "center",
   position: "relative",
-  marginBottom: -140, // overlap effect like Aspekto
+  marginBottom: -140,
 };
 
 const card = {
   width: "100%",
   maxWidth: "1020px",
-  aspectRatio: "16 / 9", // YouTube-style landscape
+  aspectRatio: "16 / 9",
   borderRadius: 16,
   overflow: "hidden",
   background: "#000",
   boxShadow: "0 20px 60px rgba(0,0,0,0.35)",
   transformOrigin: "10% 60%",
   height: "620px",
+  position: "relative",
 };
 
 const videoStyle = {
@@ -101,11 +133,82 @@ const videoStyle = {
   display: "block",
 };
 
-/* ===================== DATA ===================== */
+const playOverlay = {
+  position: "absolute",
+  top: 0,
+  left: 0,
+  width: "100%",
+  height: "100%",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  backgroundColor: "rgba(0, 0, 0, 0.3)",
+  opacity: 0,
+  transition: "opacity 0.3s ease",
+};
 
-const projects = [
-  { video: "/videos/StockVideo.mp4" },
-  { video: "/videos/StockVideo4.mp4" },
-  { video: "/videos/StockVideo3.mp4" },
-  { video: "/videos/StockVideo2.mp4" },
-];
+const cardContainerHover = {
+  ...cardContainer,
+  "&:hover $playOverlay": {
+    opacity: 1,
+  },
+};
+
+const modalOverlay = {
+  position: "fixed",
+  top: 0,
+  left: 0,
+  right: 0,
+  bottom: 0,
+  backgroundColor: "rgba(0, 0, 0, 0.9)",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  zIndex: 1000,
+  padding: "20px",
+};
+
+const modalContent = {
+  position: "relative",
+  width: "90vw",
+  maxWidth: "1400px",
+  maxHeight: "90vh",
+};
+
+const closeButton = {
+  position: "absolute",
+  top: "-40px",
+  right: "0",
+  background: "none",
+  border: "none",
+  color: "white",
+  fontSize: "2.5rem",
+  cursor: "pointer",
+  padding: "5px 15px",
+  zIndex: 1001,
+};
+
+const fullscreenVideo = {
+  width: "100%",
+  height: "auto",
+  maxHeight: "90vh",
+  objectFit: "contain",
+  borderRadius: "8px",
+  boxShadow: "0 20px 60px rgba(0,0,0,0.5)",
+};
+
+// Add hover effect
+const styles = `
+  .card-container:hover .play-overlay {
+    opacity: 1 !important;
+  }
+`;
+
+// Inject the hover styles
+if (typeof document !== 'undefined') {
+  const styleSheet = document.createElement("style");
+  styleSheet.textContent = styles;
+  document.head.appendChild(styleSheet);
+}
+
+export { cardContainerHover };
