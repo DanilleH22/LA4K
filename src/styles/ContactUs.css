@@ -440,6 +440,12 @@
   
   .contact-header {
     padding: 4rem 0 3rem;
+    margin: 0px 0px 4px 0px;
+  }
+
+  .contact-header  h1{
+   
+    margin: 0px 0px 4px 0px;
   }
   
   .contact-form-section {
