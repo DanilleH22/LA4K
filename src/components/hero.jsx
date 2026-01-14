@@ -9,36 +9,29 @@ export default function Hero() {
   const controls = useAnimation();
 
   // Sample images/videos - replace with your actual assets
-  const mediaItems = [
-    {
-      type: "image",
-      src: "/images/StockPhoto.jpg",
-      alt: "Cinematic production 1"
-    },
-    {
-      type: "image",
-      src: "/images/StockImage2.jpg",
-      alt: "Film equipment"
-    },
-    {
-      type: "image",
-      src: "/images/StockPhoto.jpg",
-      alt: "Video editing"
-    },
-    {
-      type: "image",
-      src: "/images/StockImage2.jpg",
-      alt: "Camera work"
-    }
-  ];
+  
 
   // For video items,  can use:
   // { type: "video", src: "/videos/hero1.mp4", poster: "/images/poster1.jpg" }
 
+  const [radius, setRadius] = useState(200);
+
+useEffect(() => {
+  const handleResize = () => {
+    const width = window.innerWidth;
+    if (width < 640) setRadius(100);      // mobile
+    else if (width < 1024) setRadius(150); // tablet
+    else setRadius(200);                   // desktop
+  };
+  handleResize();
+  window.addEventListener("resize", handleResize);
+  return () => window.removeEventListener("resize", handleResize);
+}, []);
+
   // Calculate positions for orbiting media
   const getOrbitPosition = (index, total) => {
     const angle = (index / total) * 2 * Math.PI;
-    const radius = 200; // Orbit radius in pixels
+   
     
     return {
       x: Math.cos(angle) * radius,
@@ -66,16 +59,21 @@ export default function Hero() {
    const [content, setContent] = useState(null);
   
      useEffect(() => {
-    client.fetch(`*[_type == "hero"][0]{
-      heroTitle,
-      heroSubtitle
-       heroMedia[]{
-      _type,
-      asset->{_id, url},
-      alt
-    }
-    }`).then((data) => {
-      console.log("HOME DATA:", data);
+    client.fetch(`
+*[_type == "titleScreen"][0]{
+  heroTitle,
+  heroSubtitle,
+  heroMedia[]{
+    _type,
+    asset->{
+      _id,
+      url
+    },
+    alt
+  }
+}
+`).then((data) => {
+      console.log("HERO DATA:", data);
       setContent(data);
     });
   }, []);
@@ -116,12 +114,18 @@ export default function Hero() {
         </div>
 
         {/* Orbiting media container */}
-        <motion.div 
+        {/* <motion.div 
   className="orbit-container"
   animate={controls}
   style={{ originX: "center", originY: "center" }}
+> */}
+<motion.div
+  className="orbit-container"
+  animate={{ rotate: 360 }}
+  transition={{ duration: 30, ease: "linear", repeat: Infinity }}
+  style={{ originX: "50%", originY: "50%" }}
 >
-  {content.heroMedia.map((item, index) => {
+  {content.heroMedia?.map((item, index) => {
     const position = getOrbitPosition(index, content.heroMedia.length);
 
     return (
@@ -141,23 +145,23 @@ export default function Hero() {
       >
         <div className="media-wrapper">
           {item._type === "image" ? (
-            <img
-              src={urlFor(item).url()}
-              alt={item.alt || "Hero image"}
-              className="orbit-image"
-              loading="eager"
-            />
-          ) : (
-            <video
-              className="orbit-video"
-              autoPlay
-              muted
-              loop
-              playsInline
-            >
-              <source src={item.asset.url} type="video/mp4" />
-            </video>
-          )}
+  <img
+  src={urlFor(item.asset).url()}
+  alt={item.alt || "Hero image"}
+  className="orbit-image"
+  loading="eager"
+/>
+) : item._type === "file" ? (
+  <video
+    className="orbit-video"
+    autoPlay
+    muted
+    loop
+    playsInline
+  >
+    <source src={item.asset.url} type="video/mp4" />
+  </video>
+) : null}
 
           <div className="media-glow"></div>
           <div className="orbit-connector"></div>
