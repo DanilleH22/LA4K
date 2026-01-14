@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import Hero from '../components/hero.jsx';
 import SocialLinks from '../components/SocialLinks.jsx';
 import Footer from '../components/Footer.jsx';
 import MovingFooter from '../components/MovingFooter.jsx';
 import "../styles/ContactUs.css";
-import { Alert } from 'bootstrap';
-import Services from '../components/Services.jsx';
-// import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaClock, FaPaperPlane, FaCheck, FaLinkedin, FaInstagram } from 'react-icons/fa';
+import { client } from "../sanity/client";
+
+
 
 const ContactUs = () => {
   const [formData, setFormData] = useState({
@@ -22,26 +22,24 @@ const ContactUs = () => {
   const [copied, setCopied] = useState(false);
 
   const contactInfo = {
-    email: "hamiltonkdanille@hotmail.com",
-    phone: "+1 (555) 123-4567",
-    address: "123 Studio Street, Los Angeles, CA 90028",
-    hours: "Mon-Fri: 9AM-6PM PST",
+    email: "Mrla4k@gmail.com",
+    phone: "+447769873047",
     socials: {
-      linkedin: "https://linkedin.com",
+      tiktok: "https://tiktok.com",
       instagram: "https://instagram.com"
     }
   };
 
-  const projectTypes = [
-    'Commercial Ad',
-    'Brand Documentary',
-    'Social Media Content',
-    'Event Coverage',
-    'Animation',
-    'Corporate Video',
-    'Music Video',
-    'Other'
-  ];
+  // const projectTypes = [
+  //   'Commercial Ad',
+  //   'Brand Documentary',
+  //   'Social Media Content',
+  //   'Event Coverage',
+  //   'Animation',
+  //   'Corporate Video',
+  //   'Music Video',
+  //   'Other'
+  // ];
 
   const handleChange = (e) => {
     setFormData({
@@ -100,6 +98,57 @@ const ContactUs = () => {
     }
   };
 
+ const [buttonState, setButtonState] = useState('idle');
+const whatsappMessage = "Hello LA4K,\n\nI'm interested in your media production services. Could you provide more information?";
+
+  const handleGetInTouch = () => {
+    setButtonState('loading');
+    setTimeout(() => {
+      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      if (isMobile) {
+        window.location.href = `whatsapp://send?phone=${whatsappPhone}&text=${encodeURIComponent(whatsappMessage)}`;
+        setTimeout(() => {
+          if (!document.hidden) {
+            window.open(`https://api.whatsapp.com/send?phone=${whatsappPhone}&text=${encodeURIComponent(whatsappMessage)}`, '_blank');
+          }
+        }, 2000);
+      } else {
+        window.open(`https://web.whatsapp.com/send?phone=${whatsappPhone}&text=${encodeURIComponent(whatsappMessage)}`, '_blank');
+      }
+      setButtonState('success');
+      setTimeout(() => setButtonState('idle'), 2000);
+    }, 800);
+  };
+
+
+
+
+   const [content, setContent] = useState(null);
+
+   useEffect(() => {
+  client.fetch(`*[_type == "contact"][0]{
+    headerTitle,
+    headerSubtitle,
+    contactInfo,
+    projectTypes,
+    faqs,
+    ctaTitle,
+    ctaDescription,
+    ctaButtonText
+  }`).then((data) => {
+    console.log("CONTACT DATA:", data);
+    setContent(data);
+  });
+}, []);
+
+  
+  
+    if (!content) {
+    return <div style={{ color: 'white', padding: '2rem' }}>Loading Contact Us content…</div>;
+  }
+
+  
+
   return (
     <>
       <Hero />
@@ -114,10 +163,10 @@ const ContactUs = () => {
           variants={containerVariants}
         >
           <motion.h1 variants={itemVariants}>
-            Let's Create <span className="gradient-text">Together</span>
+            {content.headerTitle}
           </motion.h1>
           <motion.p variants={itemVariants} className="contact-subtitle">
-            Have a project in mind? Get in touch with our team to discuss how we can bring your vision to life.
+            {content.headerSubtitle}
           </motion.p>
         </motion.section>
 
@@ -135,8 +184,8 @@ const ContactUs = () => {
             variants={containerVariants}
           >
             <motion.div className="section-header" variants={itemVariants}>
-              <span className="section-eyebrow">GET IN TOUCH</span>
-              <h2 className="section-title">Contact Information</h2>
+              <span className="section-eyebrow">{content.contactEyebrow}</span>
+              <h2 className="section-title">{content.contactSectionTitle}</h2>
             </motion.div>
 
             <div className="info-cards-grid">
@@ -156,20 +205,6 @@ const ContactUs = () => {
                   action: () => window.location.href = `tel:${contactInfo.phone}`,
                   actionText: 'Call Now',
                   color: '#45b7d1'
-                },
-                {
-              
-                  title: 'Location',
-                  content: contactInfo.address,
-                  action: () => window.open('https://maps.google.com', '_blank'),
-                  actionText: 'Open Maps',
-                  color: '#2a8cb8'
-                },
-                {
-                  
-                  title: 'Hours',
-                  content: contactInfo.hours,
-                  color: '#2aa7b8'
                 }
               ].map((info, index) => (
                 <motion.div 
@@ -210,7 +245,7 @@ const ContactUs = () => {
             variants={containerVariants}
           >
             <motion.div className="section-header" variants={itemVariants}>
-              <span className="section-eyebrow">START A PROJECT</span>
+              <span className="section-eyebrow">ENQUIRE NOW</span>
               <h2 className="section-title">Send Us a Message</h2>
             </motion.div>
 
@@ -268,7 +303,7 @@ const ContactUs = () => {
                     required
                   >
                     <option value="">Select a project type</option>
-                    {projectTypes.map(type => (
+                    {content.projectTypes.map(type => (
                       <option key={type} value={type}>{type}</option>
                     ))}
                   </select>
@@ -348,37 +383,17 @@ const ContactUs = () => {
             <h2 className="section-title">Frequently Asked Questions</h2>
           </motion.div>
 
-          <div className="faq-grid">
-            {[
-              {
-                question: "What's your typical response time?",
-                answer: "We respond to all inquiries within 24 hours during business days."
-              },
-              {
-                question: "Do you work with international clients?",
-                answer: "Yes, we work with clients worldwide and can accommodate different time zones."
-              },
-              {
-                question: "What's your project minimum?",
-                answer: "Our minimum project starts at $2,500, but this varies based on scope and requirements."
-              },
-              {
-                question: "How long does a typical project take?",
-                answer: "Timelines vary from 2-8 weeks depending on complexity, scope, and revision rounds."
-              }
-            ].map((faq, index) => (
-              <motion.div 
-                key={index}
-                className="faq-item"
-                variants={itemVariants}
-                whileHover={{ x: 10 }}
-                transition={{ duration: 0.2 }}
-              >
-                <h3 className="faq-question">{faq.question}</h3>
-                <p className="faq-answer">{faq.answer}</p>
-              </motion.div>
-            ))}
-          </div>
+
+              <div className="faq-grid">
+  {content.faqs.map((faq, index) => (
+    <motion.div key={index} className="faq-item" variants={itemVariants} whileHover={{ x: 10 }} transition={{ duration: 0.2 }}>
+      <h3 className="faq-question">{faq.question}</h3>
+      <p className="faq-answer">{faq.answer}</p>
+    </motion.div>
+  ))}
+</div>
+
+         
         </motion.section>
 
         {/* CTA Section */}
@@ -390,19 +405,20 @@ const ContactUs = () => {
           transition={{ duration: 0.8 }}
         >
           <div className="cta-content">
-            <h2 className="cta-title">Ready to bring your vision to life?</h2>
+            <h2 className="cta-title">{content.ctaTitle}</h2>
             <p className="cta-description">
-              Let's schedule a free consultation to discuss your vision and how we can help.
+              {content.ctaDescription}
             </p>
             <div className="cta-buttons">
               <motion.button 
                 className="cta-primary"
-                onClick={() => window.location.href = `mailto:${contactInfo.email}`}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
+                disabled={buttonState === 'loading'}
+                onClick={handleGetInTouch}
               >
                 
-                Schedule a Call
+                {content.ctaButtonText}
               </motion.button>
               
             </div>
