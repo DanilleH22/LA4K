@@ -517,6 +517,20 @@ h1 {
   .mission-hero {
     padding: 4rem 0 3rem;
   }
+
+  .mission-hero h1 {
+  font-size: 40px;
+  margin: 0px 0px 2px 0px
+}
+
+.hero-subtitle {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.8);
+  max-width: 700px;
+  margin: 0 auto;
+}
+
   
   .story-section,
   .mission-section,
@@ -542,6 +556,8 @@ h1 {
   .cta-secondary {
     width: 100%;
     max-width: 300px;
+    align-items: center;
+    justify-content: center;
   }
 }
 
