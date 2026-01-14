@@ -16,22 +16,14 @@ export default {
     {
       type: "image",
       options: { hotspot: true },
-      fields: [
-        {
-          name: "alt",
-          title: "Alt text",
-          type: "string"
-        }
-      ]
+      fields: [{ name: "alt", title: "Alt text", type: "string" }]
     },
     {
       type: "file",
-      title: "Video"
+      title: "Video",
+      fields: [{ name: "alt", title: "Alt text", type: "string" }] // optional for video
     }
   ]
 }
 
-]
-
-}
-
+    ]
