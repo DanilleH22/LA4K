@@ -1,7 +1,7 @@
 /* Q&A Section */
 .qa-section {
-  padding: 100px 5vw;
-
+  /* padding: 100px 5vw; */
+      padding: 30px 1vw;
   color: white;
   position: relative;
   overflow: hidden;

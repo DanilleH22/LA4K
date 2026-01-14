@@ -5,7 +5,7 @@ Retrieved 2026-01-11, License - CC BY-SA 4.0
 */
 
 .video-reel {
-  padding: 100px 5vw;
+  /* padding: 100px 5vw; */
   background: #0a0a0a;
   color: white;
   overflow: hidden;

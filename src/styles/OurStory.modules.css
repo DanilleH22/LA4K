@@ -1,7 +1,8 @@
 /* our story section */
 .our-story {
-  padding: 8rem 5vw;
-  background: #060000;
+  /* padding: 8rem 5vw; */
+  padding: 5rem 5vw;
+
   position: relative;
   overflow: hidden;
 }
@@ -40,12 +41,13 @@
 
 /* image placeholders */
 .our-story-image {
-  width: 100%;
+  width: 200px;
+  height: 200px;
 }
 
 .story-image-placeholder {
-  width: 160px;
-  height: 150px;
+  width: 200px;
+  height: 200px;
   background: linear-gradient(135deg, #ddd, #bbb);
   border-radius: 8px;
 }
