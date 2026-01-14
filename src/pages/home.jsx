@@ -92,8 +92,9 @@ export default function Homepage() {
       <SocialLinks />
       <CaseStudies  data={home.caseStudy} />
       <TrustedFeedback  data={home.trustedFeedback} />
-      <PhotoReel  data={home.videoReelSection} />
       <Services  data={home.servicesSection} />
+      <PhotoReel  data={home.videoReelSection} />
+      <MovingFooter />
       <QA data={home.faq} />
       <Footer />
       <SocialLinks />
