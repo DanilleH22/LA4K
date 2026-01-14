@@ -10,6 +10,8 @@ export default defineConfig({
   projectId: 'q74eh5v5',
   dataset: 'production',
 
+  appID: 'pyc352054dg83p5xbzewkjp0',
+
   plugins: [structureTool(), visionTool()],
 
   schema: {
