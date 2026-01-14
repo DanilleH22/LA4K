@@ -84,11 +84,11 @@ export default function Homepage() {
   return (
     <>
       {home.heroSection && <Hero2 data={home.heroSection} />}
-      {home.ourStory && <OurStory data={home.ourStory} />}
+      
     
      
       <MovingFooter />
-      <OurStory  data={home.ourStory} />
+      {home.ourStory && <OurStory data={home.ourStory} />}
       <SocialLinks />
       <CaseStudies  data={home.caseStudy} />
       <TrustedFeedback  data={home.trustedFeedback} />
