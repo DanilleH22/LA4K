@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import Hero from '../components/hero.jsx';
+import Hero from '../components/Hero2.jsx';
 import SocialLinks from '../components/SocialLinks.jsx';
 import Footer from '../components/Footer.jsx';
 import MovingFooter from '../components/MovingFooter.jsx';
@@ -126,17 +126,29 @@ const whatsappMessage = "Hello LA4K,\n\nI'm interested in your media production 
    const [content, setContent] = useState(null);
 
    useEffect(() => {
-  client.fetch(`*[_type == "contact"][0]{
-    headerTitle,
-    headerSubtitle,
-    contactInfo,
-    projectTypes,
-    faqs,
-    ctaTitle,
-    ctaDescription,
-    ctaButtonText
-  }`).then((data) => {
-    console.log("CONTACT DATA:", data);
+  client.fetch(`
+    *[_type == "contact"][0]{
+      titleScreen->{
+        heroTitle,
+        heroSubtitle,
+        heroMedia
+      },
+
+      headerTitle,
+      headerSubtitle,
+
+      contactEyebrow,
+      contactSectionTitle,
+
+      projectTypes,
+      faqs,
+
+      ctaTitle,
+      ctaDescription,
+      ctaButtonText
+    }
+  `).then((data) => {
+    console.log("CONTACT WITH HERO:", data);
     setContent(data);
   });
 }, []);
@@ -151,7 +163,9 @@ const whatsappMessage = "Hello LA4K,\n\nI'm interested in your media production 
 
   return (
     <>
-      <Hero />
+       {content?.titleScreen && (
+        <Hero data={content.titleScreen} />
+      )}
       
       <div className="contact-container">
         {/* Contact Header */}

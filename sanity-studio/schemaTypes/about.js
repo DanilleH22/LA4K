@@ -3,6 +3,18 @@ export default {
   title: "About Page",
   type: "document",
   fields: [
+  
+    // hero 
+
+    {
+  name: "titleScreen",
+  title: "Title Screen (Hero)",
+  type: "reference",
+  to: [{ type: "titleScreen" }],
+},
+
+
+
     // HERO / MISSION
     {
       name: "missionTitle",

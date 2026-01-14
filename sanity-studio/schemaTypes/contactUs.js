@@ -4,6 +4,16 @@ export default {
   title: "Contact Page",
   type: "document",
   fields: [
+// hero
+
+{
+  name: "titleScreen",
+  title: "Title Screen (Hero)",
+  type: "reference",
+  to: [{ type: "titleScreen" }],
+},
+
+
     // Header Section
     {
       name: "headerTitle",

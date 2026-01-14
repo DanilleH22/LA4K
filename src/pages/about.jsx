@@ -4,11 +4,12 @@ import { client } from "../sanity/client";
 import { urlFor } from '../sanityImage';
 
 import { motion } from 'framer-motion';
-import Hero from '../components/hero.jsx';
+import Hero from '../components/Hero2.jsx';
 import SocialLinks from '../components/SocialLinks.jsx';
 import Footer from '../components/Footer.jsx';
 import MovingFooter from '../components/MovingFooter.jsx';
 import "../styles/about.css";
+import titleScreen from '../../sanity-studio/schemaTypes/titleScreen.js';
 
 const About = () => {
   const containerVariants = {
@@ -26,11 +27,47 @@ const About = () => {
   const [content, setContent] = useState(null);
 
   useEffect(() => {
-  client.fetch(`*[_type == "about"][0]`).then((data) => {
-    console.log("ABOUT DATA:", data);
+  client.fetch(`
+    *[_type == "about"][0]{
+      titleScreen->{
+        heroTitle,
+        heroSubtitle,
+        heroMedia
+      },
+
+      missionTitle,
+      missionSubtitle,
+
+      storyEyebrow,
+      storyTitle,
+      storyTagline,
+      storyDescription,
+      storySince,
+      stats,
+
+      missionEyebrow,
+      missionTitleSection,
+      missionPoints,
+      missionCtaText,
+
+      eyebrowPrincipal,
+      titleValues,
+      values,
+
+      contactTitle,
+      contactDescription,
+      contactButtonText,
+
+      storyImage,
+      missionImage
+    }
+  `).then((data) => {
+    console.log("ABOUT WITH HERO:", data);
     setContent(data);
   });
 }, []);
+
+  
 
 
   if (!content) {
@@ -64,7 +101,9 @@ const About = () => {
 
   return (
     <>
-      <Hero />
+     {content?.titleScreen && (
+  <Hero data={content.titleScreen} />
+)}
 
       <div className="about-container">
 
