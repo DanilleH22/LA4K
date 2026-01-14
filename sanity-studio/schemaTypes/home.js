@@ -47,20 +47,30 @@ export default {
   fields: [
     { name: "ourStoryHeading", title: "Our Story Heading", type: "string" },
     { name: "ourStoryBody", title: "Our Story Body Text", type: "text" },
-    {
-      name: "media",
-      title: "Media",
-      type: "array",
-      of: [
-        { type: "image", options: { hotspot: true } },
-        { type: "file", title: "Video", options: { accept: "video/*" } }
-      ]
+    // {
+    //   name: "media",
+    //   title: "Media",
+    //   type: "array",
+    //   of: [
+    //     { type: "image", options: { hotspot: true } },
+    //     { type: "file", title: "Video", options: { accept: "video/*" } }
+    //   ]
+    // },
+   
+{
+      name: "backgroundVideo",
+      title: "Background Video",
+      type: "file", // Use 'file' for videos
+      options: {
+        accept: "video/mp4,video/webm,video/ogg", // restrict file types
+      }
     },
-    {
-      name: "missionStatements",
-      title: "Mission Statements",
-      type: "array",
-      of: [
+
+{
+  name: "missionStatements",
+  title: "Mission Statements",
+  type: "array",
+  of: [
         {
           type: "object",
           fields: [
