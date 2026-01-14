@@ -38,7 +38,6 @@ function Homepage() {
     }
   }
 },
-
           trustedFeedback,
           faq,
           servicesSection,
