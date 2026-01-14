@@ -1,6 +1,6 @@
 .hero {
   position: relative;
-  min-height: 100vh;
+  min-height: 100svh;
   background: #000;
   color: white;
   overflow-x: hidden;
@@ -8,6 +8,8 @@
   align-items: center;
   justify-content: center;
 }
+
+
 
 /* IMAGE LAYER */
 .image-layer {
@@ -63,4 +65,26 @@
   bottom: 40px;
   font-size: 1.2rem;
   opacity: 0.6;
+}
+
+
+@media (max-width: 768px) {
+  .hero {
+    overflow-y: visible;
+  }
+
+  .image-card {
+    width: 110px;
+    height: 70px;
+  }
+
+  .image-layer {
+    inset: 5% 5%;
+  }
+}
+
+@supports not (height: 100svh) {
+  .hero {
+    min-height: 100vh;
+  }
 }
