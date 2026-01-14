@@ -4,23 +4,42 @@ export default {
   type: "document",
   fields: [
     {
-      name: "hero",
-      title: "Hero Section",
-      type: "object",
-      fields: [
-        { name: "heroTitle", title: "Hero Title", type: "string" },
-        { name: "heroSubtitle", title: "Hero Subtitle", type: "string" },
+  name: "heroSection",
+  title: "Hero Section - Company Title Section",
+  type: "object",
+  fields: [
+    {
+      name: "title",
+      title: "Hero Title",
+      type: "string",
+      validation: Rule => Rule.required()
+    },
+    {
+      name: "metaLeft",
+      title: "Meta Left Text",
+      type: "string",
+      validation: Rule => Rule.required()
+    },
+    {
+      name: "metaRight",
+      title: "Meta Right Text",
+      type: "string",
+      validation: Rule => Rule.required()
+    },
+    {
+      name: "images",
+      title: "Floating Images",
+      type: "array",
+      validation: Rule => Rule.max(6),
+      of: [
         {
-          name: "heroMedia",
-          title: "Hero Media",
-          type: "array",
-          of: [
-            { type: "image", options: { hotspot: true } },
-            { type: "file", title: "Video" }
-          ]
+          type: "image",
+          options: { hotspot: true }
         }
       ]
-    },
+    }
+  ]
+},
     {
   name: "ourStory",
   title: "Our Story Section",
