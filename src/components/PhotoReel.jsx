@@ -181,11 +181,17 @@ if (!data) return null;
         }
       }}
     >
-      <img
+      <div
+  className="card-image"
+  style={{
+    backgroundImage: `url(${urlFor(project.image).width(800).quality(80).url()})`
+  }}
+/>
+      {/* <img
         src={urlFor(project.image).width(800).quality(80).url()}
         alt={project.title}
         loading="lazy"
-      />
+      /> */}
       <div className="card-content">
         <h3 className="card-title">{project.title}</h3>
         <p className="card-description">{project.description}</p>
