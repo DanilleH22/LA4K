@@ -1,84 +1,130 @@
 import React, { useRef, useEffect, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
+import { Button } from "react-bootstrap";
 import "../styles/OurStory.modules.css";
-import { client } from "../sanity/client";
-import { urlFor } from '../sanityImage';
 
 export default function OurStory({ data }) {
+  const [buttonState, setButtonState] = useState("idle");
+  const [isMobile, setIsMobile] = useState(false);
   const sectionRef = useRef(null);
 
-  // Track scroll relative to THIS section
+  // Check if mobile on mount and resize
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.matchMedia("(max-width: 900px)").matches);
+    };
+
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  const whatsappPhone = "447769873047";
+  const whatsappMessage =
+    "Hello LA4K,\n\nI'm interested in your media production services. Could you provide more information about:\n\n• Project type:\n• Timeline:\n• Budget range:\n\nLooking forward to hearing from you!";
+
+  const handleGetInTouch = () => {
+    setButtonState("loading");
+
+    setTimeout(() => {
+      const isMobileDevice = /iPhone|iPad|iPod|Android/i.test(
+        navigator.userAgent
+      );
+
+      if (isMobileDevice) {
+        window.location.href = `whatsapp://send?phone=${whatsappPhone}&text=${encodeURIComponent(
+          whatsappMessage
+        )}`;
+
+        setTimeout(() => {
+          if (!document.hidden) {
+            window.open(
+              `https://api.whatsapp.com/send?phone=${whatsappPhone}&text=${encodeURIComponent(
+                whatsappMessage
+              )}`,
+              "_blank"
+            );
+          }
+        }, 2000);
+      } else {
+        window.open(
+          `https://web.whatsapp.com/send?phone=${whatsappPhone}&text=${encodeURIComponent(
+            whatsappMessage
+          )}`,
+          "_blank"
+        );
+      }
+
+      setButtonState("success");
+      setTimeout(() => setButtonState("idle"), 2000);
+    }, 800);
+  };
+
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start end", "end start"],
   });
 
-  // Parallax motion values
-  const leftImageY = useTransform(scrollYProgress, [0, 3], [100, -100]);
-  const rightImageY = useTransform(scrollYProgress, [0, 3], [-100, 100]);
-
   const textY = useTransform(scrollYProgress, [0, 1], [40, 0]);
   const textOpacity = useTransform(scrollYProgress, [0, 1], [0, 1]);
-
 
   if (!data) return null;
 
   return (
     <section className="our-story" ref={sectionRef}>
+      {/* Background Video */}
+      {data.backgroundVideo?.asset?.url && (
+        <div className="background-video-container">
+          <video
+  className="background-video"
+  autoPlay
+  loop
+  muted
+  playsInline
+>
+  <source src={data.backgroundVideo.asset.url} type="video/mp4" />
+  Your browser does not support the video tag.
+</video>
+          <div className="background-overlay"></div>
+        </div>
+      )}
+
       <div className="our-story-inner">
-
-        {/* Left image/video */}
-        <motion.div
-          className="our-story-image our-story-image-l"
-          style={{ y: leftImageY }}
-        >
-          {data.media?.[0]?._type === "image" ? (
-            <img src={urlFor(data.media[0]).url()} alt={data.media[0]?.alt || ""} />
-          ) : data.media?.[0]?._type === "file" ? (
-            <video autoPlay muted loop playsInline>
-              <source src={data.media[0].asset.url} type="video/mp4" />
-            </video>
-          ) : null}
-        </motion.div>
-
-
-
-        {/* Text — fades + slides in */}
+        {/* Text positioned bottom right */}
         <motion.div
           className="our-story-text"
-          // style={{ y: textY, opacity: textOpacity }}
+          style={{ y: textY, opacity: textOpacity }}
         >
-          <h2>
-            {data.ourStoryHeading}
-          </h2>
+          <h2>{data.ourStoryHeading}</h2>
+          <p>{data.ourStoryBody}</p>
 
-          <p>
-            {data.ourStoryBody}
-          </p>
-    {data.missionStatements?.map((missionStatement, index) => (
-          <ul className="our-story-mission">
-            <li key={index}><strong>{missionStatement.title}:</strong> {missionStatement.description}</li>
-          </ul>
-        ))}
+          {data.missionStatements?.map((missionStatement, index) => (
+            <ul className="our-story-mission" key={index}>
+              <li>
+                <strong>{missionStatement.title}:</strong>{" "}
+                {missionStatement.description}
+              </li>
+            </ul>
+          ))}
         </motion.div>
 
-        {/* Right image/video */}
-        <motion.div
-          className="our-story-image our-story-image-r"
-          style={{ y: rightImageY }}
+        {/* Button positioned bottom right */}
+        <Button
+          variant="primary"
+          className="button"
+          disabled={buttonState === "loading"}
+          href={`https://wa.me/${whatsappPhone}?text=${encodeURIComponent(
+            whatsappMessage
+          )}`}
+          onClick={(e) => {
+            e.preventDefault();
+            handleGetInTouch();
+          }}
+          target="_blank"
+          rel="noopener noreferrer"
         >
-          {data.media?.[1]?._type === "image" ? (
-            <img src={urlFor(data.media[1]).url()} alt={data.media[1]?.alt || ""} />
-          ) : data.media?.[1]?._type === "file" ? (
-            <video autoPlay muted loop playsInline>
-              <source src={data.media[1].asset.url} type="video/mp4" />
-            </video>
-          ) : (
-            <div className="story-image-placeholder" />
-          )}
-        </motion.div>
-
-
+          {buttonState === "loading" ? "Loading…" : "Get in touch!"}
+        </Button>
       </div>
     </section>
   );

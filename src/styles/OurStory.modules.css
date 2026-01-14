@@ -1,42 +1,69 @@
+/* Background video styles */
+.background-video-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.background-video {
+
+ 
+  width: 100%;
+  height: 100%;
+  
+  object-fit: cover;
+}
+
+.background-fallback {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+.background-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4); /* Adjust opacity as needed */
+  z-index: 1;
+}
+
+
 /* our story section */
 .our-story {
   padding: 5rem 5vw;
   position: relative;
   overflow: hidden;
+  min-height: 100vh; /* Make section full viewport height */
+  display: flex;
+  align-items: flex-end; /* Align content to bottom */
+  justify-content: flex-end; /* Align content to right */
+  
 }
 
 .our-story-inner {
-  display: grid;
-  grid-template-columns: 1fr 3fr 1fr;
-  gap: 3rem;
-  max-width: 1200px;
-  margin: 0 auto;
-  align-items: center;
-}
-
-/* image containers */
-.our-story-image {
-  width: 100%; 
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
+  gap: 2rem;
+  max-width: 600px; /* Limit text width */
+  text-align: right; /* Align text to right */
+  margin-right: 5vw; /* Add some space from right edge */
+  margin-bottom: 5vh; /* Add some space from bottom edge */
+  position: relative;
+  z-index: 2;
 }
 
-.our-story-image img,
-.our-story-image video {
-  width: 100%; 
-  height: auto; 
-  max-width: 250px; 
-  object-fit: cover; 
-  /*  border-radius: 30px; */
-}
-
-/* If you want exact 200px squares */
-.our-story-image img {
-  width: 290px;
-  height: 200px;
-  object-fit: cover;
-}
+/* image containers - removed as you don't have images in this component */
 
 /* text styling */
 .our-story-text h2 {
@@ -49,36 +76,70 @@
   font-size: 1.05rem;
   margin-bottom: 1.5rem;
   color: #f0eeee;
+  line-height: 1.6;
 }
 
 .our-story-mission {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
 .our-story-mission li {
   margin-bottom: 0.7rem;
   color: #f0eeee;
+  font-size: 0.95rem;
+}
+
+/* Button styling - positioning it properly */
+.our-story-inner .button {
+  align-self: flex-end; /* Align button to right within container */
+  margin-top: 1rem;
+  padding: 0.8rem 2rem;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.our-story-inner .button:hover {
+  background-color: #0056b3;
 }
 
 /* responsiveness */
 @media (max-width: 900px) {
+  .our-story {
+    align-items: center; /* Center on mobile */
+    justify-content: center; /* Center on mobile */
+    text-align: center; /* Center text on mobile */
+  }
+  
   .our-story-inner {
-    grid-template-columns: 1fr;
-    text-align: center;
+    max-width: 90%;
+    text-align: center; /* Center text on mobile */
+    margin: 0 auto; /* Center container on mobile */
+    padding-bottom: 5vh;
   }
-
-  .our-story-image {
-    width: 100%;
-    max-width: 290px; 
-    margin: 0 auto 40px;
+  
+  .our-story-inner .button {
+    align-self: center; /* Center button on mobile */
   }
+}
 
-  .our-story-image img,
-  .our-story-image video {
-    width: 100%;
-    max-width: 290px;
-    height: 280px; 
-    padding: 0;
+@media (max-width: 480px) {
+  .our-story {
+    padding: 3rem 3vw;
+  }
+  
+  .our-story-text p {
+    font-size: 0.95rem;
+  }
+  
+  .our-story-mission li {
+    font-size: 0.85rem;
   }
 }
