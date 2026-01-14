@@ -87,8 +87,8 @@ export default function Hero({ data }) {
                       opacity: 0.8,
                       scale: 1,
                       rotate: c.rotate,
-                      x: mouse.x * 40 * c.speed,
-                      y: mouse.y * 30 * c.speed,
+                      x: mouse.x * 20 * c.speed,
+                      y: mouse.y * 15 * c.speed,
                     }
               }
               transition={{
