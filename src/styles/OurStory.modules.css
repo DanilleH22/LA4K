@@ -7,15 +7,11 @@
   height: 100%;
   z-index: 0;
   overflow: hidden;
-  
 }
 
 .background-video {
-
- 
   width: 100%;
   height: 100%;
-  
   object-fit: cover;
 }
 
@@ -35,117 +31,281 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.4); /* Adjust opacity as needed */
+  background: rgba(0, 0, 0, 0.4);
   z-index: 1;
 }
 
-
-/* our story section */
+/* our story section - MOBILE FIRST */
 .our-story {
-  
   min-height: 100svh;
-  overflow: visible;
-
-  padding: 5rem 5vw;
+  min-height: 100vh; /* Fallback */
+  padding: 1.5rem 1rem; /* Smaller padding on mobile */
   position: relative;
- 
-
   display: flex;
-  align-items: flex-end; /* Align content to bottom */
-  justify-content: flex-end; /* Align content to right */
-  
+  align-items: flex-end;
+  justify-content: flex-end;
+  overflow: hidden;
 }
-
 
 .our-story-inner {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
-  max-width: 600px; /* Limit text width */
-  text-align: right; /* Align text to right */
-  margin-right: 5vw; /* Add some space from right edge */
-  margin-bottom: 5vh; /* Add some space from bottom edge */
+  gap: 1.5rem; /* Smaller gap on mobile */
+  width: 100%; /* Full width on mobile */
+  max-width: 100%;
+  text-align: right;
+  margin-right: 1rem; /* Smaller margin on mobile */
+  margin-bottom: 3vh; /* Smaller bottom margin on mobile */
   position: relative;
   z-index: 2;
 }
 
-/* image containers - removed as you don't have images in this component */
-
-/* text styling */
+/* text styling - OPTIMIZED FOR MOBILE */
 .our-story-text h2 {
-  font-size: clamp(2rem, 4vw, 3rem);
-  margin-bottom: 1rem;
+  font-size: clamp(1.8rem, 6vw, 2.5rem); /* Better mobile scaling */
+  margin-bottom: 0.75rem;
   color: #f0eeee;
+  line-height: 1.2; /* Tighter line height for mobile */
+  font-weight: 700;
 }
 
 .our-story-text p {
-  font-size: 1.05rem;
-  margin-bottom: 1.5rem;
+  font-size: clamp(0.95rem, 3.5vw, 1.05rem); /* Fluid font size */
+  margin-bottom: 1rem;
   color: #f0eeee;
-  line-height: 1.6;
+  line-height: 1.5; /* Better readability on mobile */
+ 
 }
 
 .our-story-mission {
   list-style: none;
   padding: 0;
-  margin: 0;
+  margin: 0.5rem 0;
 }
 
 .our-story-mission li {
-  margin-bottom: 0.7rem;
+  margin-bottom: 0.6rem;
   color: #f0eeee;
-  font-size: 0.95rem;
+  font-size: clamp(0.85rem, 3vw, 0.95rem); /* Fluid font size */
+  line-height: 1.4;
+ 
 }
 
-/* Button styling - positioning it properly */
+.our-story-mission li strong {
+  color: #4ecdc4;
+  font-weight: 600;
+}
+
+/* Button styling - MOBILE OPTIMIZED */
 .our-story-inner .button {
-  align-self: flex-end; /* Align button to right within container */
-  margin-top: 1rem;
-  padding: 0.8rem 2rem;
-  background-color: #007bff;
+  align-self: flex-end;
+  margin-top: 0.5rem;
+  padding: clamp(0.7rem, 3vw, 0.8rem) clamp(1.5rem, 5vw, 2rem); /* Responsive padding */
+  background: linear-gradient(135deg, #4ecdc4, #45b7d1);
   border: none;
-  border-radius: 5px;
+  border-radius: 50px; /* Pill shape works better on mobile */
   color: white;
-  font-size: 1rem;
+  font-size: clamp(0.9rem, 3.5vw, 1rem); /* Responsive font size */
+  font-weight: 600;
   cursor: pointer;
   text-decoration: none;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
+  min-height: 44px; /* Minimum touch target size (Apple guidelines) */
+  min-width: 120px; /* Minimum width for readability */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  -webkit-tap-highlight-color: transparent; /* Remove tap highlight on mobile */
 }
 
-.our-story-inner .button:hover {
-  background-color: #0056b3;
-}
-
-/* responsiveness */
-@media (max-width: 900px) {
-  .our-story {
-    align-items: center; /* Center on mobile */
-    justify-content: center; /* Center on mobile */
-    text-align: center; /* Center text on mobile */
-  }
-  
-  .our-story-inner {
-    max-width: 90%;
-    text-align: center; /* Center text on mobile */
-    margin: 0 auto; /* Center container on mobile */
-    padding-bottom: 5vh;
-  }
-  
-  .our-story-inner .button {
-    align-self: center; /* Center button on mobile */
+/* Hover effects only on devices that support hover */
+@media (hover: hover) and (pointer: fine) {
+  .our-story-inner .button:hover {
+    background: linear-gradient(135deg, #45b7d1, #4ecdc4);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(78, 205, 196, 0.3);
   }
 }
 
-@media (max-width: 480px) {
+/* Active/tap state for mobile */
+.our-story-inner .button:active {
+  transform: scale(0.98);
+  transition: transform 0.1s ease;
+}
+
+/* Focus state for accessibility */
+.our-story-inner .button:focus {
+  outline: 2px solid #4ecdc4;
+  outline-offset: 2px;
+}
+
+/* Tablet and Small Desktop */
+@media (min-width: 768px) {
   .our-story {
     padding: 3rem 3vw;
   }
   
+  .our-story-inner {
+    max-width: 600px;
+    gap: 2rem;
+    margin-right: 5vw;
+    margin-bottom: 5vh;
+  }
+  
+  .our-story-text h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin-bottom: 1rem;
+  }
+  
   .our-story-text p {
-    font-size: 0.95rem;
+    font-size: 1.05rem;
+    margin-bottom: 1.5rem;
   }
   
   .our-story-mission li {
+    font-size: 0.95rem;
+    margin-bottom: 0.7rem;
+  }
+  
+  .our-story-inner .button {
+    padding: 0.8rem 2.5rem;
+    font-size: 1rem;
+  }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+  .our-story {
+    padding: 5rem 5vw;
+  }
+  
+  .our-story-inner {
+    max-width: 600px;
+  }
+}
+
+/* Very small phones (iPhone SE, etc.) */
+@media (max-width: 360px) {
+  .our-story {
+    padding: 1rem 0.75rem;
+  }
+  
+  .our-story-inner {
+    margin-right: 0.75rem;
+    margin-bottom: 2vh;
+    gap: 1rem;
+  }
+  
+  .our-story-text h2 {
+    font-size: 1.6rem;
+  }
+  
+  .our-story-text p {
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
+  
+  .our-story-mission li {
+    font-size: 0.8rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .our-story-inner .button {
+    min-width: 110px;
+    padding: 0.6rem 1.2rem;
     font-size: 0.85rem;
   }
+}
+
+/* Landscape mode optimization */
+@media (max-height: 500px) and (orientation: landscape) {
+  .our-story {
+    min-height: 120vh; /* More height in landscape */
+    padding: 1rem 2vw;
+  }
+  
+  .our-story-inner {
+    margin-bottom: 2vh;
+    gap: 1rem;
+  }
+  
+  .our-story-text h2 {
+    font-size: clamp(1.5rem, 4vh, 2rem);
+    margin-bottom: 0.5rem;
+  }
+  
+  .our-story-text p {
+    font-size: clamp(0.85rem, 2.5vh, 0.95rem);
+    margin-bottom: 0.75rem;
+  }
+  
+  .our-story-mission li {
+    font-size: clamp(0.8rem, 2vh, 0.9rem);
+    margin-bottom: 0.4rem;
+    
+  }
+  
+  .our-story-inner .button {
+    padding: 0.5rem 1.5rem;
+    font-size: 0.9rem;
+    min-height: 40px;
+  }
+}
+
+/* Center everything on smaller screens */
+@media (max-width: 640px) {
+  .our-story {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  
+  .our-story-inner {
+    text-align: center;
+    margin: 0 auto;
+    padding-bottom: 4vh;
+    margin-right: 0;
+    align-items: center;
+  }
+  
+  .our-story-inner .button {
+    align-self: center;
+  }
+}
+
+/* Prevent text overflow on very small screens */
+.our-story-text h2,
+.our-story-text p,
+.our-story-mission li {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  hyphens: auto;
+}
+
+/* Improve text contrast on mobile */
+@media (max-width: 768px) {
+  .our-story-text h2 {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+  
+  .our-story-text p,
+  .our-story-mission li {
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  }
+}
+
+/* Adjust overlay for better text readability on mobile */
+@media (max-width: 768px) {
+  .background-overlay {
+    background: rgba(0, 0, 0, 0.5); /* Darker overlay for better contrast */
+  }
+}
+
+/* Smooth transitions for all interactive elements */
+.our-story-inner .button,
+.our-story-text h2,
+.our-story-text p {
+  transition: all 0.3s ease;
 }

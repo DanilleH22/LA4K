@@ -104,7 +104,7 @@ export default function OurStory({ data }) {
   className="our-story-text" 
   style={{ y: textY, }}
 >
-  <div style={{ opacity: 0.7 }}>
+  <div style={{ opacity: 0.9 }}>
     <h2>{ourStoryHeading}</h2>
     <p>{ourStoryBody}</p>
     
