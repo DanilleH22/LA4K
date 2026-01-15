@@ -6,12 +6,14 @@ export default {
   fields: [
 // hero
 
-{
-  name: "titleScreen",
-  title: "Title Screen (Hero)",
-  type: "reference",
-  to: [{ type: "titleScreen" }],
-},
+     {
+      name: "contactBackgroundVideo",
+      title: "Hero Title For Contact Page",
+      type: "file", // Use 'file' for videos
+      options: {
+        accept: "video/mp4,video/webm,video/ogg", // restrict file types
+      }
+    },
 
 
     // Header Section

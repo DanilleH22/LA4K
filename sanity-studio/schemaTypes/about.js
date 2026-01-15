@@ -6,12 +6,18 @@ export default {
   
     // hero 
 
+
     {
-  name: "titleScreen",
-  title: "Title Screen (Hero)",
-  type: "reference",
-  to: [{ type: "titleScreen" }],
-},
+      name: "aboutBackgroundVideo",
+      title: "Hero Title For About Page",
+      type: "file", // Use 'file' for videos
+      options: {
+        accept: "video/mp4,video/webm,video/ogg", // restrict file types
+      }
+    },
+     
+
+
 
 
 
