@@ -13,11 +13,6 @@
   margin-bottom: 15px;
 } */
 
-.hero,
-.our-story,
-.moving-footer {
-  outline: 1px solid red;
-}
 
 .hero {
   position: relative;
