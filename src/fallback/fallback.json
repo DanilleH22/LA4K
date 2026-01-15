@@ -1,0 +1,31 @@
+{
+  "heroSection": {
+    "title": "Welcome to LA4K",
+    "metaLeft": "Media Production",
+    "metaRight": "Since 2020",
+    "images": [
+      "/fallback1.jpg",
+      "/fallback2.jpg"
+    ]
+  },
+  "ourStory": {
+    "ourStoryHeading": "Our Story",
+    "ourStoryBody": "We create amazing media content for clients worldwide.",
+    "backgroundVideo": "/fallback-video.mp4",
+    "missionStatements": [
+      { "title": "Quality", "description": "Top-notch content production." },
+      { "title": "Creativity", "description": "Innovative storytelling." }
+    ]
+  },
+  "videoReelSection": {
+    "eyebrow": "Recent Work",
+    "heading": "Projects",
+    "projects": [
+      { 
+        "title": "Project 1", 
+        "description": "Description here",
+        "image": "/fallback-image.jpg" 
+      }
+    ]
+  }
+}
