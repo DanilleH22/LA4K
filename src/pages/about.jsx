@@ -1,18 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import { client } from "../sanity/client";
-
-import { urlFor } from '../sanityImage';
-
 import { motion } from 'framer-motion';
-import Hero from '../components/Hero2.jsx';
+
+import AboutHero from '../components/AboutHero.jsx';
 import SocialLinks from '../components/SocialLinks.jsx';
 import Footer from '../components/Footer.jsx';
 import MovingFooter from '../components/MovingFooter.jsx';
-import AboutHero from '../components/AboutHero.jsx';
+
+import { urlFor } from '../sanityImage';
+import { fetchAbout } from "../sanity/fetchAbout";
+
 import "../styles/about.css";
-import titleScreen from '../../sanity-studio/schemaTypes/titleScreen.js';
+
+
+
 
 const About = () => {
+ 
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: { opacity: 1, transition: { staggerChildren: 0.2 } },
@@ -27,60 +31,30 @@ const About = () => {
   const whatsappPhone = "447769873047";
   const [content, setContent] = useState(null);
 
-  useEffect(() => {
-  client.fetch(`
-    *[_type == "about"][0]{
-      titleScreen->{
-        heroTitle,
-        heroSubtitle,
-        heroMedia
-      },
-
-      aboutBackgroundVideo {
-  asset->{
-    url
-  }
-},
-
-
-      missionTitle,
-      missionSubtitle,
-
-      storyEyebrow,
-      storyTitle,
-      storyTagline,
-      storyDescription,
-      storySince,
-      stats,
-
-      missionEyebrow,
-      missionTitleSection,
-      missionPoints,
-      missionCtaText,
-
-      eyebrowPrincipal,
-      titleValues,
-      values,
-
-      contactTitle,
-      contactDescription,
-      contactButtonText,
-
-      storyImage,
-      missionImage
-    }
-  `).then((data) => {
-    console.log("ABOUT WITH HERO:", data);
-    setContent(data);
-  });
+ useEffect(() => {
+  fetchAbout()
+    .then(setContent)
+    .catch((err) => {
+      console.error(err);
+      setContent({
+        missionTitle: "About Us",
+        missionSubtitle: "Creative media studio",
+        storyTitle: "Our Story",
+        storyDescription: "We craft meaningful visuals."
+      });
+    });
 }, []);
-
   
 
 
-  if (!content) {
-  return <div style={{ color: 'white', padding: '2rem' }}>Loading about content…</div>;
+ if (!content) {
+  return (
+    <div style={{ color: 'white', padding: '2rem' }}>
+      Loading about content…
+    </div>
+  );
 }
+
 
 
 

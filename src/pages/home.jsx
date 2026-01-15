@@ -16,6 +16,7 @@ import MovingFooter from '../components/MovingFooter.jsx';
 
 import SocialLinks from '../components/SocialLinks.jsx';
 import Hero2 from '../components/Hero2.jsx';
+import { fetchHome } from "../sanity/fetchHome.js";
 
 
 export default function Homepage() {
@@ -24,50 +25,14 @@ export default function Homepage() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    client
-      .fetch(`
-        *[_type == "home"][0]{
-          heroSection,
-          ourStory{
-            ourStoryHeading,
-            ourStoryBody,
-            backgroundVideo{
-              asset->{
-                _id,
-                url
-              }
-            },
-            missionStatements[]{
-              title,
-              description
-            }
-          },
-          caseStudy{
-            caseStudyHeading,
-            caseStudyBody,
-            caseStudyMedia[]{
-              asset->{
-                url
-              }
-            }
-          },
-          trustedFeedback,
-          faq,
-          servicesSection,
-          videoReelSection
-        }
-      `)
-      .then((data) => {
-        console.log("HOME DATA:", data);
-        setHome(data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error("Error fetching data:", err);
-        setError(err);
-        setLoading(false);
-      });
-  }, []);
+  fetchHome()
+    .then(setHome)
+    .catch((err) => {
+      console.error(err);
+      // fallback logic here if needed
+    })
+    .finally(() => setLoading(false));
+}, []);
 
   if (loading) {
     return <div style={{ color: "white", padding: "2rem" }}>Loading homepage…</div>;

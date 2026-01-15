@@ -7,10 +7,14 @@ import MovingFooter from '../components/MovingFooter.jsx';
 import "../styles/ContactUs.css";
 import { client } from "../sanity/client";
 import ContactHero from "../components/ContactHero.jsx"
+import { fetchContact } from "../sanity/fetchContactUs";
 
 
 
 const ContactUs = () => {
+
+  const whatsappPhone = "447769873047";
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -126,40 +130,25 @@ const whatsappMessage = "Hello LA4K,\n\nI'm interested in your media production 
 
    const [content, setContent] = useState(null);
 
-   useEffect(() => {
-  client.fetch(`
-    *[_type == "contact"][0]{
-      titleScreen->{
-        heroTitle,
-        heroSubtitle,
-        heroMedia
-      },
-
-      heroSection,
-      contactBackgroundVideo {
-  asset->{
-    url
-  }
-},
-
-      headerTitle,
-      headerSubtitle,
-
-      contactEyebrow,
-      contactSectionTitle,
-
-      projectTypes,
-      faqs,
-
-      ctaTitle,
-      ctaDescription,
-      ctaButtonText
-    }
-  `).then((data) => {
-    console.log("CONTACT WITH HERO:", data);
-    setContent(data);
-  });
+  useEffect(() => {
+  fetchContact()
+    .then(setContent)
+    .catch(() => {
+      setContent({
+        headerTitle: "Contact Us",
+        headerSubtitle: "Let’s work together",
+        contactEyebrow: "GET IN TOUCH",
+        contactSectionTitle: "Contact Details",
+        projectTypes: ["Commercial", "Social", "Other"],
+        faqs: [],
+        ctaTitle: "Start a Project",
+        ctaDescription: "Tell us about your idea",
+        ctaButtonText: "Get in Touch"
+      });
+    });
 }, []);
+
+
 
   
   
