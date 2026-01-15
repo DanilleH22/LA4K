@@ -1,29 +1,36 @@
 export default {
   name: "titleScreen",
-  title: "Title Section",
+  title: "Hero Section",
   type: "document",
   fields: [
-
-        { name: "heroTitle",
-        title: "Hero Title",
-        type: "string" },
-        { name: "heroSubtitle", title: "Hero Subtitle", type: "string" },
-        {
-  name: "heroMedia",
-  title: "Hero Media",
-  type: "array",
-  of: [
     {
-      type: "image",
-      options: { hotspot: true },
-      fields: [{ name: "alt", title: "Alt text", type: "string" }]
+      name: "title",
+      title: "Hero Title",
+      type: "string",
+      validation: Rule => Rule.required()
     },
     {
-      type: "file",
-      title: "Video",
-      fields: [{ name: "alt", title: "Alt text", type: "string" }] // optional for video
+      name: "metaLeft",
+      title: "Meta Left",
+      type: "string",
+    },
+    {
+      name: "images",
+      title: "Hero Images",
+      type: "array",
+      of: [
+        {
+          type: "image",
+          options: { hotspot: true },
+          fields: [
+            {
+              name: "alt",
+              title: "Alt Text",
+              type: "string"
+            }
+          ]
+        }
+      ]
     }
   ]
-}
-    ]
-}
+};
