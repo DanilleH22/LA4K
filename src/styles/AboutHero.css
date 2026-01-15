@@ -1,109 +1,223 @@
 /* Background video styles */
 .background-video-container {
-  position: absolute; /* ADD THIS BACK */
-  top: 0; /* ADD THIS */
-  left: 0; /* ADD THIS */
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   overflow: hidden;
-  margin: 0; /* Changed from 30px */
-  z-index: 1; /* ADD THIS */
+  margin: 0;
+  z-index: 1;
 }
 
 .background-video {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  pointer-events: none; /* Prevent video from interfering with touch */
 }
 
 .background-overlay {
-  position: absolute; /* ADD THIS BACK */
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.4); /* Adjust opacity as needed */
-  z-index: 1; /* Same as video container */
+  background: rgba(0, 0, 0, 0.3); /* Lighter for mobile readability */
+  z-index: 1;
 }
 
-/* our story section */
+/* Hero section - MOBILE FIRST APPROACH */
 .about-hero {
   min-height: 100svh;
-  overflow: hidden; /* Changed from visible */
-  padding: 5rem 5vw;
-  position: relative; /* This is important! */
+  min-height: 100vh; /* Fallback */
+  overflow: hidden;
+  padding: 2rem 1rem; /* Smaller padding on mobile */
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
+  text-align: center; /* Center everything by default */
 }
 
 .about-hero-inner {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
-  max-width: 600px;
-  text-align: center;
-  margin-right: 5vw;
-  margin-bottom: 5vh;
+  gap: 1.5rem; /* Smaller gap on mobile */
+  max-width: 90%; /* Use most of screen on mobile */
+  width: 100%;
   position: relative;
-  z-index: 2; /* This makes text appear above video */
+  z-index: 10; /* Higher z-index */
+  margin: 0 auto; /* Center horizontally */
+  padding: 1rem;
 }
 
-/* text styling */
-.about-hero-text h1 { /* Changed from h2 to h1 to match your JSX */
-  font-size: clamp(4rem, 14vw, 8rem); /* Made larger for hero */
-  margin-bottom: 1rem;
+/* Text styling - OPTIMIZED FOR MOBILE */
+.about-hero-text {
+  width: 100%;
+  text-align: center;
+}
+
+.about-hero-text h1 {
+  font-size: clamp(2.5rem, 10vw, 4rem); /* Better mobile scaling */
+  margin: 0 0 0.5rem 0; /* Consistent margins */
+  line-height: 1.1; /* Better line height for mobile */
   background: linear-gradient(135deg, #4ecdc4, #45b7d1);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  background-clip: text;
   font-weight: 900;
-  
+  letter-spacing: -0.02em; /* Slightly tighter letterspacing */
+  word-wrap: break-word; /* Prevent overflow */
+  overflow-wrap: break-word;
 }
+
 .about-hero-text p {
-   font-size: clamp(2rem, 4vw, 2rem); /* Made larger for hero */
-
+  font-size: clamp(1.2rem, 5vw, 1.8rem); /* Better proportional scaling */
+  margin: 0;
+  line-height: 1.3;
   background: linear-gradient(135deg, #4ecdc4, #45b7d1);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  font-weight: 900;
+  background-clip: text;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase; /* Makes "VISUAL STUDIO" stand out */
 }
 
-/* responsiveness */
-@media (max-width: 900px) {
+/* Tablet and Desktop */
+@media (min-width: 768px) {
   .about-hero {
-    align-items: center;
-    justify-content: center;
-    text-align: center;
+    padding: 3rem 2rem;
   }
-
+  
   .about-hero-inner {
-    max-width: 90%;
-    text-align: center;
-    margin: 0 auto;
-    padding-bottom: 5vh;
-    margin-right: 0; /* Remove right margin on mobile */
-    margin-bottom: 10vh; /* Increase bottom margin on mobile */
+    max-width: 600px;
+    gap: 2rem;
   }
   
   .about-hero-text h1 {
-    font-size: clamp(2.5rem, 8vw, 4rem);
+    font-size: clamp(3.5rem, 8vw, 6rem);
+    margin-bottom: 0.75rem;
   }
-
-  .about-hero-text h1 {
-    font-size: clamp(1rem, 4vw, 2rem);
+  
+  .about-hero-text p {
+    font-size: clamp(1.5rem, 3vw, 2.2rem);
   }
 }
 
-@media (max-width: 480px) {
+/* Desktop */
+@media (min-width: 1024px) {
   .about-hero {
-    padding: 2rem 3vw;
+    padding: 5rem 5vw;
   }
   
   .about-hero-text h1 {
-    font-size: 2.5rem;
+    font-size: clamp(4rem, 10vw, 8rem);
+    margin-bottom: 1rem;
   }
+  
+  .about-hero-text p {
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
+  }
+}
 
+/* Fix for iOS Safari text rendering */
+@supports (-webkit-touch-callout: none) {
+  .about-hero-text h1,
+  .about-hero-text p {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* Fix for gradient text on some mobile browsers */
+.about-hero-text h1::selection,
+.about-hero-text p::selection {
+  -webkit-text-fill-color: white;
+  background: rgba(78, 205, 196, 0.5);
+}
+
+/* Ensure text is always visible (fallback) */
+@media (max-width: 480px) {
   .about-hero-text h1 {
-    font-size: 1rem
+    font-size: 2.8rem; /* Minimum readable size */
+  }
+  
+  .about-hero-text p {
+    font-size: 1.4rem;
+  }
+  
+  .background-overlay {
+    background: rgba(0, 0, 0, 0.25); /* Even lighter on small phones */
+  }
+}
+
+/* Extra small phones */
+@media (max-width: 360px) {
+  .about-hero {
+    padding: 1.5rem 0.75rem;
+  }
+  
+  .about-hero-text h1 {
+    font-size: 2.2rem;
+  }
+  
+  .about-hero-text p {
+    font-size: 1.1rem;
+  }
+  
+  .about-hero-inner {
+    gap: 1rem;
+    padding: 0.5rem;
+  }
+}
+
+/* Landscape mode optimization */
+@media (max-height: 500px) and (orientation: landscape) {
+  .about-hero {
+    min-height: 120vh; /* More height in landscape */
+  }
+  
+  .about-hero-text h1 {
+    font-size: clamp(2rem, 6vh, 3rem);
+  }
+  
+  .about-hero-text p {
+    font-size: clamp(1rem, 3vh, 1.5rem);
+  }
+  
+  .about-hero-inner {
+    gap: 0.75rem;
+  }
+}
+
+/* Prevent text from being too wide */
+.about-hero-text h1,
+.about-hero-text p {
+  max-width: 100%;
+  display: inline-block;
+}
+
+/* Add some subtle animation for mobile users */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.about-hero-text {
+  animation: fadeInUp 0.8s ease-out 0.3s both;
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .about-hero-text {
+    animation: none;
   }
 }
