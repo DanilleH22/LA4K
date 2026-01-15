@@ -86,7 +86,7 @@ export default function Hero({ data }) {
   }, [titleControls, isMobile, prefersReducedMotion]);
 
   return (
-    <section className={styles.kyle}>
+    <section className={styles.hero}>
       {/* FLOATING IMAGES */}
       <div className={styles.imageLayer}>
         {data.images?.map((img, i) => {
@@ -174,7 +174,7 @@ export default function Hero({ data }) {
           transition={{ delay: 0.8 }}
         >
           <span>{data.metaLeft}</span>
-          <span>{data.metaRight}</span>
+          
         </motion.div>
       </div>
 
