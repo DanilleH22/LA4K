@@ -26,7 +26,19 @@
   gap: 24px;
   width: 100%;
   max-width: 1100px;
+  
 }
+
+.cards-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.cards-container.collapsed .service-card {
+  transform: scale(0.95);
+  opacity: 0;
+}
+
 
 /* BEFORE SCROLL → ONE CARD */
 .cards-container.collapsed {

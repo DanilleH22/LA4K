@@ -1,11 +1,9 @@
-import { motion, useInView } from "framer-motion";
-import { useRef, useState } from "react";
+import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
 import "../styles/Services.modules.css";
 
 export default function Services({ data }) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { amount: 0.3 });
-
+  const [expanded, setExpanded] = useState(false);
   const [buttonState, setButtonState] = useState("idle");
 
   const whatsappPhone = "447769873047";
@@ -38,25 +36,59 @@ export default function Services({ data }) {
     }, 800);
   };
 
+  // Trigger animation on mount
+  useEffect(() => {
+    const timer = setTimeout(() => setExpanded(true), 300);
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Container variants
+  const containerVariants = {
+    collapsed: {},
+    expanded: {
+      transition: {
+        staggerChildren: 0.15, // stagger card entrance
+      },
+    },
+  };
+
+  // Card variants
+  const cardVariants = {
+    collapsed: { opacity: 0, y: 30, scale: 0.9 },
+    expanded: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: {
+        type: "spring",
+        stiffness: 120,
+        damping: 20,
+      },
+    },
+  };
+
   return (
     <section className="services-section">
       <h2>{data.sectionTitle}</h2>
       <p>{data.sectionSubtitle}</p>
 
-      <div ref={ref} className="cards-wrapper">
+      <motion.div
+        className="cards-wrapper"
+        variants={containerVariants}
+        initial="collapsed"
+        animate={expanded ? "expanded" : "collapsed"}
+      >
         <motion.div
+          className="cards-container"
           layout
-          className={`cards-container ${isInView ? "expanded" : "collapsed"}`}
-          transition={{
-            layout: { duration: 0.9, ease: [0.22, 1, 0.36, 1] },
-          }}
+          transition={{ type: "spring", stiffness: 80, damping: 20 }}
         >
           {data.services.map((service, i) => (
             <motion.div
-              layout
               key={i}
               className="service-card"
-              transition={{ layout: { duration: 0.9 } }}
+              variants={cardVariants}
+              whileHover={{ y: -10, scale: 1.03, boxShadow: "0 10px 20px rgba(78, 205, 196, 0.4)" }}
             >
               <h3>{service.title}</h3>
               <p>{service.description}</p>
@@ -66,7 +98,7 @@ export default function Services({ data }) {
             </motion.div>
           ))}
         </motion.div>
-      </div>
+      </motion.div>
 
       <div>
         <a
