@@ -7,8 +7,7 @@
   height: 100%;
   z-index: 0;
   overflow: hidden;
-  padding: 30px;
-  margin: 10px 0;
+  
 }
 
 .background-video {
@@ -43,15 +42,20 @@
 
 /* our story section */
 .our-story {
+  
+  min-height: 100svh;
+  overflow: visible;
+
   padding: 5rem 5vw;
   position: relative;
-  overflow: hidden;
-  min-height: 100vh; /* Make section full viewport height */
+ 
+
   display: flex;
   align-items: flex-end; /* Align content to bottom */
   justify-content: flex-end; /* Align content to right */
   
 }
+
 
 .our-story-inner {
   display: flex;

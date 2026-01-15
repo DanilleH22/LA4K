@@ -143,7 +143,7 @@
 /* MOBILE STYLES */
 @media (max-width: 768px) {
   .hero {
-    height: 100vh;
+   
     padding: 20px;
   }
 
@@ -191,7 +191,7 @@
 
 /* FALLBACK FOR OLDER BROWSERS */
 @supports not (height: 100svh) {
-  .kyle {
+  .hero {
     min-height: 100vh;
   }
 }
