@@ -1,128 +1,175 @@
 .services-section {
-  /* padding: 120px 24px; */
-  padding: 40px 24px;
+  padding: 30px 16px; /* Reduced padding on mobile */
   text-align: center;
   color: white;
 }
 
 .services-section h2 {
-  font-size: 3rem;
+  font-size: clamp(2rem, 8vw, 3rem); /* Fluid font size */
   margin-bottom: 8px;
+  line-height: 1.2;
 }
 
 .services-section p {
-  opacity: 0.6;
+  opacity: 0.7;
   margin-bottom: 10px;
+  font-size: clamp(0.9rem, 4vw, 1.1rem);
+  line-height: 1.5;
 }
 
 .cards-wrapper {
   display: flex;
   justify-content: center;
+  margin: 20px 0;
 }
 
 /* SHARED CONTAINER */
 .cards-container {
   display: grid;
-  gap: 24px;
+  gap: 16px; /* Reduced gap on mobile */
   width: 100%;
   max-width: 1100px;
-  
-}
-
-.cards-container {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-}
-
-.cards-container.collapsed .service-card {
-  transform: scale(0.95);
-  opacity: 0;
-}
-
-
-/* BEFORE SCROLL → ONE CARD */
-.cards-container.collapsed {
-  grid-template-columns: 1fr;
-}
-
-/* AFTER SCROLL → FOUR CARDS */
-.cards-container.expanded {
   grid-template-columns: repeat(4, 1fr);
 }
 
 /* CARD */
 .service-card {
   background: #151515;
-  padding: 32px;
-  border-radius: 16px;
+  padding: clamp(20px, 4vw, 32px); /* Responsive padding */
+  border-radius: 12px; /* Slightly smaller radius */
   text-align: left;
-  min-height: 200px;
+  min-height: 180px;
+  touch-action: manipulation; /* Better touch handling */
 }
 
 .service-card h3 {
-  font-size: 1.4rem;
-  margin-bottom: 12px;
+  font-size: clamp(1.1rem, 4vw, 1.4rem);
+  margin-bottom: 8px;
+  line-height: 1.3;
 }
 
 .service-card p {
   opacity: 0.7;
-  font-size: 0.95rem;
+  font-size: clamp(0.8rem, 3vw, 0.95rem);
+  line-height: 1.4;
+  margin-bottom: 6px;
+}
+
+.service-card .price {
+  font-weight: 600;
+  color: #4ecdc4;
+  margin-top: 8px;
 }
 
 .additional-services {
-  margin-top: 24px;
+  margin-top: 20px;
   opacity: 0.85;
+  font-size: clamp(1rem, 4vw, 1.2rem);
 }
 
-/* MOBILE */
-@media (max-width: 900px) {
-  .cards-container.expanded {
-    grid-template-columns: repeat(2, 1fr);
+/* MOBILE RESPONSIVE GRID */
+@media (max-width: 1024px) {
+  .cards-container {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
   }
 }
 
-@media (max-width: 500px) {
-  .cards-container.expanded {
+@media (max-width: 768px) {
+  .cards-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  
+  .service-card {
+    min-height: 160px;
+  }
+}
+
+@media (max-width: 480px) {
+  .cards-container {
     grid-template-columns: 1fr;
+    gap: 12px;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  
+  .service-card {
+    min-height: auto;
+    padding: 20px;
+  }
+  
+  .services-section {
+    padding: 25px 12px;
   }
 }
 
 /* ============================= */
-/*        NEON BUTTON ONLY       */
+/*        NEON BUTTON MOBILE     */
 /* ============================= */
 
 .neon-btn {
   position: relative;
   display: inline-block;
-  padding: 22px 28px;
-  margin: 40px 0;
+  padding: clamp(16px, 4vw, 22px) clamp(20px, 5vw, 28px);
+  margin: 30px 0;
   color: #4ecdc4;
   text-decoration: none;
   text-transform: uppercase;
-  letter-spacing: 4px;
+  letter-spacing: clamp(2px, 2vw, 4px);
   overflow: hidden;
   transition: 0.5s;
   font-weight: 600;
+  font-size: clamp(0.9rem, 3vw, 1rem);
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent; /* Remove tap highlight */
 }
+
+/* Reduce animation speed on mobile for performance */
+@media (max-width: 768px) {
+  .neon-btn span {
+    animation-duration: 1.5s; /* Slower on mobile */
+  }
   
-
-.neon-btn:hover {
-  background: #4ecdc4;
-  color: #ffffff;
-  box-shadow:
-    0 0 5px #4ecdc4,
-    0 0 25px #4ecdc4,
-    0 0 50px #4ecdc4,
-    0 0 120px #45b7d1;
+  .neon-btn span:nth-child(2),
+  .neon-btn span:nth-child(4) {
+    width: 1px; /* Thinner lines on mobile */
+  }
 }
 
-/* SPANS */
+/* Disable hover effects on mobile */
+@media (hover: hover) and (pointer: fine) {
+  .neon-btn:hover {
+    background: #4ecdc4;
+    color: #ffffff;
+    box-shadow:
+      0 0 5px #4ecdc4,
+      0 0 25px #4ecdc4,
+      0 0 50px #4ecdc4,
+      0 0 120px #45b7d1;
+  }
+}
+
+/* Active state for mobile */
+.neon-btn:active {
+  transform: scale(0.98);
+}
+
+/* Accessibility focus */
+.neon-btn:focus {
+  outline: 2px solid #4ecdc4;
+  outline-offset: 4px;
+}
+
+/* Keep the existing span animations but add mobile optimization */
 .neon-btn span {
   position: absolute;
   display: block;
 }
 
-/* TOP */
+/* SPANS animations remain the same */
 .neon-btn span:nth-child(1) {
   top: 0;
   left: -100%;
@@ -137,7 +184,6 @@
   50%, 100% { left: 100%; }
 }
 
-/* RIGHT */
 .neon-btn span:nth-child(2) {
   top: -100%;
   right: 0;
@@ -153,7 +199,6 @@
   50%, 100% { top: 100%; }
 }
 
-/* BOTTOM */
 .neon-btn span:nth-child(3) {
   bottom: 0;
   right: -100%;
@@ -169,7 +214,6 @@
   50%, 100% { right: 100%; }
 }
 
-/* LEFT */
 .neon-btn span:nth-child(4) {
   bottom: -100%;
   left: 0;
@@ -183,4 +227,15 @@
 @keyframes neon4 {
   0% { bottom: -100%; }
   50%, 100% { bottom: 100%; }
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  .neon-btn span {
+    animation: none !important;
+  }
+  
+  .service-card {
+    transition: none !important;
+  }
 }

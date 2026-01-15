@@ -5,6 +5,18 @@ import "../styles/Services.modules.css";
 export default function Services({ data }) {
   const [expanded, setExpanded] = useState(false);
   const [buttonState, setButtonState] = useState("idle");
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Check if mobile on mount
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.matchMedia("(max-width: 768px)").matches);
+    };
+    
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   const whatsappPhone = "447769873047";
   const whatsappMessage =
@@ -16,9 +28,9 @@ export default function Services({ data }) {
     setButtonState("loading");
 
     setTimeout(() => {
-      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      const isMobileDevice = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
-      if (isMobile) {
+      if (isMobileDevice) {
         window.location.href = `whatsapp://send?phone=${whatsappPhone}&text=${encodeURIComponent(
           whatsappMessage
         )}`;
@@ -36,36 +48,48 @@ export default function Services({ data }) {
     }, 800);
   };
 
-  // Trigger animation on mount
+  // Trigger animation on mount with mobile delay
   useEffect(() => {
-    const timer = setTimeout(() => setExpanded(true), 300);
+    const timer = setTimeout(() => setExpanded(true), isMobile ? 100 : 300);
     return () => clearTimeout(timer);
-  }, []);
+  }, [isMobile]);
 
-  // Container variants
+  // Simplified variants for mobile
   const containerVariants = {
     collapsed: {},
     expanded: {
       transition: {
-        staggerChildren: 0.15, // stagger card entrance
+        staggerChildren: isMobile ? 0.08 : 0.15, // Faster on mobile
       },
     },
   };
 
-  // Card variants
   const cardVariants = {
-    collapsed: { opacity: 0, y: 30, scale: 0.9 },
+    collapsed: { opacity: 0, y: isMobile ? 15 : 30, scale: 0.95 },
     expanded: {
       opacity: 1,
       y: 0,
       scale: 1,
       transition: {
         type: "spring",
-        stiffness: 120,
-        damping: 20,
+        stiffness: isMobile ? 150 : 120, // Snappier on mobile
+        damping: isMobile ? 25 : 20,
+        mass: isMobile ? 0.8 : 1, // Lighter on mobile
       },
     },
   };
+
+  // Mobile-optimized hover
+  const hoverProps = isMobile 
+    ? {} // No hover on mobile
+    : { 
+        whileHover: { 
+          y: -10, 
+          scale: 1.03, 
+          boxShadow: "0 10px 20px rgba(78, 205, 196, 0.4)",
+          transition: { type: "spring", stiffness: 400, damping: 10 }
+        } 
+      };
 
   return (
     <section className="services-section">
@@ -78,26 +102,23 @@ export default function Services({ data }) {
         initial="collapsed"
         animate={expanded ? "expanded" : "collapsed"}
       >
-        <motion.div
-          className="cards-container"
-          layout
-          transition={{ type: "spring", stiffness: 80, damping: 20 }}
-        >
+        <div className="cards-container">
           {data.services.map((service, i) => (
             <motion.div
               key={i}
               className="service-card"
               variants={cardVariants}
-              whileHover={{ y: -10, scale: 1.03, boxShadow: "0 10px 20px rgba(78, 205, 196, 0.4)" }}
+              {...hoverProps}
+              whileTap={isMobile ? { scale: 0.98 } : {}}
             >
               <h3>{service.title}</h3>
               <p>{service.description}</p>
               <p>{service.description2}</p>
               <p>{service.description3}</p>
-              <p>{service.price}</p>
+              <p className="price">{service.price}</p>
             </motion.div>
           ))}
-        </motion.div>
+        </div>
       </motion.div>
 
       <div>
@@ -106,6 +127,14 @@ export default function Services({ data }) {
           onClick={(e) => {
             e.preventDefault();
             handleGetInTouch();
+          }}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              handleGetInTouch();
+            }
           }}
         >
           <span></span>
