@@ -8,6 +8,7 @@ import Hero from '../components/Hero2.jsx';
 import SocialLinks from '../components/SocialLinks.jsx';
 import Footer from '../components/Footer.jsx';
 import MovingFooter from '../components/MovingFooter.jsx';
+import AboutHero from '../components/AboutHero.jsx';
 import "../styles/about.css";
 import titleScreen from '../../sanity-studio/schemaTypes/titleScreen.js';
 
@@ -34,6 +35,13 @@ const About = () => {
         heroSubtitle,
         heroMedia
       },
+
+      aboutBackgroundVideo {
+  asset->{
+    url
+  }
+},
+
 
       missionTitle,
       missionSubtitle,
@@ -101,9 +109,9 @@ const About = () => {
 
   return (
     <>
-     {content?.titleScreen && (
-  <Hero data={content.titleScreen} />
-)}
+     
+
+<AboutHero data={content} />
 
       <div className="about-container">
 

@@ -6,6 +6,7 @@ import Footer from '../components/Footer.jsx';
 import MovingFooter from '../components/MovingFooter.jsx';
 import "../styles/ContactUs.css";
 import { client } from "../sanity/client";
+import ContactHero from "../components/ContactHero.jsx"
 
 
 
@@ -134,6 +135,13 @@ const whatsappMessage = "Hello LA4K,\n\nI'm interested in your media production 
         heroMedia
       },
 
+      heroSection,
+      contactBackgroundVideo {
+  asset->{
+    url
+  }
+},
+
       headerTitle,
       headerSubtitle,
 
@@ -163,9 +171,9 @@ const whatsappMessage = "Hello LA4K,\n\nI'm interested in your media production 
 
   return (
     <>
-       {content?.titleScreen && (
-        <Hero data={content.titleScreen} />
-      )}
+      
+{/* <ContactHero data={content.titleScreen} /> */}
+<ContactHero data={content} />
       
       <div className="contact-container">
         {/* Contact Header */}
@@ -303,7 +311,7 @@ const whatsappMessage = "Hello LA4K,\n\nI'm interested in your media production 
                     name="phone"
                     value={formData.phone}
                     onChange={handleChange}
-                    placeholder="+1 (555) 123-4567"
+                    placeholder="+447379621023"
                   />
                 </div>
 
