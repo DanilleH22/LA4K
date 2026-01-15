@@ -1,11 +1,11 @@
 /* Hero2.module.css */
 .hero {
   position: relative;
-  height: 100vh;
-  min-height: 100svh;
+   min-height: 100svh;
+  height: auto;
   background: #000;
   color: white;
-  overflow: hidden;
+  overflow: visible;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -45,6 +45,10 @@
   padding: 0 20px;
   max-width: 1200px;
   margin: 0 auto;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .heroTitle {
@@ -73,8 +77,9 @@
 
 /* SCROLL INDICATOR - Fixed at bottom */
 .scrollIndicator {
-  position: absolute;
-  bottom: 40px;
+   position: relative;
+  bottom: auto;
+  margin-bottom: 40px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -95,7 +100,7 @@
 
 /* MOBILE STYLES */
 @media (max-width: 768px) {
-  .kyle {
+  .hero {
     height: 100vh;
     padding: 20px;
   }
