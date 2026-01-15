@@ -1,5 +1,5 @@
 /* Hero2.module.css */
-.hero {
+/* .hero {
   position: relative;
    min-height: 100svh;
   height: auto;
@@ -11,15 +11,52 @@
   align-items: center;
   justify-content: center;
   margin-bottom: 15px;
+} */
+
+
+.hero {
+  position: relative;
+  min-height: 100svh;
+  background: #000;
+  color: white;
+  display: flex;
+  flex-direction: column;
 }
 
-/* IMAGE LAYER - Fixed background images */
 .imageLayer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.heroContent {
+  position: relative;
+  z-index: 2;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0 20px;
+}
+
+.scrollIndicator {
+  position: relative;
+  margin-bottom: 40px;
+  z-index: 3;
+}
+
+
+/* IMAGE LAYER - Fixed background images */
+/* .imageLayer {
   position: absolute;
   inset: 0;
   pointer-events: none;
   z-index: 1;
-}
+} */
 
 .imageCard {
   position: absolute;
@@ -38,7 +75,7 @@
 }
 
 /* TEXT CONTENT - Centered in viewport */
-.heroContent {
+/* .heroContent {
   position: relative;
   z-index: 2;
   text-align: center;
@@ -49,7 +86,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-}
+} */
 
 .heroTitle {
   font-size: clamp(4rem, 15vw, 10rem);
@@ -76,7 +113,7 @@
 }
 
 /* SCROLL INDICATOR - Fixed at bottom */
-.scrollIndicator {
+/* .scrollIndicator {
    position: relative;
   bottom: auto;
   margin-bottom: 40px;
@@ -89,7 +126,7 @@
   font-size: 1.2rem;
   opacity: 0.6;
   z-index: 3;
-}
+} */
 
 .scrollIndicator p {
   margin: 0;
