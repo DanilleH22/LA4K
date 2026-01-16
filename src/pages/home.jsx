@@ -4,7 +4,7 @@
 
 import React, {useState, useEffect} from "react";
 import OurStory from "../components/OurStory.jsx"
-import { client } from "../sanity/client";
+
 import CaseStudies from '../components/CaseStudies.jsx';
 import Services from '../components/Services.jsx';
 // import PlayReel from './components/PlayReel.jsx';

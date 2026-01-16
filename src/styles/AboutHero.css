@@ -10,6 +10,17 @@
   z-index: 1;
 }
 
+/* Add these to AboutHero.css for debugging */
+.about-hero-text h1.debug {
+  border: 3px solid red !important;
+  padding: 10px !important;
+}
+
+.about-hero-text p.debug {
+  border: 3px solid blue !important;
+  padding: 10px !important;
+}
+
 .background-video {
   width: 100%;
   height: 100%;
@@ -55,34 +66,45 @@
 /* Text styling - OPTIMIZED FOR MOBILE */
 .about-hero-text {
   width: 100%;
+  
+  position: relative;
+  z-index: 2;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   text-align: center;
+  padding: 0 20px;
 }
 
 .about-hero-text h1 {
-  font-size: clamp(2.5rem, 10vw, 4rem); /* Better mobile scaling */
-  margin: 0 0 0.5rem 0; /* Consistent margins */
-  line-height: 1.1; /* Better line height for mobile */
-  background: linear-gradient(135deg, #4ecdc4, #45b7d1);
+  font-size: clamp(2.5rem, 10vw, 4rem);
+  margin: 0 0 0.5rem 0;
+  line-height: 1.1;
+  /* CHANGE to match Hero2 gradient: */
+  background: linear-gradient(135deg, #ffffff 0%, #4ecdc4 50%, #45b7d1 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   font-weight: 900;
-  letter-spacing: -0.02em; /* Slightly tighter letterspacing */
-  word-wrap: break-word; /* Prevent overflow */
+  letter-spacing: -0.02em;
+  word-wrap: break-word;
   overflow-wrap: break-word;
 }
 
 .about-hero-text p {
-  font-size: clamp(1.2rem, 5vw, 1.8rem); /* Better proportional scaling */
+  font-size: clamp(1.2rem, 5vw, 1.8rem);
   margin: 0;
   line-height: 1.3;
-  background: linear-gradient(135deg, #4ecdc4, #45b7d1);
+  /* CHANGE to match Hero2 gradient: */
+  background: linear-gradient(135deg, #ffffff 0%, #4ecdc4 50%, #45b7d1 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   font-weight: 700;
   letter-spacing: 0.02em;
-  text-transform: uppercase; /* Makes "VISUAL STUDIO" stand out */
+  text-transform: uppercase;
 }
 
 /* Tablet and Desktop */
@@ -220,4 +242,22 @@
   .about-hero-text {
     animation: none;
   }
+}
+
+
+/* Gradient Split Heading */
+.gradient-heading {
+  font-size: clamp(3rem, 12vw, 10rem); /* adjusts to screen size */
+  font-weight: 900;                     /* bold text */
+  letter-spacing: -0.02em;             /* tightens letters slightly */
+  margin: 0;                            /* remove default spacing */
+  
+  /* gradient effect */
+  background: linear-gradient(135deg, #ffffff 0%, #4ecdc4 50%, #45b7d1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  
+  line-height: 0.9;                     /* creates the “split line” look */
+  will-change: transform;               /* smooth GPU rendering */
 }

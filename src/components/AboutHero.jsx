@@ -87,7 +87,7 @@ export default function AboutHero({ data }) {
           initial={{ opacity: 0, scale: 0.9 }} // Add initial state
           animate={titleControls}
         >
-          <h1>LA4K</h1>
+          <h1 className="gradient-heading">LA4K</h1>
           <p>VISUAL STUDIO</p>
         </motion.div>
       </div>
