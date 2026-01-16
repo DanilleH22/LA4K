@@ -12,7 +12,7 @@ export default {
       title: "Hero Title For About Page",
       type: "file", // Use 'file' for videos
       options: {
-        accept: "video/mp4,video/webm,video/ogg", // restrict file types
+        accept: "video/mp4,video/webm,video/ogg", 
       }
     },
      
