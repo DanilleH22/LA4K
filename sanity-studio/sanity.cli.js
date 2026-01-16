@@ -4,7 +4,7 @@ export default defineCliConfig({
   api: {
     projectId: 'q74eh5v5',
     dataset: 'production',
-    appID: 'pyc352054dg83p5xbzewkjp0'
+    appID: 'pyc352054dg83p5xbzewkjp0',
   },
   deployment: {
     /**
