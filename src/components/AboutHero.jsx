@@ -63,19 +63,16 @@ export default function AboutHero({ data }) {
     <section className="about-hero" ref={sectionRef}>
         
       <div className="background-video-container">
-        {aboutBackgroundVideo?.asset?.url && (
-        <video 
-          className="background-video" 
-          autoPlay 
-          loop 
-          muted 
-          playsInline
-          
-        >
-            <source src={aboutBackgroundVideo.asset.url} type="video/mp4" />
-          
-        </video>
-        )}
+      
+        
+           <iframe
+  src="https://www.youtube.com/embed/eqXJNMlszvw?autoplay=1&mute=1&loop=1&controls=0&playsinline=1&modestbranding=1&rel=0&playlist=eqXJNMlszvw"
+  frameBorder="0"
+  allow="autoplay; encrypted-media"
+  title="Background video"
+></iframe>
+
+        
       </div>
         
       

@@ -82,20 +82,21 @@ export default function OurStory({ data }) {
   return (
     <section className="our-story" ref={sectionRef}>
       {/* Background Video */}
-      {backgroundVideo?.asset?.url && (
+
         <div className="background-video-container">
-          <video 
-            className="background-video" 
-            autoPlay 
-            loop 
-            muted 
-            playsInline
-          >
-            <source src={backgroundVideo.asset.url} type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
+          
+          
+
+         <iframe
+  src="https://www.youtube.com/embed/3zAXpk6EJMQ?autoplay=1&mute=1&loop=1&controls=0&playsinline=1&modestbranding=1&rel=0&playlist=3zAXpk6EJMQ"
+  frameBorder="0"
+  allow="autoplay; encrypted-media"
+  title="Background video"
+></iframe>
+
+
         </div>
-      )}
+     
       
       <div className="background-overlay"></div>
 

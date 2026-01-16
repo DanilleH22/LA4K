@@ -261,3 +261,11 @@
   line-height: 0.9;                     /* creates the “split line” look */
   will-change: transform;               /* smooth GPU rendering */
 }
+
+
+.background-video-container iframe {
+  width: 100%;
+  height: 100%;
+  pointer-events: none; 
+  transform: scale(1.3); 
+}
