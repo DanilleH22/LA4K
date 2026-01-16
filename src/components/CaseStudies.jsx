@@ -25,6 +25,7 @@ useEffect(() => {
   window.addEventListener("resize", checkMobile);
   return () => window.removeEventListener("resize", checkMobile);
 }, []);
+
 const closeButton = {
   position: "absolute",
   top: isMobile ? "20px" : "45px",
