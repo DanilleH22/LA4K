@@ -4,7 +4,13 @@ import { motion } from "framer-motion";
 export default function CaseStudies({ data }) {
   const [selectedVideo, setSelectedVideo] = useState(null);
 
-  if (!data) return null;
+  // YouTube embed URLs
+  const youtubeVideos = [
+    "https://www.youtube.com/embed/3zAXpk6EJMQ?si=hXYQBOTvuXR1ILsV&controls=0&start=1",
+    "https://www.youtube.com/embed/W1kp2Ecd_r8?si=WHnWsNOl2cV48uFJ", 
+    "https://www.youtube.com/embed/ALzNl3iKo34?si=-hEjDErXGgUaFNWi&controls=0&start=1",
+    "https://www.youtube.com/embed/eqXJNMlszvw?si=uG5yBhjPkasGGkD0&controls=0"
+  ];
 
   const handleVideoClick = (videoUrl) => {
     setSelectedVideo(videoUrl);
@@ -16,50 +22,63 @@ export default function CaseStudies({ data }) {
 
   const [isMobile, setIsMobile] = useState(false);
 
-useEffect(() => {
-  const checkMobile = () => {
-    setIsMobile(window.innerWidth <= 768);
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  // Extract video ID from URL
+  const extractVideoId = (url) => {
+    const match = url.match(/embed\/([^?]+)/);
+    return match ? match[1] : null;
   };
-  
-  checkMobile();
-  window.addEventListener("resize", checkMobile);
-  return () => window.removeEventListener("resize", checkMobile);
-}, []);
 
-const closeButton = {
-  position: "absolute",
-  top: isMobile ? "20px" : "45px",
-  right: "0",
-  background: "none",
-  border: "none",
-  color: "white",
-  fontSize: "2.5rem",
-  cursor: "pointer",
-  padding: "5px 15px",
-  zIndex: 1001,
-};
+  // Create autoplay URL for modal
+  const createModalUrl = (url) => {
+    const videoId = extractVideoId(url);
+    if (!videoId) return url;
+    
+    let embedUrl = `https://www.youtube.com/embed/${videoId}`;
+    embedUrl += '?rel=0&modestbranding=1&showinfo=0&playsinline=1';
+    embedUrl += '&autoplay=1&mute=0&controls=1';
+    
+    if (url.includes('start=')) {
+      const startMatch = url.match(/start=(\d+)/);
+      if (startMatch) embedUrl += `&start=${startMatch[1]}`;
+    }
+    
+    return embedUrl;
+  };
 
-const fullscreenVideo = {
-  width: "100%",
-  height: "auto",
-  maxHeight: "80vh",
-  objectFit: "contain",
-  borderRadius: "8px",
-  boxShadow: "0 20px 60px rgba(0,0,0,0.5)",
-  position: "relative",
-  top: "80px",
-};
+  const closeButton = {
+    position: "absolute",
+    top: isMobile ? "20px" : "45px",
+    right: "0",
+    background: "none",
+    border: "none",
+    color: "white",
+    fontSize: "2.5rem",
+    cursor: "pointer",
+    padding: "5px 15px",
+    zIndex: 1001,
+  };
 
   return (
     <>
-      <h1>{data.caseStudyHeading}</h1>
-      <p>{data.caseStudyBody}</p>
+      <h1>{data?.caseStudyHeading || "Our Recent Work"}</h1>
+      <p>{data?.caseStudyBody || "Check out our latest video productions"}</p>
 
       <div style={container}>
-        {data.caseStudyMedia?.map((media, index) => (
+        {youtubeVideos.map((videoUrl, index) => (
           <Card 
             key={index} 
-            video={media.asset.url} 
+            videoUrl={videoUrl}
+            index={index}
             onVideoClick={handleVideoClick}
           />
         ))}
@@ -70,14 +89,23 @@ const fullscreenVideo = {
         <div style={modalOverlay} onClick={closeModal}>
           <div style={modalContent} onClick={(e) => e.stopPropagation()}>
             <button style={closeButton} onClick={closeModal}>×</button>
-            <video
-              src={selectedVideo}
-              style={fullscreenVideo}
-              autoPlay
-              muted
-              loop
-              controls
-              playsInline
+            
+            <iframe
+              src={createModalUrl(selectedVideo)}
+              style={{
+                width: "100%",
+                height: isMobile ? "auto" : "80vh",
+                aspectRatio: "16/9",
+                border: "none",
+                borderRadius: "8px",
+                boxShadow: "0 20px 60px rgba(0,0,0,0.5)",
+                position: "relative",
+                top: isMobile ? "40px" : "80px",
+              }}
+              title="YouTube video player"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
             />
           </div>
         </div>
@@ -86,29 +114,96 @@ const fullscreenVideo = {
   );
 }
 
-function Card({ video, onVideoClick }) {
+function Card({ videoUrl, index, onVideoClick }) {
+  // Extract video ID
+  const extractVideoId = (url) => {
+    const match = url.match(/embed\/([^?]+)/);
+    return match ? match[1] : null;
+  };
+
+  // Create autoplay URL for thumbnail
+  const createThumbnailUrl = (url) => {
+    const videoId = extractVideoId(url);
+    if (!videoId) return url;
+    
+    let embedUrl = `https://www.youtube.com/embed/${videoId}`;
+    embedUrl += '?rel=0&modestbranding=1&showinfo=0&playsinline=1';
+    embedUrl += '&autoplay=1&mute=1&loop=1&playlist=' + videoId + '&controls=0';
+    
+    if (url.includes('start=')) {
+      const startMatch = url.match(/start=(\d+)/);
+      if (startMatch) embedUrl += `&start=${startMatch[1]}`;
+    }
+    
+    return embedUrl;
+  };
+
+  const videoId = extractVideoId(videoUrl);
+  const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+  const fallbackThumbnail = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+
   return (
     <motion.div
-      style={cardContainer}
+      style={{
+        ...cardContainer,
+        marginTop: index > 0 ? "110px" : "0",
+        zIndex: 10 - index
+      }}
       initial="offscreen"
       whileInView="onscreen"
-      viewport={{ amount: 0.6, once: false }}
-      onClick={() => onVideoClick(video)}
+      viewport={{ amount: 0.6, once: true }}
+      onClick={() => onVideoClick(videoUrl)}
+      className="card-container"
     >
-      <motion.div style={card} variants={cardVariants}>
-        <video
-          src={video}
-          style={videoStyle}
-          autoPlay
-          muted
-          loop
-          playsInline
-        />
-        {/* Play overlay icon */}
-        <div style={playOverlay}>
-          <svg width="60" height="60" viewBox="0 0 24 24" fill="white">
-            <path d="M8 5v14l11-7z" />
-          </svg>
+      <motion.div 
+        style={card} 
+        variants={cardVariants}
+        whileHover={{ scale: 1.02 }}
+        transition={{ duration: 0.3 }}
+      >
+        <div style={videoWrapper}>
+          <iframe
+            src={createThumbnailUrl(videoUrl)}
+            style={{
+              width: "100%",
+              height: "100%",
+              border: "none",
+              pointerEvents: "none",
+            }}
+            title={`YouTube video ${index + 1}`}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            loading="lazy"
+          />
+          
+          <img 
+            src={thumbnailUrl} 
+            alt="Video thumbnail"
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              display: "none",
+              pointerEvents: "none"
+            }}
+            onError={(e) => {
+              if (e.target.src !== fallbackThumbnail) {
+                e.target.src = fallbackThumbnail;
+                e.target.style.display = "block";
+              }
+            }}
+          />
+        </div>
+        
+        <div style={playOverlay} className="play-overlay">
+          <div style={playButton}>
+            <svg width="80" height="80" viewBox="0 0 24 24" fill="white">
+              <path d="M8 5v14l11-7z" />
+            </svg>
+          </div>
         </div>
       </motion.div>
     </motion.div>
@@ -120,6 +215,7 @@ const cardVariants = {
   offscreen: {
     y: 200,
     opacity: 0,
+    rotate: -5,
   },
   onscreen: {
     y: 0,
@@ -129,6 +225,7 @@ const cardVariants = {
       type: "spring",
       bounce: 0.35,
       duration: 0.8,
+      delay: 0.1
     },
   },
 };
@@ -137,16 +234,17 @@ const cardVariants = {
 const container = {
   margin: "100px auto",
   maxWidth: 1100,
-  paddingBottom: 200,
+  paddingBottom: 100,
   width: "100%",
   cursor: "pointer",
+  position: "relative",
 };
 
 const cardContainer = {
   display: "flex",
   justifyContent: "center",
   position: "relative",
-  marginBottom: -140,
+  marginBottom: "-120px",
 };
 
 const card = {
@@ -158,17 +256,18 @@ const card = {
   background: "#000",
   boxShadow: "0 20px 60px rgba(0,0,0,0.35)",
   transformOrigin: "10% 60%",
-  height: "620px",
+  height: "auto",
   position: "relative",
+  cursor: "pointer",
 };
 
-const videoStyle = {
+const videoWrapper = {
   width: "100%",
   height: "100%",
-  objectFit: "cover",
-  display: "block",
+  position: "relative",
+  overflow: "hidden",
 };
- 
+
 const playOverlay = {
   position: "absolute",
   top: 0,
@@ -180,14 +279,15 @@ const playOverlay = {
   justifyContent: "center",
   backgroundColor: "rgba(0, 0, 0, 0.3)",
   opacity: 0,
-  transition: "opacity 0.3s ease",
+  transition: "opacity 0.3s ease, background-color 0.3s ease",
+  pointerEvents: "none",
 };
 
-const cardContainerHover = {
-  ...cardContainer,
-  "&:hover $playOverlay": {
-    opacity: 1,
-  },
+const playButton = {
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  justifyContent: "center",
 };
 
 const modalOverlay = {
@@ -196,12 +296,13 @@ const modalOverlay = {
   left: 0,
   right: 0,
   bottom: 0,
-  backgroundColor: "rgba(0, 0, 0, 0.9)",
+  backgroundColor: "rgba(0, 0, 0, 0.95)",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  zIndex: 1000,
+  zIndex: 2000,
   padding: "20px",
+  backdropFilter: "blur(5px)",
 };
 
 const modalContent = {
@@ -209,53 +310,25 @@ const modalContent = {
   width: "90vw",
   maxWidth: "1400px",
   maxHeight: "90vh",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
 };
-
-// const closeButton = {
-//   position: "absolute",
-//   top: isMobile ? "80px" : "45px",
-//   right: "0",
-//   background: "none",
-//   border: "none",
-//   color: "white",
-//   fontSize: "2.5rem",
-//   cursor: "pointer",
-//   padding: "5px 15px",
-//   zIndex: 1001,
-// };
-
-// const fullscreenVideo = {
-//   width: "100%",
-//   height: "auto",
-//   maxHeight: "80vh",
-//   objectFit: "contain",
-//   borderRadius: "8px",
-//   boxShadow: "0 20px 60px rgba(0,0,0,0.5)",
-//   position: "relative",
-//   top: "80px",
-// };
-
-
-    // width: 100%;
-    // height: 60%;
-    // max-height: 80vh;
-    // object-fit: contain;
-    // border-radius: 8px;
-    // box-shadow: rgba(0, 0, 0, 0.5) 0px 20px 60px;
-    
 
 // Add hover effect
 const styles = `
   .card-container:hover .play-overlay {
     opacity: 1 !important;
+    background-color: rgba(0, 0, 0, 0.5) !important;
+  }
+  
+  .card-container:hover {
+    z-index: 20 !important;
   }
 `;
 
-// Inject the hover styles
 if (typeof document !== 'undefined') {
   const styleSheet = document.createElement("style");
   styleSheet.textContent = styles;
   document.head.appendChild(styleSheet);
 }
-
-export { cardContainerHover };
