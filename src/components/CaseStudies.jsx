@@ -6,10 +6,10 @@ export default function CaseStudies({ data }) {
 
   // YouTube embed URLs
   const youtubeVideos = [
+    "https://www.youtube.com/embed/yl5oPrBQi6k?si=jnchRCVK5n-lYdSh&amp;controls=0&start=1",
     "https://www.youtube.com/embed/ALzNl3iKo34?si=-hEjDErXGgUaFNWi&controls=0&start=1",
-    "https://www.youtube.com/embed/3zAXpk6EJMQ?si=hXYQBOTvuXR1ILsV&controls=0&start=1",
     "https://www.youtube.com/embed/W1kp2Ecd_r8?si=WHnWsNOl2cV48uFJ", 
-    "https://www.youtube.com/embed/eMTLsrzMIvw?si=hDUys6iHhyspTNOm&amp;controls=0&start=1" 
+    "https://www.youtube.com/embed/eMTLsrzMIvw?si=hDUys6iHhyspTNOm&amp;controls=0&start=1"
     
   ];
 
