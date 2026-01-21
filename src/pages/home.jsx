@@ -17,22 +17,25 @@ import MovingFooter from '../components/MovingFooter.jsx';
 import SocialLinks from '../components/SocialLinks.jsx';
 import Hero2 from '../components/Hero2.jsx';
 import { fetchHome } from "../sanity/fetchHome.js";
-
+import { clearHomeCache } from "../sanity/fetchHome.js";
 
 export default function Homepage() {
   const [home, setHome] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
+ 
+
+useEffect(() => {
+  clearHomeCache();
   fetchHome()
     .then(setHome)
-    .catch((err) => {
-      console.error(err);
-      // fallback logic here if needed
-    })
+    .catch(console.error)
     .finally(() => setLoading(false));
 }, []);
+
+
+
 
   if (loading) {
     return <div style={{ color: "white", padding: "2rem" }}>Loading homepage…</div>;
@@ -45,6 +48,13 @@ export default function Homepage() {
   if (!home) {
     return <div style={{ color: "white", padding: "2rem" }}>No data found</div>;
   }
+
+   console.log("Video Reel Projects:", home.videoReelSection.projects.map(p => ({
+  title: p.title,
+  url: p.image?.asset?.url,
+  createdAt: p.image?.asset?._createdAt
+})));
+
 
   return (
     <>

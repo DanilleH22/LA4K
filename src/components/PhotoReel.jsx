@@ -3,65 +3,16 @@ import "../styles/PhotoReel.modules.css";
 import { useEffect, useState } from 'react';
 import { client } from "../sanity/client";
 import { urlFor } from "../sanityImage";
+import { clearHomeCache } from "../sanity/fetchHome.js";
 
 
 export default function VideoReel({ data }) {
-  // const projects = [
-  //   {
-  //     id: 1,
-  //     title: "Brand Documentary",
-  //     description: "Corporate storytelling for global tech company",
-  //     image: "https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=800&auto=format&fit=crop"
-  //   },
-  //   {
-  //     id: 2,
-  //     title: "Product Launch",
-  //     description: "Cinematic product reveal video",
-  //     image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&auto=format&fit=crop"
-  //   },
-  //   {
-  //     id: 3,
-  //     title: "Social Campaign",
-  //     description: "Viral social media content series",
-  //     image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&auto=format&fit=crop"
-  //   },
-  //   {
-  //     id: 4,
-  //     title: "Event Coverage",
-  //     description: "Multi-camera conference production",
-  //     image: "https://images.unsplash.com/photo-1568992688065-536aad8a12f6?w=800&auto=format&fit=crop"
-  //   },
-  //   {
-  //     id: 5,
-  //     title: "Commercial Ad",
-  //     description: "30-second TV commercial spot",
-  //     image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&auto=format&fit=crop"
-  //   },
-  //   {
-  //     id: 6,
-  //     title: "Training Series",
-  //     description: "Educational video content",
-  //     image: "https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=800&auto=format&fit=crop"
-  //   },
-  //   {
-  //     id: 7,
-  //     title: "Corporate Profile",
-  //     description: "Company culture showcase",
-  //     image: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=800&auto=format&fit=crop"
-  //   },
-  //   {
-  //     id: 8,
-  //     title: "Testimonial Series",
-  //     description: "Client success stories",
-  //     image: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=800&auto=format&fit=crop"
-  //   },
-  //   {
-  //     id: 9,
-  //     title: "Motion Graphics",
-  //     description: "Animated explainer video",
-  //     image: "https://images.unsplash.com/photo-1551986781-2e6d2c6d2c6d?w=800&auto=format&fit=crop"
-  //   }
-  // ];
+
+useEffect(() => {
+  clearHomeCache();
+}, []);
+
+
 
      const [buttonState, setButtonState] = useState('idle'); 
     const [copied, setCopied] = useState(false);
@@ -134,6 +85,8 @@ export default function VideoReel({ data }) {
 
 if (!data) return null;
 
+console.log("Video Reel Projects →", data.projects);
+
 
   return (
     <section className="video-reel">
@@ -181,12 +134,20 @@ if (!data) return null;
         }
       }}
     >
-      <div
-  className="card-image"
-  style={{
-    backgroundImage: `url(${urlFor(project.image).width(800).quality(80).url()})`
-  }}
-/>
+     
+<div className="card-image">
+  {project.image && (
+    <img
+      src={urlFor(project.image).width(800).quality(80).url()}
+      alt={project.title}
+      className="card-img-underlay"
+      loading="lazy"
+    />
+  )}
+</div>
+
+
+
       {/* <img
         src={urlFor(project.image).width(800).quality(80).url()}
         alt={project.title}

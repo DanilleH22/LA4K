@@ -8,45 +8,42 @@ export async function fetchHome() {
   }
 
   const data = await client.fetch(`
-    *[_type == "home"][0]{
-      heroSection,
-      ourStory{
-        ourStoryHeading,
-        ourStoryBody,
-        backgroundVideo{
-          asset->{ url }
-        },
-        missionStatements[]{
-          title,
-          description
-        }
+  *[_type == "home"][0]{
+    heroSection,
+    ourStory{
+      ourStoryHeading,
+      ourStoryBody,
+      backgroundVideo{
+        asset->{ url }
       },
-
-      caseStudy{
-        caseStudyHeading,
-        caseStudyBody,
-        caseStudyMedia[]{
+      missionStatements[]{
+        title,
+        description
+      }
+    },
+    caseStudy{
+      caseStudyHeading,
+      caseStudyBody,
+      caseStudyMedia[]{
+        asset->{ url }
+      }
+    },
+    trustedFeedback,
+    faq,
+    servicesSection,
+    videoReelSection{
+      eyebrow,
+      heading,
+      projects[]{
+        title,
+        description,
+        image{
           asset->{ url }
-        }
-      },
-
-      trustedFeedback,
-      faq,
-      servicesSection,
-
-      videoReelSection{
-        eyebrow,
-        heading,
-        projects[]{
-          title,
-          description,
-          image{
-            asset->
-          }
         }
       }
     }
-  `);
+  }
+`);
 
   cachedHome = data;
   return data;
