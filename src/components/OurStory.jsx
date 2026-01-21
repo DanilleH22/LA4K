@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Button } from "react-bootstrap";
-import "../styles/OurStory.modules.css";
+import "../styles/OurStory.css";
 
 export default function OurStory({ data }) {
   const [buttonState, setButtonState] = useState("idle");
@@ -83,19 +83,15 @@ export default function OurStory({ data }) {
     <section className="our-story" ref={sectionRef}>
       {/* Background Video */}
 
-        <div className="background-video-container">
-          
-          
-
-         <iframe
-  src="https://www.youtube.com/embed/3zAXpk6EJMQ?autoplay=1&mute=1&loop=1&controls=0&playsinline=1&modestbranding=1&rel=0&playlist=3zAXpk6EJMQ"
+      <div className="background-video-container">
+      <iframe
+  src="https://www.youtube.com/embed/3zAXpk6EJMQ?autoplay=1&mute=1&loop=1&controls=0&playsinline=1&playlist=3zAXpk6EJMQ&enablejsapi=1"
   frameBorder="0"
   allow="autoplay; encrypted-media"
   title="Background video"
-></iframe>
-
-
-        </div>
+  allowFullScreen
+/>
+  </div>
      
       
       <div className="background-overlay"></div>

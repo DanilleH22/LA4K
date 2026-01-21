@@ -1,0 +1,363 @@
+/* Background video container - RESPONSIVE IFRAME */
+.background-video-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Responsive iframe - covers entire container on all screens */
+  .background-video-container iframe {
+    /* Default for desktop/larger screens - maintain 16:9 aspect ratio */
+    width: 100vw;
+    height: 56.25vw; /* 16:9 aspect ratio (9/16 = 0.5625) */
+    min-height: 100vh;
+    min-width: 177.78vh; /* Inverse: 16/9 = 1.7778 */
+    
+    /* Center the iframe */
+    position: absolute;
+    /* top: 50%;
+    left: 50%; */
+    transform: translate(-50%, -50%);
+    
+    /* Remove default iframe styling */
+    border: 0;
+    pointer-events: none; /* Allows clicks to pass through to content */
+  }
+  
+  /* MOBILE PORTRAIT: Switch to 9:16 aspect ratio */
+  @media (max-width: 768px) and (orientation: portrait) {
+    .background-video-container iframe {
+      /* Switch to portrait mobile ratio (9:16) */
+      width: 56.25vh; /* 9/16 of viewport height */
+      height: 100vh;
+      /* min-width: 100vw; */
+      min-height: 177.78vw; /* Inverse: 16/9 = 1.7778 */
+    }
+  }
+  
+  /* Tablet portrait optimization */
+  @media (min-width: 769px) and (max-width: 1024px) and (orientation: portrait) {
+    .background-video-container iframe {
+      width: 56.25vh;
+      height: 100vh;
+      min-width: 100vw;
+      min-height: 177.78vw;
+    }
+  }
+  
+  /* Small mobile devices */
+  @media (max-width: 360px) and (orientation: portrait) {
+    .background-video-container iframe {
+      /* Adjust for very small screens */
+      width: 50vh;
+      height: 100vh;
+      min-width: 100vw;
+      min-height: 200vw;
+    }
+  }
+  
+  /* Landscape mode - keep 16:9 */
+  @media (max-width: 768px) and (orientation: landscape) {
+    .background-video-container iframe {
+      /* Keep 16:9 in landscape */
+      width: 100vw;
+      height: 56.25vw;
+      min-height: 100vh;
+      min-width: 177.78vh;
+    }
+  }
+  
+  /* The rest of your existing CSS remains exactly the same... */
+  
+  /* Background overlay */
+  .background-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 1;
+  }
+  
+  /* our story section - MOBILE FIRST */
+  .our-story {
+    min-height: 100svh;
+    min-height: 100vh; /* Fallback */
+    padding: 1.5rem 1rem; /* Smaller padding on mobile */
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    overflow: hidden;
+  }
+  
+  .our-story-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem; /* Smaller gap on mobile */
+    width: 100%; /* Full width on mobile */
+    max-width: 100%;
+    text-align: right;
+    margin-right: 1rem; /* Smaller margin on mobile */
+    margin-bottom: 3vh; /* Smaller bottom margin on mobile */
+    position: relative;
+    z-index: 2;
+  }
+  
+  /* text styling - OPTIMIZED FOR MOBILE */
+  .our-story-text h2 {
+    font-size: clamp(1.2rem, 6vw, 2.5rem); /* Better mobile scaling */
+    margin-bottom: 0.75rem;
+    color: #f0eeee;
+    line-height: 1.2; /* Tighter line height for mobile */
+    font-weight: 700;
+  }
+  
+  .our-story-text p {
+    font-size: clamp(0.8rem, 3.5vw, 1.05rem); /* Fluid font size */
+    margin-bottom: 1rem;
+    color: #f0eeee;
+    line-height: 1.5; /* Better readability on mobile */
+   
+  }
+  
+  .our-story-mission {
+    list-style: none;
+    padding: 0;
+    margin: 0.5rem 0;
+  }
+  
+  .our-story-mission li {
+    margin-bottom: 0.6rem;
+    color: #f0eeee;
+    font-size: clamp(0.65rem, 3vw, 0.95rem); /* Fluid font size */
+    line-height: 1.4;
+   
+  }
+  
+  .our-story-mission li strong {
+    color: #4ecdc4;
+    font-weight: 600;
+  }
+  
+  /* Button styling - MOBILE OPTIMIZED */
+  .our-story-inner .button {
+    align-self: flex-end;
+    margin-top: 0.5rem;
+    padding: clamp(0.7rem, 3vw, 0.8rem) clamp(1.5rem, 5vw, 2rem); /* Responsive padding */
+    background: linear-gradient(135deg, #4ecdc4, #45b7d1);
+    border: none;
+    border-radius: 50px; /* Pill shape works better on mobile */
+    color: white;
+    font-size: clamp(0.9rem, 3.5vw, 1rem); /* Responsive font size */
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    min-height: 44px; /* Minimum touch target size (Apple guidelines) */
+    min-width: 120px; /* Minimum width for readability */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    -webkit-tap-highlight-color: transparent; /* Remove tap highlight on mobile */
+  }
+  
+  /* Hover effects only on devices that support hover */
+  @media (hover: hover) and (pointer: fine) {
+    .our-story-inner .button:hover {
+      background: linear-gradient(135deg, #45b7d1, #4ecdc4);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(78, 205, 196, 0.3);
+    }
+  }
+  
+  /* Active/tap state for mobile */
+  .our-story-inner .button:active {
+    transform: scale(0.98);
+    transition: transform 0.1s ease;
+  }
+  
+  /* Focus state for accessibility */
+  .our-story-inner .button:focus {
+    outline: 2px solid #4ecdc4;
+    outline-offset: 2px;
+  }
+  
+  /* Tablet and Small Desktop */
+  @media (min-width: 768px) {
+    .our-story {
+      padding: 3rem 3vw;
+    }
+    
+    .our-story-inner {
+      max-width: 600px;
+      gap: 2rem;
+      margin-right: 5vw;
+      margin-bottom: 5vh;
+    }
+    
+    .our-story-text h2 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      margin-bottom: 1rem;
+    }
+    
+    .our-story-text p {
+      font-size: 1.05rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .our-story-mission li {
+      font-size: 0.95rem;
+      margin-bottom: 0.7rem;
+    }
+    
+    .our-story-inner .button {
+      padding: 0.8rem 2.5rem;
+      font-size: 1rem;
+    }
+  }
+  
+  /* Desktop */
+  @media (min-width: 1024px) {
+    .our-story {
+      padding: 5rem 5vw;
+    }
+    
+    .our-story-inner {
+      max-width: 600px;
+    }
+  }
+  
+  /* Very small phones (iPhone SE, etc.) */
+  @media (max-width: 360px) {
+    .our-story {
+      padding: 1rem 0.75rem;
+    }
+    
+    .our-story-inner {
+      margin-right: 0.75rem;
+      margin-bottom: 2vh;
+      gap: 1rem;
+    }
+    
+    .our-story-text h2 {
+      font-size: 1.6rem;
+    }
+    
+    .our-story-text p {
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+    
+    .our-story-mission li {
+      font-size: 0.8rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .our-story-inner .button {
+      min-width: 110px;
+      padding: 0.6rem 1.2rem;
+      font-size: 0.85rem;
+    }
+  }
+  
+  /* Landscape mode optimization */
+  @media (max-height: 500px) and (orientation: landscape) {
+    .our-story {
+      min-height: 120vh; /* More height in landscape */
+      padding: 1rem 2vw;
+    }
+    
+    .our-story-inner {
+      margin-bottom: 2vh;
+      gap: 1rem;
+    }
+    
+    .our-story-text h2 {
+      font-size: clamp(1.5rem, 4vh, 2rem);
+      margin-bottom: 0.5rem;
+    }
+    
+    .our-story-text p {
+      font-size: clamp(0.85rem, 2.5vh, 0.95rem);
+      margin-bottom: 0.75rem;
+    }
+    
+    .our-story-mission li {
+      font-size: clamp(0.8rem, 2vh, 0.9rem);
+      margin-bottom: 0.4rem;
+      
+    }
+    
+    .our-story-inner .button {
+      padding: 0.5rem 1.5rem;
+      font-size: 0.9rem;
+      min-height: 40px;
+    }
+  }
+  
+  /* Center everything on smaller screens */
+  @media (max-width: 640px) {
+    .our-story {
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    
+    .our-story-inner {
+      text-align: center;
+      margin: 0 auto;
+      padding-bottom: 4vh;
+      margin-right: 0;
+      align-items: center;
+    }
+    
+    .our-story-inner .button {
+      align-self: center;
+    }
+  }
+  
+  /* Prevent text overflow on very small screens */
+  .our-story-text h2,
+  .our-story-text p,
+  .our-story-mission li {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    hyphens: auto;
+  }
+  
+  /* Improve text contrast on mobile */
+  @media (max-width: 768px) {
+    .our-story-text h2 {
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+    
+    .our-story-text p,
+    .our-story-mission li {
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    }
+  }
+  
+  /* Adjust overlay for better text readability on mobile */
+  @media (max-width: 768px) {
+    .background-overlay {
+      background: rgba(0, 0, 0, 0.5); /* Darker overlay for better contrast */
+    }
+  }
+  
+  /* Smooth transitions for all interactive elements */
+  .our-story-inner .button,
+  .our-story-text h2,
+  .our-story-text p {
+    transition: all 0.3s ease;
+  }
