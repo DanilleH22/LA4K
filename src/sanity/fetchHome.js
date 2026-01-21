@@ -4,7 +4,7 @@ let cachedHome = null;
 
 export async function fetchHome() {
   if (cachedHome) {
-    return cachedHome; // ✅ reuse cached result
+    return cachedHome; // reuse cached result
   }
 
   const data = await client.fetch(`
@@ -21,6 +21,7 @@ export async function fetchHome() {
           description
         }
       },
+
       caseStudy{
         caseStudyHeading,
         caseStudyBody,
@@ -28,10 +29,22 @@ export async function fetchHome() {
           asset->{ url }
         }
       },
+
       trustedFeedback,
       faq,
       servicesSection,
-      videoReelSection
+
+      videoReelSection{
+        eyebrow,
+        heading,
+        projects[]{
+          title,
+          description,
+          image{
+            asset->
+          }
+        }
+      }
     }
   `);
 
@@ -39,5 +52,6 @@ export async function fetchHome() {
   return data;
 }
 
-
-export function clearHomeCache() { cachedHome = null; }
+export function clearHomeCache() {
+  cachedHome = null;
+}
