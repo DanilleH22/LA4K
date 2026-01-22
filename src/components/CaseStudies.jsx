@@ -40,21 +40,40 @@ export default function CaseStudies({ data }) {
   };
 
   // Create autoplay URL for modal
+  // const createModalUrl = (url) => {
+  //   const videoId = extractVideoId(url);
+  //   if (!videoId) return url;
+    
+  //   let embedUrl = `https://www.youtube.com/embed/${videoId}`;
+  //   embedUrl += '?rel=0&modestbranding=1&showinfo=0&playsinline=1';
+  //   embedUrl += '&autoplay=1&mute=0&controls=1';
+    
+  //   if (url.includes('start=')) {
+  //     const startMatch = url.match(/start=(\d+)/);
+  //     if (startMatch) embedUrl += `&start=${startMatch[1]}`;
+  //   }
+    
+  //   return embedUrl;
+  // };
   const createModalUrl = (url) => {
-    const videoId = extractVideoId(url);
-    if (!videoId) return url;
-    
-    let embedUrl = `https://www.youtube.com/embed/${videoId}`;
-    embedUrl += '?rel=0&modestbranding=1&showinfo=0&playsinline=1';
-    embedUrl += '&autoplay=1&mute=0&controls=1';
-    
-    if (url.includes('start=')) {
-      const startMatch = url.match(/start=(\d+)/);
-      if (startMatch) embedUrl += `&start=${startMatch[1]}`;
-    }
-    
-    return embedUrl;
-  };
+  const videoId = extractVideoId(url);
+  if (!videoId) return url;
+
+  let embedUrl = `https://www.youtube.com/embed/${videoId}`;
+  embedUrl += '?rel=0&modestbranding=1&showinfo=0&playsinline=1';
+
+  // Detect mobile and mute autoplay
+  const isMobileDevice = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  embedUrl += `&autoplay=1&mute=${isMobileDevice ? 1 : 0}&controls=1`;
+
+  if (url.includes('start=')) {
+    const startMatch = url.match(/start=(\d+)/);
+    if (startMatch) embedUrl += `&start=${startMatch[1]}`;
+  }
+
+  return embedUrl;
+};
+
 
   const closeButton = {
     position: "absolute",
