@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
-export default function CaseStudies({ data }) {
+export default function testingVideos({ data }) {
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
 
-  // YouTube embed URLs
+  // CORRECTED: YouTube embed URLs WITHOUT the 'si=' parameter
   const youtubeVideos = [
-    "https://www.youtube.com/embed/yl5oPrBQi6k?si=jnchRCVK5n-lYdSh&controls=0&start=1",
-    "https://www.youtube.com/embed/ALzNl3iKo34?si=-hEjDErXGgUaFNWi&controls=0&start=1",
-    "https://www.youtube.com/embed/W1kp2Ecd_r8?si=WHnWsNOl2cV48uFJ&controls=0&start=1", 
-    "https://www.youtube.com/embed/eMTLsrzMIvw?si=hDUys6iHhyspTNOmz&controls=0&start=1"
+    "https://www.youtube.com/embed/yl5oPrBQi6k?controls=0&start=1&autoplay=1&mute=1",
+    "https://www.youtube.com/embed/ALzNl3iKo34?controls=0&start=1&autoplay=1&mute=1",
+    "https://www.youtube.com/embed/W1kp2Ecd_r8?controls=0&start=1&autoplay=1&mute=1", 
+    "https://www.youtube.com/embed/eMTLsrzMIvw?controls=0&start=1&autoplay=1&mute=1"
   ];
 
   useEffect(() => {
@@ -43,28 +43,22 @@ export default function CaseStudies({ data }) {
     if (!videoId) return url;
     
     let embedUrl = `https://www.youtube.com/embed/${videoId}`;
-    embedUrl += '?rel=0&modestbranding=1&showinfo=0';
-    embedUrl += '&autoplay=1&playsinline=1';
+    embedUrl += '?rel=0&modestbranding=1&showinfo=0&playsinline=1';
+    embedUrl += '&autoplay=1&controls=1';
     
     // Mobile requires muted autoplay
     if (isMobile) {
       embedUrl += '&mute=1';
-    } else {
-      embedUrl += '&mute=0';
     }
     
-    // Add controls back for modal
-    embedUrl += '&controls=1';
-    
-    if (url.includes('start=')) {
-      const startMatch = url.match(/start=(\d+)/);
-      if (startMatch) embedUrl += `&start=${startMatch[1]}`;
-    }
+    // Add start time if present in original URL
+    const startMatch = url.match(/start=(\d+)/);
+    if (startMatch) embedUrl += `&start=${startMatch[1]}`;
     
     return embedUrl;
   };
 
-  // Create thumbnail URL with autoplay for both mobile and desktop
+  // Create thumbnail URL with autoplay
   const createThumbnailUrl = (url) => {
     const videoId = extractVideoId(url);
     if (!videoId) return url;
@@ -72,16 +66,13 @@ export default function CaseStudies({ data }) {
     let embedUrl = `https://www.youtube.com/embed/${videoId}`;
     embedUrl += '?rel=0&modestbranding=1&showinfo=0&playsinline=1';
     
-    // For autoplay to work on both mobile and desktop, must be muted
-    embedUrl += '&autoplay=1&mute=1&controls=0';
+    // CRITICAL: For mobile autoplay, videos MUST be muted and have playsinline
+    embedUrl += '&autoplay=1&mute=1&controls=0&loop=1';
+    embedUrl += '&playlist=' + videoId; // Required for loop to work
     
-    // Loop the video
-    embedUrl += '&loop=1&playlist=' + videoId;
-    
-    if (url.includes('start=')) {
-      const startMatch = url.match(/start=(\d+)/);
-      if (startMatch) embedUrl += `&start=${startMatch[1]}`;
-    }
+    // Add start time if present
+    const startMatch = url.match(/start=(\d+)/);
+    if (startMatch) embedUrl += `&start=${startMatch[1]}`;
     
     return embedUrl;
   };
@@ -148,7 +139,6 @@ export default function CaseStudies({ data }) {
 }
 
 function Card({ videoUrl, index, onVideoClick, createThumbnailUrl }) {
-  // Extract video ID
   const extractVideoId = (url) => {
     const match = url.match(/embed\/([^?]+)/);
     return match ? match[1] : null;
@@ -191,7 +181,8 @@ function Card({ videoUrl, index, onVideoClick, createThumbnailUrl }) {
             allowFullScreen
             loading="lazy"
             playsInline
-            muted
+            // IMPORTANT: Add frameBorder for older browsers
+            frameBorder="0"
           />
           
           <img 
@@ -228,7 +219,7 @@ function Card({ videoUrl, index, onVideoClick, createThumbnailUrl }) {
   );
 }
 
-/* ===================== ANIMATION ===================== */
+/* ===================== ANIMATION & STYLES (same as before) ===================== */
 const cardVariants = {
   offscreen: {
     y: 200,
@@ -248,7 +239,6 @@ const cardVariants = {
   },
 };
 
-/* ===================== STYLES ===================== */
 const container = {
   margin: "100px auto",
   maxWidth: 1100,
@@ -333,7 +323,6 @@ const modalContent = {
   alignItems: "center",
 };
 
-// Add hover effect
 const styles = `
   .card-container:hover .play-overlay {
     opacity: 1 !important;
