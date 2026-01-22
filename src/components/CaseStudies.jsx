@@ -5,13 +5,12 @@ export default function CaseStudies({ data }) {
   const [selectedVideo, setSelectedVideo] = useState(null);
 
   // YouTube embed URLs
-  const youtubeVideos = [
-    "https://www.youtube.com/embed/yl5oPrBQi6k?si=jnchRCVK5n-lYdSh&amp;controls=0&start=1&autoplay=1&mute=1",
-    "https://www.youtube.com/embed/ALzNl3iKo34?si=-hEjDErXGgUaFNWi&controls=0&start=1&autoplay=1&mute=1",
-    "https://www.youtube.com/embed/W1kp2Ecd_r8?si=WHnWsNOl2cV48uFJ&autoplay=1&mute=1&controls=0&start=1", 
-    "https://www.youtube.com/embed/eMTLsrzMIvw?si=hDUys6iHhyspTNOm&amp;controls=0&start=1&autoplay=1&mute=1"
-    
-  ];
+const youtubeVideos = [
+  "https://www.youtube.com/embed/yl5oPrBQi6k?si=jnchRCVK5n-lYdSh&amp;controls=0&start=1&autoplay=1&mute=1",
+  "https://www.youtube.com/embed/ALzNl3iKo34?si=-hEjDErXGgUaFNWi&controls=0&start=1&autoplay=1&mute=1",
+  "https://www.youtube.com/embed/W1kp2Ecd_r8?si=WHnWsNOl2cV48uFJ&autoplay=1&mute=1&controls=0&start=1", 
+  "https://www.youtube.com/embed/eMTLsrzMIvw?si=hDUys6iHhyspTNOm&amp;controls=0&start=1&autoplay=1&mute=1"
+];
 
   const handleVideoClick = (videoUrl) => {
     setSelectedVideo(videoUrl);
@@ -142,21 +141,32 @@ function Card({ videoUrl, index, onVideoClick }) {
   };
 
   // Create autoplay URL for thumbnail
-  const createThumbnailUrl = (url) => {
-    const videoId = extractVideoId(url);
-    if (!videoId) return url;
-    
-    let embedUrl = `https://www.youtube.com/embed/${videoId}`;
-    embedUrl += '?rel=0&modestbranding=1&showinfo=0&playsinline=1';
-    embedUrl += '&autoplay=1&mute=1&loop=1&playlist=' + videoId + '&controls=0';
-    
-    if (url.includes('start=')) {
-      const startMatch = url.match(/start=(\d+)/);
-      if (startMatch) embedUrl += `&start=${startMatch[1]}`;
-    }
-    
-    return embedUrl;
-  };
+// Create autoplay URL for thumbnail
+const createThumbnailUrl = (url) => {
+  const videoId = extractVideoId(url);
+  if (!videoId) return url;
+  
+  let embedUrl = `https://www.youtube.com/embed/${videoId}`;
+  embedUrl += '?rel=0&modestbranding=1&showinfo=0&playsinline=1';
+  
+  // For mobile autoplay, videos MUST be muted
+  const isMobileDevice = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  
+  if (isMobileDevice) {
+    // Mobile: autoplay only works with muted=1
+    embedUrl += '&autoplay=1&mute=1&controls=0&loop=1&playlist=' + videoId;
+  } else {
+    // Desktop: can autoplay with or without sound
+    embedUrl += '&autoplay=1&mute=1&controls=0&loop=1&playlist=' + videoId;
+  }
+  
+  if (url.includes('start=')) {
+    const startMatch = url.match(/start=(\d+)/);
+    if (startMatch) embedUrl += `&start=${startMatch[1]}`;
+  }
+  
+  return embedUrl;
+};
 
   const videoId = extractVideoId(videoUrl);
   const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
