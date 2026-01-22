@@ -89,6 +89,8 @@ export default function OurStory({ data }) {
   frameBorder="0"
   allow="autoplay; encrypted-media"
   title="Background video"
+  playsInline  
+muted  
   allowFullScreen
 />
   </div>
