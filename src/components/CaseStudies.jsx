@@ -1,35 +1,53 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 
 export default function CaseStudies({ data }) {
   const [selectedVideo, setSelectedVideo] = useState(null);
-
-  // YouTube embed URLs
-const youtubeVideos = [
-  "https://www.youtube.com/embed/yl5oPrBQi6k?si=jnchRCVK5n-lYdSh&amp;controls=0&start=1&autoplay=1&mute=1",
-  "https://www.youtube.com/embed/ALzNl3iKo34?si=-hEjDErXGgUaFNWi&controls=0&start=1&autoplay=1&mute=1",
-  "https://www.youtube.com/embed/W1kp2Ecd_r8?si=WHnWsNOl2cV48uFJ&autoplay=1&mute=1&controls=0&start=1", 
-  "https://www.youtube.com/embed/eMTLsrzMIvw?si=hDUys6iHhyspTNOm&amp;controls=0&start=1&autoplay=1&mute=1"
-];
-
-  const handleVideoClick = (videoUrl) => {
-    setSelectedVideo(videoUrl);
-  };
-
-  const closeModal = () => {
-    setSelectedVideo(null);
-  };
-
   const [isMobile, setIsMobile] = useState(false);
+  const videoRefs = useRef([]);
+
+  // YouTube embed URLs - ensure they have mute=1 for mobile
+  const youtubeVideos = [
+    "https://www.youtube.com/embed/yl5oPrBQi6k?si=jnchRCVK5n-lYdSh&amp;controls=0&start=1&autoplay=1&mute=1",
+    "https://www.youtube.com/embed/ALzNl3iKo34?si=-hEjDErXGgUaFNWi&controls=0&start=1&autoplay=1&mute=1",
+    "https://www.youtube.com/embed/W1kp2Ecd_r8?si=WHnWsNOl2cV48uFJ&autoplay=1&mute=1&controls=0&start=1", 
+    "https://www.youtube.com/embed/eMTLsrzMIvw?si=hDUys6iHhyspTNOm&amp;controls=0&start=1&autoplay=1&mute=1"
+  ];
 
   useEffect(() => {
+    // Check if mobile
     const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768);
+      const isMobileDevice = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      setIsMobile(isMobileDevice || window.innerWidth <= 768);
     };
     
     checkMobile();
     window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
+    
+    // Try to play videos on mobile (they need user interaction first)
+    const handleUserInteraction = () => {
+      videoRefs.current.forEach(ref => {
+        if (ref && ref.contentWindow) {
+          try {
+            ref.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+          } catch (error) {
+            console.log("Could not autoplay video:", error);
+          }
+        }
+      });
+      // Remove listener after first interaction
+      document.removeEventListener('click', handleUserInteraction);
+      document.removeEventListener('touchstart', handleUserInteraction);
+    };
+    
+    document.addEventListener('click', handleUserInteraction);
+    document.addEventListener('touchstart', handleUserInteraction);
+    
+    return () => {
+      window.removeEventListener("resize", checkMobile);
+      document.removeEventListener('click', handleUserInteraction);
+      document.removeEventListener('touchstart', handleUserInteraction);
+    };
   }, []);
 
   // Extract video ID from URL
@@ -39,40 +57,31 @@ const youtubeVideos = [
   };
 
   // Create autoplay URL for modal
-  // const createModalUrl = (url) => {
-  //   const videoId = extractVideoId(url);
-  //   if (!videoId) return url;
-    
-  //   let embedUrl = `https://www.youtube.com/embed/${videoId}`;
-  //   embedUrl += '?rel=0&modestbranding=1&showinfo=0&playsinline=1';
-  //   embedUrl += '&autoplay=1&mute=0&controls=1';
-    
-  //   if (url.includes('start=')) {
-  //     const startMatch = url.match(/start=(\d+)/);
-  //     if (startMatch) embedUrl += `&start=${startMatch[1]}`;
-  //   }
-    
-  //   return embedUrl;
-  // };
   const createModalUrl = (url) => {
-  const videoId = extractVideoId(url);
-  if (!videoId) return url;
+    const videoId = extractVideoId(url);
+    if (!videoId) return url;
 
-  let embedUrl = `https://www.youtube.com/embed/${videoId}`;
-  embedUrl += '?rel=0&modestbranding=1&showinfo=0&playsinline=1';
+    let embedUrl = `https://www.youtube.com/embed/${videoId}`;
+    embedUrl += '?rel=0&modestbranding=1&showinfo=0&playsinline=1';
 
-  // Detect mobile and mute autoplay
-  const isMobileDevice = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-  embedUrl += `&autoplay=1&mute=${isMobileDevice ? 1 : 0}&controls=1`;
+    // Always mute for mobile autoplay
+    embedUrl += `&autoplay=1&mute=1&controls=1`;
 
-  if (url.includes('start=')) {
-    const startMatch = url.match(/start=(\d+)/);
-    if (startMatch) embedUrl += `&start=${startMatch[1]}`;
-  }
+    if (url.includes('start=')) {
+      const startMatch = url.match(/start=(\d+)/);
+      if (startMatch) embedUrl += `&start=${startMatch[1]}`;
+    }
 
-  return embedUrl;
-};
+    return embedUrl;
+  };
 
+  const handleVideoClick = (videoUrl) => {
+    setSelectedVideo(videoUrl);
+  };
+
+  const closeModal = () => {
+    setSelectedVideo(null);
+  };
 
   const closeButton = {
     position: "absolute",
@@ -99,6 +108,8 @@ const youtubeVideos = [
             videoUrl={videoUrl}
             index={index}
             onVideoClick={handleVideoClick}
+            videoRef={(el) => (videoRefs.current[index] = el)}
+            isMobile={isMobile}
           />
         ))}
       </div>
@@ -133,40 +144,31 @@ const youtubeVideos = [
   );
 }
 
-function Card({ videoUrl, index, onVideoClick }) {
+function Card({ videoUrl, index, onVideoClick, videoRef, isMobile }) {
   // Extract video ID
   const extractVideoId = (url) => {
     const match = url.match(/embed\/([^?]+)/);
     return match ? match[1] : null;
   };
 
-  // Create autoplay URL for thumbnail
-// Create autoplay URL for thumbnail
-const createThumbnailUrl = (url) => {
-  const videoId = extractVideoId(url);
-  if (!videoId) return url;
-  
-  let embedUrl = `https://www.youtube.com/embed/${videoId}`;
-  embedUrl += '?rel=0&modestbranding=1&showinfo=0&playsinline=1';
-  
-  // For mobile autoplay, videos MUST be muted
-  const isMobileDevice = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-  
-  if (isMobileDevice) {
-    // Mobile: autoplay only works with muted=1
+  // Create autoplay URL for thumbnail - ALWAYS use mute=1 for mobile compatibility
+  const createThumbnailUrl = (url) => {
+    const videoId = extractVideoId(url);
+    if (!videoId) return url;
+    
+    let embedUrl = `https://www.youtube.com/embed/${videoId}`;
+    embedUrl += '?rel=0&modestbranding=1&showinfo=0&playsinline=1';
+    
+    // For reliable autoplay on all devices, ALWAYS use mute=1
     embedUrl += '&autoplay=1&mute=1&controls=0&loop=1&playlist=' + videoId;
-  } else {
-    // Desktop: can autoplay with or without sound
-    embedUrl += '&autoplay=1&mute=1&controls=0&loop=1&playlist=' + videoId;
-  }
-  
-  if (url.includes('start=')) {
-    const startMatch = url.match(/start=(\d+)/);
-    if (startMatch) embedUrl += `&start=${startMatch[1]}`;
-  }
-  
-  return embedUrl;
-};
+    
+    if (url.includes('start=')) {
+      const startMatch = url.match(/start=(\d+)/);
+      if (startMatch) embedUrl += `&start=${startMatch[1]}`;
+    }
+    
+    return embedUrl;
+  };
 
   const videoId = extractVideoId(videoUrl);
   const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
@@ -193,6 +195,7 @@ const createThumbnailUrl = (url) => {
       >
         <div style={videoWrapper}>
           <iframe
+            ref={videoRef}
             src={createThumbnailUrl(videoUrl)}
             style={{
               width: "100%",
@@ -239,6 +242,8 @@ const createThumbnailUrl = (url) => {
     </motion.div>
   );
 }
+
+// ... (rest of your styles remain the same)
 
 /* ===================== ANIMATION ===================== */
 const cardVariants = {
