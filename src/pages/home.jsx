@@ -18,6 +18,7 @@ import SocialLinks from '../components/SocialLinks.jsx';
 import Hero2 from '../components/Hero2.jsx';
 import { fetchHome } from "../sanity/fetchHome.js";
 import { clearHomeCache } from "../sanity/fetchHome.js";
+import TestingVideo from '../components/testingVideo.jsx';
 
 export default function Homepage() {
   const [home, setHome] = useState(null);
@@ -74,6 +75,7 @@ useEffect(() => {
       <Footer />
       <SocialLinks />
       <MovingFooter />
+      <TestingVideo data={home.caseStudy} />
     </>
   );
 }
