@@ -3,24 +3,15 @@ import { motion } from "framer-motion";
 
 export default function CaseStudies({ data }) {
   const [selectedVideo, setSelectedVideo] = useState(null);
+  const [isMobile, setIsMobile] = useState(false);
 
   // YouTube embed URLs
-const youtubeVideos = [
-  "https://www.youtube.com/embed/yl5oPrBQi6k?si=jnchRCVK5n-lYdSh&controls=0&start=1&autoplay=1&mute=1",
-  "https://www.youtube.com/embed/ALzNl3iKo34?si=-hEjDErXGgUaFNWi&controls=0&start=1&autoplay=1&mute=1",
-  "https://www.youtube.com/embed/W1kp2Ecd_r8?si=WHnWsNOl2cV48uFJ&controls=0&start=1&autoplay=1&mute=1", 
-  "https://www.youtube.com/embed/eMTLsrzMIvw?si=hDUys6iHhyspTNOmz&controls=0&start=1&autoplay=1&mute=1"
-];
-
-  const handleVideoClick = (videoUrl) => {
-    setSelectedVideo(videoUrl);
-  };
-
-  const closeModal = () => {
-    setSelectedVideo(null);
-  };
-
-  const [isMobile, setIsMobile] = useState(false);
+  const youtubeVideos = [
+    "https://www.youtube.com/embed/yl5oPrBQi6k?si=jnchRCVK5n-lYdSh&controls=0&start=1",
+    "https://www.youtube.com/embed/ALzNl3iKo34?si=-hEjDErXGgUaFNWi&controls=0&start=1",
+    "https://www.youtube.com/embed/W1kp2Ecd_r8?si=WHnWsNOl2cV48uFJ&controls=0&start=1", 
+    "https://www.youtube.com/embed/eMTLsrzMIvw?si=hDUys6iHhyspTNOmz&controls=0&start=1"
+  ];
 
   useEffect(() => {
     const checkMobile = () => {
@@ -32,6 +23,14 @@ const youtubeVideos = [
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
+  const handleVideoClick = (videoUrl) => {
+    setSelectedVideo(videoUrl);
+  };
+
+  const closeModal = () => {
+    setSelectedVideo(null);
+  };
+
   // Extract video ID from URL
   const extractVideoId = (url) => {
     const match = url.match(/embed\/([^?]+)/);
@@ -39,40 +38,53 @@ const youtubeVideos = [
   };
 
   // Create autoplay URL for modal
-  // const createModalUrl = (url) => {
-  //   const videoId = extractVideoId(url);
-  //   if (!videoId) return url;
-    
-  //   let embedUrl = `https://www.youtube.com/embed/${videoId}`;
-  //   embedUrl += '?rel=0&modestbranding=1&showinfo=0&playsinline=1';
-  //   embedUrl += '&autoplay=1&mute=0&controls=1';
-    
-  //   if (url.includes('start=')) {
-  //     const startMatch = url.match(/start=(\d+)/);
-  //     if (startMatch) embedUrl += `&start=${startMatch[1]}`;
-  //   }
-    
-  //   return embedUrl;
-  // };
   const createModalUrl = (url) => {
-  const videoId = extractVideoId(url);
-  if (!videoId) return url;
+    const videoId = extractVideoId(url);
+    if (!videoId) return url;
+    
+    let embedUrl = `https://www.youtube.com/embed/${videoId}`;
+    embedUrl += '?rel=0&modestbranding=1&showinfo=0';
+    embedUrl += '&autoplay=1&playsinline=1';
+    
+    // Mobile requires muted autoplay
+    if (isMobile) {
+      embedUrl += '&mute=1';
+    } else {
+      embedUrl += '&mute=0';
+    }
+    
+    // Add controls back for modal
+    embedUrl += '&controls=1';
+    
+    if (url.includes('start=')) {
+      const startMatch = url.match(/start=(\d+)/);
+      if (startMatch) embedUrl += `&start=${startMatch[1]}`;
+    }
+    
+    return embedUrl;
+  };
 
-  let embedUrl = `https://www.youtube.com/embed/${videoId}`;
-  embedUrl += '?rel=0&modestbranding=1&showinfo=0&playsinline=1';
-
-  // Detect mobile and mute autoplay
-  const isMobileDevice = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-  embedUrl += `&autoplay=1&mute=${isMobileDevice ? 1 : 0}&controls=1`;
-
-  if (url.includes('start=')) {
-    const startMatch = url.match(/start=(\d+)/);
-    if (startMatch) embedUrl += `&start=${startMatch[1]}`;
-  }
-
-  return embedUrl;
-};
-
+  // Create thumbnail URL with autoplay for both mobile and desktop
+  const createThumbnailUrl = (url) => {
+    const videoId = extractVideoId(url);
+    if (!videoId) return url;
+    
+    let embedUrl = `https://www.youtube.com/embed/${videoId}`;
+    embedUrl += '?rel=0&modestbranding=1&showinfo=0&playsinline=1';
+    
+    // For autoplay to work on both mobile and desktop, must be muted
+    embedUrl += '&autoplay=1&mute=1&controls=0';
+    
+    // Loop the video
+    embedUrl += '&loop=1&playlist=' + videoId;
+    
+    if (url.includes('start=')) {
+      const startMatch = url.match(/start=(\d+)/);
+      if (startMatch) embedUrl += `&start=${startMatch[1]}`;
+    }
+    
+    return embedUrl;
+  };
 
   const closeButton = {
     position: "absolute",
@@ -99,6 +111,7 @@ const youtubeVideos = [
             videoUrl={videoUrl}
             index={index}
             onVideoClick={handleVideoClick}
+            createThumbnailUrl={createThumbnailUrl}
           />
         ))}
       </div>
@@ -125,6 +138,7 @@ const youtubeVideos = [
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               referrerPolicy="strict-origin-when-cross-origin"
               allowFullScreen
+              playsInline
             />
           </div>
         </div>
@@ -133,40 +147,12 @@ const youtubeVideos = [
   );
 }
 
-function Card({ videoUrl, index, onVideoClick }) {
+function Card({ videoUrl, index, onVideoClick, createThumbnailUrl }) {
   // Extract video ID
   const extractVideoId = (url) => {
     const match = url.match(/embed\/([^?]+)/);
     return match ? match[1] : null;
   };
-
-  // Create autoplay URL for thumbnail
-// Create autoplay URL for thumbnail
-const createThumbnailUrl = (url) => {
-  const videoId = extractVideoId(url);
-  if (!videoId) return url;
-  
-  let embedUrl = `https://www.youtube.com/embed/${videoId}`;
-  embedUrl += '?rel=0&modestbranding=1&showinfo=0&playsinline=1';
-  
-  // For mobile autoplay, videos MUST be muted
-  const isMobileDevice = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-  
-  if (isMobileDevice) {
-    // Mobile: autoplay only works with muted=1
-    embedUrl += '&autoplay=1&mute=1&controls=0&loop=1&playlist=' + videoId;
-  } else {
-    // Desktop: can autoplay with or without sound
-    embedUrl += '&autoplay=1&mute=1&controls=0&loop=1&playlist=' + videoId;
-  }
-  
-  if (url.includes('start=')) {
-    const startMatch = url.match(/start=(\d+)/);
-    if (startMatch) embedUrl += `&start=${startMatch[1]}`;
-  }
-  
-  return embedUrl;
-};
 
   const videoId = extractVideoId(videoUrl);
   const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
@@ -204,6 +190,8 @@ const createThumbnailUrl = (url) => {
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
             loading="lazy"
+            playsInline
+            muted
           />
           
           <img 
